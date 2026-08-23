@@ -1,0 +1,2168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Maestra — Redox &amp; Orgánica | Química 12vo</title>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<script src="https://cdn.jsdelivr.net/npm/@rdkit/rdkit@2024.3.5-1.0.0/dist/RDKit_minimal.js"></script>
+<style>
+:root{
+  --azul:#1d4ed8; --azul-claro:#dbeafe; --azul-med:#3b82f6; --azul-oscuro:#1e3a8a;
+  --verde:#15803d; --verde-claro:#f0fdf4;
+  --ambar:#b45309; --ambar-claro:#fffbeb;
+  --rojo:#b91c1c; --rojo-claro:#fef2f2;
+  --lavanda:#7c3aed; --lavanda-claro:#f5f3ff;
+  --texto:#111827; --texto-sec:#4b5563;
+  --borde:#e5e7eb;
+  --fondo:#ffffff;
+}
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background:var(--fondo); color:var(--texto);
+  max-width: 900px; margin:0 auto; padding:0 0 100px;
+  line-height:1.55;
+}
+h1,h2,h3,h4{ line-height:1.25; }
+a{ color:var(--azul); text-decoration:none; }
+code{ background:#f3f4f6; padding:1px 6px; border-radius:4px; font-size:0.88em; font-family:'SF Mono',Consolas,monospace; }
+
+/* ============ CAPA 1 — BARRA SUPERIOR STICKY ============ */
+#barra-superior{
+  position:sticky; top:0; z-index:100;
+  background:#0f172a; color:#e2e8f0;
+  padding:0; box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+#fila-titulo{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 16px; gap:10px; flex-wrap:wrap;
+}
+#logo-doc{ font-weight:700; font-size:0.95rem; white-space:nowrap; }
+#nav-scroll{
+  display:flex; gap:14px; overflow-x:auto; padding:0 16px 10px;
+  font-size:0.82rem; scrollbar-width:thin;
+}
+#nav-scroll a{ color:#94a3b8; white-space:nowrap; padding:4px 2px; border-bottom:2px solid transparent; transition:all .15s; }
+#nav-scroll a.activo{ color:#fff; border-bottom-color:var(--azul-med); font-weight:600; }
+#nav-scroll::-webkit-scrollbar{ height:4px; }
+#nav-scroll::-webkit-scrollbar-thumb{ background:#475569; border-radius:4px; }
+
+/* Barra de modos de tiempo (sticky, debajo de nav) */
+#barra-modos{
+  display:flex; gap:6px; padding:8px 16px; background:#1e293b; flex-wrap:wrap;
+}
+.btn-modo{
+  border:1px solid #334155; background:#0f172a; color:#cbd5e1;
+  padding:5px 12px; border-radius:20px; font-size:0.78rem; cursor:pointer;
+  font-weight:600; transition:all .15s;
+}
+.btn-modo.activo{ background:var(--azul-med); border-color:var(--azul-med); color:#fff; }
+.btn-modo:hover{ border-color:var(--azul-med); }
+
+/* Selector de tema principal (Redox / Orgánica) */
+#selector-tema{
+  display:flex; gap:8px; padding:8px 16px 12px; background:#1e293b;
+}
+.btn-tema{
+  flex:1; padding:8px 10px; border-radius:8px; border:2px solid #334155;
+  background:#0f172a; color:#cbd5e1; font-weight:700; font-size:0.85rem; cursor:pointer;
+  text-align:center; transition:all .15s;
+}
+.btn-tema.activo{ border-color:var(--ambar); background:#292013; color:#fde68a; }
+
+/* ============ CONTENIDO ============ */
+#contenido{ padding:0 18px; }
+
+.tema-seccion{ display:none; }
+.tema-seccion.visible{ display:block; }
+
+.portada{ text-align:center; padding:36px 0 24px; }
+.portada .emoji-grande{ font-size:2.6rem; }
+.portada h1{ font-size:1.7rem; margin:6px 0 2px; }
+.portada .sub{ color:var(--texto-sec); font-size:0.95rem; margin-bottom:14px; }
+.chips{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; font-size:0.8rem; margin-bottom:10px; }
+.chip{ background:var(--azul-claro); color:var(--azul-oscuro); padding:4px 12px; border-radius:20px; font-weight:600; }
+
+.lee-primero{
+  background:var(--azul-claro); border-left:4px solid var(--azul);
+  padding:16px 18px; border-radius:6px; margin:18px 0; font-size:0.92rem;
+}
+.lee-primero strong{ color:var(--azul-oscuro); }
+
+table{ width:100%; border-collapse:collapse; margin:14px 0; font-size:0.86rem; }
+th,td{ border:1px solid var(--borde); padding:7px 10px; text-align:left; vertical-align:top; }
+th{ background:#f3f4f6; font-weight:700; }
+tr:nth-child(even) td{ background:#fafafa; }
+
+h2.encabezado-seccion{
+  scroll-margin-top:150px;
+  font-size:1.25rem; margin:34px 0 12px; padding-bottom:6px;
+  border-bottom:3px solid var(--azul); color:var(--azul-oscuro);
+}
+h3.encabezado-sub{ scroll-margin-top:150px; font-size:1.05rem; margin:22px 0 8px; color:var(--texto); }
+
+/* Cajas conceptuales */
+.caja-concepto{ background:var(--azul-claro); border-radius:8px; padding:14px 16px; margin:12px 0; }
+.caja-analogia{ background:#fffdf5; border-left:4px solid var(--ambar); padding:12px 16px; margin:12px 0; border-radius:0 6px 6px 0; }
+.caja-adicional{ background:var(--lavanda-claro); border-radius:8px; padding:12px 16px; margin:12px 0; font-size:0.88rem; }
+.caja-tip{ background:#f0fdf4; border-left:4px solid var(--verde); padding:10px 14px; margin:10px 0; border-radius:0 6px 6px 0; font-size:0.88rem; }
+.caja-advertencia{ background:#fff7ed; border-left:4px solid #ea580c; padding:10px 14px; margin:10px 0; border-radius:0 6px 6px 0; font-size:0.88rem; }
+.caja-advertencia strong{ color:#9a3412; }
+
+/* ============ TARJETAS DE PROBLEMA ============ */
+.problema{
+  border:1px solid var(--borde); border-radius:10px; margin:16px 0;
+  overflow:hidden; scroll-margin-top:150px;
+}
+.problema-header{
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  padding:10px 14px; font-weight:700; font-size:0.92rem; color:#fff;
+}
+.dif-1{ background:#60a5fa; } /* estrella azul claro */
+.dif-2{ background:#2563eb; } /* azul medio */
+.dif-3{ background:#1e3a8a; } /* azul oscuro */
+.dif-4{ background:linear-gradient(135deg,#7c2d12,#1e3a8a); } /* dificultad extra */
+.badge-meta{ background:rgba(255,255,255,0.25); padding:2px 8px; border-radius:12px; font-size:0.72rem; }
+.problema-body{ padding:14px 16px; }
+.nombre-ingles{ font-family:'SF Mono',Consolas,monospace; color:var(--texto-sec); font-size:0.82rem; margin-bottom:4px; }
+.enunciado{ font-size:0.94rem; margin-bottom:10px; }
+
+.toggle-btn{
+  display:inline-flex; align-items:center; gap:6px;
+  background:#f3f4f6; border:1px solid var(--borde); color:var(--texto);
+  padding:6px 12px; border-radius:6px; font-size:0.82rem; cursor:pointer;
+  margin:4px 6px 4px 0; font-weight:600; transition:background .15s;
+}
+.toggle-btn:hover{ background:#e5e7eb; }
+.toggle-btn.abierto{ background:var(--azul); color:#fff; border-color:var(--azul); }
+.toggle-contenido{
+  max-height:0; overflow:hidden; transition:max-height .3s ease;
+  background:#fafafa; border-radius:6px; font-size:0.88rem;
+}
+.toggle-contenido.abierto{ max-height:6000px; margin-top:8px; padding:12px 14px; border:1px solid var(--borde); }
+.toggle-contenido ol{ padding-left:20px; }
+.toggle-contenido li{ margin-bottom:8px; border-left:3px solid var(--azul); padding-left:10px; }
+
+.respuesta-final{
+  background:var(--verde-claro); border:1px solid #bbf7d0; color:#14532d;
+  padding:10px 14px; border-radius:6px; font-weight:700; font-size:0.9rem; margin-top:10px;
+}
+.leccion{ background:var(--ambar-claro); border-left:3px solid var(--ambar); padding:8px 12px; margin-top:8px; font-size:0.84rem; border-radius:0 6px 6px 0; }
+.error-comun{ background:var(--rojo-claro); border-left:3px solid var(--rojo); padding:8px 12px; margin-top:8px; font-size:0.84rem; border-radius:0 6px 6px 0; }
+
+/* Diagramas moleculares */
+.mol-caja{ display:flex; justify-content:center; background:#fafafa; border-radius:8px; padding:10px; margin:10px 0; min-height:160px; align-items:center; }
+.mol-caja svg{ max-width:100%; }
+.svg-diagrama{ background:#fafafa; border-radius:8px; padding:10px; margin:10px 0; }
+
+/* Cheatsheet */
+.cheatsheet{ columns:2; column-gap:20px; }
+.cheatsheet .bloque-cheat{ break-inside:avoid; background:#f8fafc; border:1px solid var(--borde); border-radius:8px; padding:12px 14px; margin-bottom:14px; font-size:0.82rem; }
+.cheatsheet .bloque-cheat h4{ margin:0 0 6px; color:var(--azul-oscuro); font-size:0.88rem; }
+@media (max-width:700px){ .cheatsheet{ columns:1; } }
+
+/* Modos de tiempo — visibilidad controlada por clases en <body> */
+body.modo-crisis .oculta-crisis{ display:none !important; }
+body.modo-urgente .oculta-urgente{ display:none !important; }
+body.modo-corto .oculta-corto{ display:none !important; }
+/* normal muestra todo */
+
+/* ============ CAPA 2 — TOC LATERAL ============ */
+#toc-lateral{
+  position:fixed; top:170px; right:14px; width:210px; max-height:70vh; overflow-y:auto;
+  background:#fff; border:1px solid var(--borde); border-radius:10px; padding:12px 14px;
+  font-size:0.76rem; box-shadow:0 4px 16px rgba(0,0,0,0.08); z-index:60;
+}
+#toc-lateral h4{ margin:0 0 8px; font-size:0.8rem; color:var(--azul-oscuro); }
+#toc-lateral a{ display:block; color:var(--texto-sec); padding:3px 0; border-left:2px solid transparent; padding-left:8px; }
+#toc-lateral a.activo{ color:var(--azul); border-left-color:var(--azul); font-weight:700; }
+@media (max-width:900px){ #toc-lateral{ display:none; } }
+
+#toc-movil-btn{
+  display:none; position:fixed; bottom:16px; left:16px; z-index:70;
+  background:var(--azul); color:#fff; border:none; border-radius:50%;
+  width:46px; height:46px; font-size:1.2rem; box-shadow:0 2px 10px rgba(0,0,0,0.25);
+}
+@media (max-width:900px){ #toc-movil-btn{ display:block; } }
+#toc-movil-panel{
+  display:none; position:fixed; bottom:70px; left:16px; right:16px; max-height:60vh; overflow-y:auto;
+  background:#fff; border:1px solid var(--borde); border-radius:10px; padding:14px; z-index:70;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2); font-size:0.82rem;
+}
+#toc-movil-panel.abierto{ display:block; }
+#toc-movil-panel a{ display:block; padding:5px 0; color:var(--texto); }
+
+/* ============ CAPA 3 — MINIMAPA ============ */
+#minimapa{
+  position:fixed; bottom:16px; right:16px; z-index:60;
+  background:#fff; border:1px solid var(--borde); border-radius:10px; padding:10px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.1); max-width:130px;
+}
+@media (max-width:900px){ #minimapa{ display:none; } }
+#minimapa-puntos{ display:flex; flex-wrap:wrap; gap:4px; max-width:110px; }
+.punto-mini{ width:9px; height:9px; border-radius:50%; background:#cbd5e1; cursor:pointer; position:relative; }
+.punto-mini.visitado{ background:var(--azul-med); }
+.punto-mini:hover::after{
+  content:attr(data-tip); position:absolute; bottom:130%; left:50%; transform:translateX(-50%);
+  background:#0f172a; color:#fff; padding:2px 6px; border-radius:4px; font-size:0.65rem; white-space:nowrap;
+}
+#minimapa-toggle{ position:fixed; bottom:16px; right:16px; z-index:61; background:#0f172a; color:#fff; border:none; border-radius:50%; width:38px; height:38px; font-size:1rem; box-shadow:0 2px 10px rgba(0,0,0,0.25); }
+@media (max-width:900px){ #minimapa-toggle{ display:none; } }
+
+.tabla-decision td:first-child{ font-weight:600; }
+.footer-doc{ text-align:center; color:var(--texto-sec); font-size:0.82rem; margin-top:50px; padding:20px 0; border-top:1px solid var(--borde); }
+</style>
+</head>
+<body class="modo-normal">
+
+<div id="barra-superior">
+  <div id="fila-titulo">
+    <div id="logo-doc">⚗️ Guía Maestra — Redox &amp; Orgánica</div>
+  </div>
+  <div id="selector-tema">
+    <button class="btn-tema activo" data-tema="redox" onclick="cambiarTema('redox')">🔋 REDOX (Cap. 15)</button>
+    <button class="btn-tema" data-tema="organica" onclick="cambiarTema('organica')">🧪 ORGÁNICA (Cap. 17)</button>
+  </div>
+  <div id="barra-modos">
+    <button class="btn-modo oculta-urgente oculta-corto" data-modo="crisis" onclick="cambiarModo('crisis')">🔴 CRISIS &lt;24h</button>
+    <button class="btn-modo" data-modo="urgente" onclick="cambiarModo('urgente')">🟠 URGENTE 2-3d</button>
+    <button class="btn-modo" data-modo="corto" onclick="cambiarModo('corto')">🟡 CORTO 1sem</button>
+    <button class="btn-modo activo" data-modo="normal" onclick="cambiarModo('normal')">🟢 NORMAL +2sem</button>
+  </div>
+  <div id="nav-scroll"></div>
+</div>
+
+<div id="contenido">
+
+<!-- ========================================================= -->
+<!-- ============ SECCIÓN REDOX (se inserta aquí) ============ -->
+<!-- ========================================================= -->
+<div class="tema-seccion visible" id="tema-redox">
+
+<div class="portada">
+  <div class="emoji-grande">🔋⚗️</div>
+  <h1>Oxidación y Reducción — Guía Magistral Fusionada</h1>
+  <div class="sub">Capítulo 15 · Nomenclatura · Números de Oxidación · Ion-Electrón · Celdas Voltaicas · Baterías · Excepciones Avanzadas</div>
+  <div class="chips">
+    <span class="chip">📚 Química 12vo</span>
+    <span class="chip">🎓 Instituto Bern Bautista Bilingüe</span>
+    <span class="chip">📅 Examen Trimestral 2026</span>
+  </div>
+</div>
+
+<div class="lee-primero">
+  <strong>📌 LEE ESTO PRIMERO:</strong> Este es el documento más completo posible sobre Redox porque el profesor "no anda con juegos" y el tema tiene muchísimas excepciones. Cubre: (1) las 7 reglas de números de oxidación, (2) nomenclatura inglés→fórmula, (3) balanceo por Ion-Electrón en ácido y básico, (4) la Tabla 15.3 (Serie de Actividad) para celdas voltaicas, (5) baterías reales, y (6) una sección ⭐⭐⭐⭐ nueva con las excepciones más peligrosas del examen (peróxido anfótero, HNO₃ diluido vs concentrado, electrólisis, desproporción compleja). <strong>Empieza siempre por los números de oxidación — si eso falla, todo colapsa.</strong>
+</div>
+
+<h2 class="encabezado-seccion" id="rx-mapa" data-nav-label="Mapa">🗺️ TABLA MAESTRA DE DECISIÓN</h2>
+<table class="tabla-decision">
+<tr><th>Si necesitas…</th><th>Entonces usa…</th><th>Ir a</th></tr>
+<tr><td>Asignar número de oxidación</td><td>Las 7 Reglas (Tabla 15.1)</td><td><a href="#rx-reglas">7 Reglas</a></td></tr>
+<tr><td>Traducir nombre en inglés → fórmula</td><td>Sufijos -ide/-ate/-ite + romanos</td><td><a href="#rx-nomenclatura">Nomenclatura</a></td></tr>
+<tr><td>Identificar agente oxidante/reductor</td><td>Tabla de terminología redox</td><td><a href="#rx-agentes">Agentes</a></td></tr>
+<tr><td>Balancear ecuación redox (con iones)</td><td>Método Ion-Electrón, 5 pasos</td><td><a href="#rx-ion-electron">Ion-Electrón</a></td></tr>
+<tr><td>Saber si una celda es espontánea</td><td>Tabla 15.3 — Serie de Actividad</td><td><a href="#rx-tabla153">Tabla 15.3</a></td></tr>
+<tr><td>Las 3 representaciones de una celda voltaica</td><td>Notación + ecuación + diagrama</td><td><a href="#rx-celda">Celda Voltaica</a></td></tr>
+<tr><td>Semirreacciones de baterías reales</td><td>Tabla de baterías (Pb, Zn, NiCad)</td><td><a href="#rx-baterias">Baterías</a></td></tr>
+<tr><td>Reconocer desproporción</td><td>Mismo elemento → 2 #Ox distintos</td><td><a href="#rx-desproporcion">Desproporción</a></td></tr>
+<tr><td>Casos ⭐⭐⭐⭐ que no vienen en libros normales</td><td>Peróxido, HNO₃, electrólisis</td><td><a href="#rx-excepciones">Excepciones ⭐⭐⭐⭐</a></td></tr>
+</table>
+
+<h2 class="encabezado-seccion" id="rx-oxred" data-nav-label="Ox/Red">1. Oxidación y Reducción — Lo Esencial</h2>
+<div class="caja-concepto">
+<strong>Oxidación</strong> = un átomo o ion <strong>PIERDE</strong> uno o más electrones (e⁻). El #Ox <strong>sube</strong>.<br>
+<strong>Reducción</strong> = un átomo o ion <strong>GANA</strong> uno o más electrones (e⁻). El #Ox <strong>baja</strong>.<br>
+⚠️ Siempre ocurren <strong>juntos</strong>. Si uno se oxida, el otro se reduce → reacción <strong>REDOX</strong>.
+</div>
+<div class="caja-analogia">
+💡 <strong>Analogía + mnemotécnico:</strong> Imagina que tienes $10 (electrones) y se los das a tu amigo. <strong>Tú perdiste</strong> → fuiste <strong>OXIDADO</strong>. Tu amigo <strong>ganó</strong> → fue <strong>REDUCIDO</strong>. El dinero (e⁻) no se crea ni destruye, solo se transfiere.<br><br>
+<strong>OIL RIG</strong> → Oxidation Is Loss | Reduction Is Gain
+</div>
+<p><strong>Medias reacciones:</strong> oxidación → e⁻ al lado <strong>derecho</strong> (producto): \( \text{Fe} \to \text{Fe}^{3+} + 3e^- \). Reducción → e⁻ al lado <strong>izquierdo</strong> (reactivo): \( \text{Ag}^+ + e^- \to \text{Ag} \).</p>
+<div class="caja-advertencia"><strong>⛔ Error clásico:</strong> "Oxidado" NO significa que tenga oxígeno. Significa que PERDIÓ electrones.</div>
+
+<h2 class="encabezado-seccion" id="rx-reglas" data-nav-label="7 Reglas">2. Las 7 Reglas — Números de Oxidación</h2>
+<p>Un número de oxidación es una herramienta contable: cuánto "perdió" (+) o "ganó" (−) un átomo ficticiamente.</p>
+
+<h3 class="encabezado-sub">R1 — La suma siempre cierra ⭐ LA MÁS USADA</h3>
+<div class="caja-concepto">Molécula neutra → suma de #Ox = <strong>0</strong>. Ion poliatómico → suma = <strong>carga del ion</strong>. Es tu calculadora: identifica los conocidos, despeja el desconocido.</div>
+<p>Ej. \( \text{SO}_4^{2-} \): O=−2 → \( S+4(-2)=-2 \Rightarrow S=+6 \)</p>
+
+<h3 class="encabezado-sub">R2 — Elemento libre (puro) = 0</h3>
+<div class="caja-concepto">Todo elemento en estado natural = 0. Aplica a monoatómicos (Fe, Na, Zn) y diatómicos naturales.</div>
+<div class="caja-tip">💡 Truco: los 7 diatómicos naturales — <strong>H₂ N₂ O₂ F₂ Cl₂ Br₂ I₂</strong> ("HNOFClBrI"). Memorízalos en forma de 7 en la tabla periódica.</div>
+
+<h3 class="encabezado-sub">R3 — Ion monoatómico = su carga</h3>
+<p>Na⁺ → +1 | Fe³⁺ → +3 | Cl⁻ → −1. Se lee directo, no se calcula.</p>
+
+<h3 class="encabezado-sub">R4 — Metales Grupo 1A y 2A</h3>
+<p>Grupo 1A (Li, Na, K…) → siempre <strong>+1</strong>. Grupo 2A (Mg, Ca, Ba…) → siempre <strong>+2</strong>. El número de grupo = número de oxidación.</p>
+
+<h3 class="encabezado-sub">R5 — Halógenos (7A)</h3>
+<div class="caja-concepto">
+<strong>Flúor:</strong> SIEMPRE −1, sin excepción (el más electronegativo de la tabla).<br>
+<strong>Cl, Br, I:</strong> normalmente −1, EXCEPTO con O o F → se vuelven positivos.
+</div>
+<div class="caja-tip">💡 Principio de electronegatividad: <strong>F &gt; O &gt; Cl &gt; N &gt; Br &gt; S &gt; C &gt; H &gt; metales</strong>. El más electronegativo de la pareja siempre toma el signo negativo. Ej. HClO₃ → Cl=+5.</div>
+
+<h3 class="encabezado-sub">R6 — Oxígeno: casi siempre −2, con 2 excepciones clave</h3>
+<table>
+<tr><th>Caso</th><th>O =</th><th>Ejemplos</th><th>Por qué</th></tr>
+<tr><td>General (99%)</td><td>−2</td><td>H₂O, CO₂, MnO₂</td><td>Aplica por defecto</td></tr>
+<tr><td>Peróxidos (enlace O-O)</td><td>−1</td><td>H₂O₂, Na₂O₂, BaO₂</td><td>Los 2 O comparten la carga</td></tr>
+<tr><td>OF₂</td><td>+2</td><td>OF₂</td><td>F es más electronegativo que O</td></tr>
+</table>
+<div class="caja-advertencia"><strong>⚠️ CLAVE DE EXAMEN:</strong> H₂O₂ → O = −1, NO −2. Este es el error #1 del capítulo y afecta TODOS los cálculos siguientes.</div>
+
+<h3 class="encabezado-sub">R7 — Hidrógeno: +1 con no metales, −1 con metales (hidruro)</h3>
+<p>Con no metales (HCl, H₂O, H₂SO₄) → H = <strong>+1</strong>. Con metales (NaH, CaH₂) → H = <strong>−1</strong>, se llama <strong>HIDRURO</strong>.</p>
+
+<h3 class="encabezado-sub oculta-crisis">📊 Tabla 15.2 — Cómo se calcula paso a paso</h3>
+<table class="oculta-crisis">
+<tr><th>Fórmula</th><th>#s Oxidación</th><th>Regla</th><th>Cálculo</th></tr>
+<tr><td>Br₂</td><td>Br = 0</td><td>R2</td><td>Diatómico puro → 0</td></tr>
+<tr><td>CO₂</td><td>C=+4, O=−2</td><td>R6, R1</td><td>\(C+2(-2)=0\) → C=+4</td></tr>
+<tr><td>SO₄²⁻</td><td>S=+6, O=−2</td><td>R6, R1</td><td>\(S+4(-2)=-2\) → S=+6</td></tr>
+<tr><td>MnO₄⁻</td><td>Mn=+7, O=−2</td><td>R6, R1</td><td>\(Mn+4(-2)=-1\) → Mn=+7 ⚠️ sale mucho</td></tr>
+<tr><td>Cr₂O₇²⁻</td><td>Cr=+6, O=−2</td><td>R6, R1</td><td>\(2Cr+7(-2)=-2\) → Cr=+6</td></tr>
+<tr><td>H₂O₂</td><td>H=+1, O=−1</td><td>R7, R6 excep.</td><td>PERÓXIDO: O=−1</td></tr>
+<tr><td>NaH</td><td>Na=+1, H=−1</td><td>R4, R7 excep.</td><td>HIDRURO: H=−1</td></tr>
+</table>
+
+<h2 class="encabezado-seccion" id="rx-nomenclatura" data-nav-label="Nomenclatura">3. Nomenclatura Inglés → Fórmula</h2>
+<div class="caja-concepto">Tu profesor plantea los problemas con nombres en inglés (ej. <em>"zinc sulfate reacts with silver nitrate"</em>). Debes escribir la fórmula correcta ANTES de tocar la parte de electroquímica o balanceo. Si fallas aquí, el resto colapsa.</div>
+<ul style="font-size:0.9rem;">
+<li>Sufijo <strong>-ide</strong> → ion simple: chloride=Cl⁻, oxide=O²⁻, sulfide=S²⁻</li>
+<li>Sufijo <strong>-ate</strong> → oxoanión con más O: sulfate=SO₄²⁻, nitrate=NO₃⁻, phosphate=PO₄³⁻</li>
+<li>Sufijo <strong>-ite</strong> → oxoanión con menos O: sulfite=SO₃²⁻, nitrite=NO₂⁻</li>
+<li>Números romanos = estado de oxidación: iron(III)=Fe³⁺, copper(II)=Cu²⁺</li>
+<li>Prefijo <strong>di-</strong> = dos átomos: dichromate=Cr₂O₇²⁻</li>
+</ul>
+<table class="oculta-crisis">
+<tr><th>Nombre en inglés</th><th>Fórmula</th><th>Estado ox. clave</th><th>Rol típico</th></tr>
+<tr><td>Zinc sulfate</td><td><strong>ZnSO₄</strong></td><td>Zn: 0→+2</td><td>Ánodo celda Zn/Cu</td></tr>
+<tr><td>Copper(II) sulfate</td><td><strong>CuSO₄</strong></td><td>Cu²⁺→Cu=0</td><td>Cátodo celda Zn/Cu</td></tr>
+<tr><td>Silver nitrate</td><td><strong>AgNO₃</strong></td><td>Ag⁺→Ag=0</td><td>Cátodo celdas de plata</td></tr>
+<tr><td>Iron(III) chloride</td><td><strong>FeCl₃</strong></td><td>Fe=+3</td><td>Agente oxidante</td></tr>
+<tr><td>Potassium permanganate</td><td><strong>KMnO₄</strong></td><td>Mn=+7</td><td>Oxidante fuerte</td></tr>
+<tr><td>Potassium dichromate</td><td><strong>K₂Cr₂O₇</strong></td><td>Cr=+6</td><td>Oxidante fuerte</td></tr>
+<tr><td>Hydrogen peroxide</td><td><strong>H₂O₂</strong></td><td>O=−1 ⚠️</td><td>Oxidante O reductor</td></tr>
+<tr><td>Sulfuric acid</td><td><strong>H₂SO₄</strong></td><td>S=+6</td><td>Medio ácido</td></tr>
+<tr><td>Nitric acid</td><td><strong>HNO₃</strong></td><td>N=+5</td><td>Oxidante (N→NO)</td></tr>
+<tr><td>Lead(IV) oxide</td><td><strong>PbO₂</strong></td><td>Pb=+4</td><td>Cátodo batería plomo</td></tr>
+<tr><td>Nickel(III) oxyhydroxide</td><td><strong>NiO(OH)</strong></td><td>Ni=+3</td><td>Cátodo NiCad</td></tr>
+</table>
+<div class="caja-advertencia"><strong>⛔ Corrección conceptual:</strong> Energía limpia se define como aquella que NO libera contaminantes ni gases de efecto invernadero. Por definición NO produce CO₂. Solar, eólica e hidrógeno verde buscan eliminar las emisiones de CO₂.</div>
+
+<h2 class="encabezado-seccion" id="rx-agentes" data-nav-label="Agentes">4. Agentes Oxidante y Reductor</h2>
+<table>
+<tr><th>Proceso</th><th>La sustancia…</th><th>Se llama…</th><th>#Ox…</th></tr>
+<tr><td>OXIDACIÓN</td><td>Pierde e⁻</td><td>Agente REDUCTOR</td><td>AUMENTA (más +)</td></tr>
+<tr><td>REDUCCIÓN</td><td>Gana e⁻</td><td>Agente OXIDANTE</td><td>DISMINUYE (más −)</td></tr>
+</table>
+<div class="caja-analogia">💡 El agente <strong>reductor</strong> es el "donante de sangre" (da electrones) → él mismo se OXIDA. El agente <strong>oxidante</strong> es el "receptor" (recibe electrones) → él mismo se REDUCE. Son roles inversos — confundirlos es el error #1 en exámenes.</div>
+
+<h2 class="encabezado-seccion" id="rx-ion-electron" data-nav-label="Ion-Electrón">5. Método Ion-Electrón — 5 Pasos Fijos</h2>
+<div class="caja-advertencia"><strong>⚠️ Reglas del profe — obligatorias:</strong> el estado natural de un elemento es 0. Los compuestos covalentes (H₂O, NH₃, H₂C₂O₄, gases) NUNCA se separan en iones. En ácido: O→H₂O, H→H⁺. En básico: balancea como ácido primero, luego neutraliza con OH⁻.</div>
+<table>
+<tr><th>Paso</th><th>Acción</th></tr>
+<tr><td>0</td><td>Nomenclatura — asigna #Ox a todos, identifica quién sube/baja</td></tr>
+<tr><td>1</td><td>Ecuación iónica — separa electrolitos fuertes; covalentes quedan enteros</td></tr>
+<tr><td>2</td><td>Dos semirreacciones (solo átomos que cambian)</td></tr>
+<tr><td>3</td><td>Balance masa: átomos que cambian → O (H₂O) → H (H⁺)</td></tr>
+<tr><td>4</td><td>Balance carga: e⁻ al lado con más carga positiva</td></tr>
+<tr><td>5</td><td>Igualar e⁻ (MCM), sumar, cancelar, verificar átomos y cargas</td></tr>
+</table>
+<table class="oculta-crisis">
+<tr><th>Paso</th><th>Solución ÁCIDA</th><th>Solución BÁSICA</th></tr>
+<tr><td>Balance O</td><td>Agregar H₂O al lado deficiente</td><td>Igual que ácido</td></tr>
+<tr><td>Balance H</td><td>Agregar H⁺ al lado deficiente</td><td>Igual que ácido primero</td></tr>
+<tr><td>Convertir</td><td>—</td><td>Agregar mismo # de OH⁻ a AMBOS lados</td></tr>
+<tr><td>Simplificar</td><td>Cancelar e⁻</td><td>H⁺+OH⁻→H₂O; cancelar H₂O repetidas</td></tr>
+</table>
+
+<h3 class="encabezado-sub oculta-crisis oculta-urgente">★ Ejemplo guiado del profe — el más importante del capítulo</h3>
+<div class="caja-concepto oculta-crisis oculta-urgente">
+<strong>K₂Cr₂O₇ + HCl → CrCl₃ + KCl + H₂O + Cl₂</strong> — combina dicromato (Cr=+6), un halógeno que se oxida (Cl⁻→Cl₂), y requiere multiplicar por un factor. Si dominas este, puedes con casi cualquier cosa.
+</div>
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-3"><span>⭐⭐⭐ EJEMPLO MAESTRO</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="enunciado">Balancea en medio ácido: K₂Cr₂O₇ + HCl → CrCl₃ + KCl + H₂O + Cl₂</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-ex-maestro-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-ex-maestro-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-ex-maestro-exp">
+<strong>¿Qué datos tengo?</strong> K=+1, Cr=+6, O=−2 en reactivos; H=+1, Cl=−1 en HCl.<br>
+<strong>¿Qué me piden?</strong> Balancear la ecuación completa.<br>
+<strong>¿Qué concepto aplica?</strong> Cr: +6→+3 (REDUCCIÓN, 2 átomos → gana 6e⁻ total). Cl: −1→0 en Cl₂ (OXIDACIÓN). K⁺ es espectador.
+</div>
+<div class="toggle-contenido" id="rx-ex-maestro-sol">
+<ol>
+<li><strong>Escribe la ecuación iónica completa</strong> separando todo lo que es electrolito fuerte en sus iones: 2K⁺ + Cr₂O₇²⁻ + H⁺ + Cl⁻ → Cr³⁺ + 3Cl⁻ + K⁺ + Cl⁻ + H₂O + Cl₂</li>
+<li class="oculta-crisis"><strong>Identifica el espectador:</strong> K⁺ aparece igual en ambos lados (2K⁺ izq, 1K⁺ der por cada fórmula — se ajusta al final). No participa en la transferencia de electrones, así que lo apartamos por ahora y lo reintroducimos al final.</li>
+<li><strong>Separa las DOS semirreacciones</strong> (solo los átomos que cambian su #Ox), sin balancear todavía: Reducción: Cr₂O₇²⁻ → Cr³⁺ | Oxidación: Cl⁻ → Cl₂</li>
+<li class="oculta-crisis"><strong>Balancea PRIMERO los átomos que cambian (Cr) en la reducción:</strong> hay 2 Cr en el reactivo (Cr₂O₇²⁻) pero solo 1 Cr en el producto (Cr³⁺) → agrega coeficiente 2 al producto: Cr₂O₇²⁻ → 2Cr³⁺</li>
+<li class="oculta-crisis"><strong>Cuenta los átomos de O que faltan balancear:</strong> Cr₂O₇²⁻ tiene 7 átomos de O en el reactivo; el producto (2Cr³⁺) no tiene ninguno todavía.</li>
+<li><strong>Balancea el O agregando H₂O al lado que le falta oxígeno</strong> (en este caso, al producto, porque el reactivo tiene los 7 O y el producto no tiene ninguno): Cr₂O₇²⁻ → 2Cr³⁺ + 7H₂O</li>
+<li class="oculta-crisis"><strong>Cuenta cuántos H aparecieron:</strong> las 7 moléculas de H₂O que acabas de agregar aportan 7×2=14 átomos de H al producto, y el reactivo todavía no tiene ninguno.</li>
+<li><strong>Balancea el H agregando H⁺ al lado que le falta hidrógeno</strong> (aquí, al reactivo, porque el producto ya tiene 14 H y el reactivo no tiene ninguno): 14H⁺ + Cr₂O₇²⁻ → 2Cr³⁺ + 7H₂O</li>
+<li class="oculta-crisis"><strong>Verifica que los átomos ya cierran</strong> antes de seguir: Cr: 2=2 ✓ | O: 7=7 ✓ | H: 14=14 ✓. Ahora la semirreacción de reducción tiene los átomos correctos, pero todavía no la carga.</li>
+<li><strong>Calcula la carga neta de cada lado</strong> (sin electrones todavía): izquierda = 14(+1) + (−2) = +12. Derecha = 2(+3) + 7(0) = +6. Hay una diferencia de 12−6=6 unidades de carga.</li>
+<li><strong>Agrega esa diferencia de electrones al lado MÁS positivo</strong> (siempre el lado con más carga positiva, para que ambos lados queden con la misma carga neta): 6e⁻ + 14H⁺ + Cr₂O₇²⁻ → 2Cr³⁺ + 7H₂O <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izquierda ahora es 12+(−6)=+6, derecha sigue en +6 ✓)</span></li>
+<li class="oculta-crisis"><strong>Repite el mismo proceso para la oxidación, empezando por los átomos que cambian (Cl):</strong> reactivo tiene 1 Cl⁻, producto (Cl₂) tiene 2 Cl → agrega coeficiente 2 al reactivo: 2Cl⁻ → Cl₂</li>
+<li class="oculta-crisis"><strong>Verifica O y H en la oxidación:</strong> no hay O ni H en esta semirreacción, así que no se necesita agregar H₂O ni H⁺ aquí — pasamos directo a la carga.</li>
+<li><strong>Calcula la carga neta de la oxidación:</strong> izquierda = 2(−1) = −2. Derecha = 0 (Cl₂ es neutro). Diferencia de 2 unidades.</li>
+<li><strong>Agrega 2e⁻ al lado más positivo</strong> (aquí, al producto, porque −2 es más negativo que 0): 2Cl⁻ → Cl₂ + 2e⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izquierda −2, derecha 0+(−2)=−2 ✓)</span></li>
+<li><strong>Compara los electrones de ambas semirreacciones:</strong> reducción usa 6e⁻, oxidación produce 2e⁻. No son iguales, así que no puedes sumarlas todavía — necesitas igualarlos primero.</li>
+<li><strong>Calcula el Mínimo Común Múltiplo (MCM) de 6 y 2:</strong> MCM(6,2)=6. Esto te dice por cuánto debes multiplicar cada semirreacción completa (todos sus coeficientes) para que ambas manejen exactamente 6 electrones.</li>
+<li><strong>Multiplica la reducción por 1</strong> (ya tiene 6e⁻, se queda igual): 6e⁻ + 14H⁺ + Cr₂O₇²⁻ → 2Cr³⁺ + 7H₂O</li>
+<li><strong>Multiplica la oxidación completa por 3</strong> (porque 2e⁻×3=6e⁻, igualando a la reducción) — multiplica CADA coeficiente de la semirreacción, no solo los electrones: 2Cl⁻×3=6Cl⁻ → Cl₂×3=3Cl₂ + 2e⁻×3=6e⁻. Resultado: 6Cl⁻ → 3Cl₂ + 6e⁻</li>
+<li class="oculta-crisis"><strong>Verifica que ambas semirreacciones ahora manejan 6e⁻:</strong> Reducción usa 6e⁻ (reactivo) · Oxidación produce 6e⁻ (producto). Coinciden ✓ — ya puedes sumarlas.</li>
+<li><strong>Suma las dos semirreacciones término por término</strong> (todo lo que está del lado de reactivos se suma con reactivos, y de productos con productos): (6e⁻+14H⁺+Cr₂O₇²⁻) + (6Cl⁻) → (2Cr³⁺+7H₂O) + (3Cl₂+6e⁻)</li>
+<li><strong>Cancela lo que se repite en AMBOS lados</strong> (los 6e⁻ aparecen en reactivos Y productos, así que se eliminan por completo): 14H⁺ + Cr₂O₇²⁻ + 6Cl⁻ → 2Cr³⁺ + 7H₂O + 3Cl₂</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta final</strong> átomo por átomo antes de convertir a molecular: H: 14=14 ✓ · Cr: 2=2 ✓ · O: 7=7 ✓ · Cl: 6=6 ✓ · Carga: izq=14(+1)+(−2)+6(−1)=+6, der=2(+3)=+6 ✓</li>
+<li><strong>Reintroduce el K⁺ espectador</strong> que apartaste en el paso 2: como hay 2K⁺ en el compuesto original (K₂Cr₂O₇), agrégalos a ambos lados como KCl en productos: 14H⁺ + K₂Cr₂O₇ + 6Cl⁻ + 2K⁺ → 2Cr³⁺ + 7H₂O + 3Cl₂ + 2KCl (el 2K⁺ que agregaste a la izquierda se combina con 2 de los Cl⁻ ya presentes para formar 2KCl)</li>
+<li><strong>Reescribe todo en forma molecular</strong> usando HCl (que aporta el H⁺ y el Cl⁻ juntos) y CrCl₃ (que combina el Cr³⁺ con 3Cl⁻): <strong>K₂Cr₂O₇ + 14HCl → 2CrCl₃ + 2KCl + 7H₂O + 3Cl₂</strong></li>
+<li class="oculta-crisis"><strong>Verificación final completa</strong> (todos los átomos y la carga, en la ecuación molecular): K: 2=2 ✓ · Cr: 2=2 ✓ · O: 7=7 ✓ · H: 14=14 ✓ · Cl: 14=6+2+6=14 ✓ · Carga: 0=0 (todo neutro) ✓</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-1', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-1">
+<div class="respuesta-final">✅ K₂Cr₂O₇ + 14HCl → 2CrCl₃ + 2KCl + 7H₂O + 3Cl₂</div>
+<div class="leccion">💡 Cr₂O₇²⁻ tiene DOS Cr → gana 6e⁻ totales (no 3). Este es el patrón maestro del método iónico.</div>
+<div class="error-comun">⚠️ Error crítico: pensar que Cr gana solo 3e⁻ e ignorar que hay 2 átomos de Cr en el dicromato.</div>
+</div>
+</div>
+</div>
+
+<h2 class="encabezado-seccion oculta-crisis" id="rx-desproporcion" data-nav-label="Desproporción">6. Desproporción y Casos Especiales</h2>
+<div class="caja-concepto oculta-crisis">Ocurre cuando <strong>UN MISMO ELEMENTO</strong> actúa como agente oxidante Y reductor a la vez → produce DOS productos con #Ox DIFERENTES.</div>
+<div class="caja-tip oculta-crisis">🔍 Señal de alerta: el mismo elemento aparece como reactivo y en 2 productos con distinto #Ox.</div>
+<table class="oculta-crisis">
+<tr><th>Caso</th><th>Elemento</th><th>Cambio</th></tr>
+<tr><td>Cl₂ + NaOH → NaCl + NaClO + H₂O</td><td>Cl</td><td>0→−1 (red.) y 0→+1 (ox.)</td></tr>
+<tr><td>KClO₃ + HCl → Cl₂ + KCl + H₂O</td><td>Cl</td><td>+5→−1 (red.) desde ClO₃⁻; −1→0 (ox.) desde HCl</td></tr>
+<tr><td>MnCl₃ + H₂O → MnCl₂ + MnO₂ + HCl</td><td>Mn</td><td>+3→+2 (red.) y +3→+4 (ox.)</td></tr>
+<tr><td>H₂O₂ → H₂O + O₂</td><td>O</td><td>−1→−2 y −1→0</td></tr>
+</table>
+
+<h2 class="encabezado-seccion" id="rx-tabla153" data-nav-label="Tabla 15.3">7. Tabla 15.3 — Serie de Actividad</h2>
+<div class="caja-concepto">Ranking de metales de <strong>más activo</strong> (se oxida fácil, arriba) a <strong>menos activo</strong> (abajo). Solo posición relativa — <strong>NO tiene voltajes</strong>.</div>
+<div class="caja-analogia">💡 Competencia de "quién cede electrones más fácil". El de arriba siempre se oxida cuando compite con uno de abajo.</div>
+<table>
+<tr><th>Pos.</th><th>Metal</th><th>Semirreacción de Oxidación</th></tr>
+<tr><td colspan="3" style="background:var(--azul-claro);font-weight:700;">⬆ MÁS ACTIVO — se oxida fácilmente</td></tr>
+<tr><td>1</td><td>Li(s)</td><td>Li(s) → Li⁺(aq) + e⁻</td></tr>
+<tr><td>2</td><td>K(s)</td><td>K(s) → K⁺(aq) + e⁻</td></tr>
+<tr><td>3</td><td>Ca(s)</td><td>Ca(s) → Ca²⁺(aq) + 2e⁻</td></tr>
+<tr><td>4</td><td>Na(s)</td><td>Na(s) → Na⁺(aq) + e⁻</td></tr>
+<tr><td>5</td><td>Mg(s)</td><td>Mg(s) → Mg²⁺(aq) + 2e⁻</td></tr>
+<tr><td>6</td><td>Al(s)</td><td>Al(s) → Al³⁺(aq) + 3e⁻</td></tr>
+<tr><td>7</td><td>Zn(s)</td><td>Zn(s) → Zn²⁺(aq) + 2e⁻</td></tr>
+<tr><td>8</td><td>Cr(s)</td><td>Cr(s) → Cr³⁺(aq) + 3e⁻</td></tr>
+<tr><td>9</td><td>Fe(s)</td><td>Fe(s) → Fe²⁺(aq) + 2e⁻</td></tr>
+<tr><td>10</td><td>Ni(s)</td><td>Ni(s) → Ni²⁺(aq) + 2e⁻</td></tr>
+<tr><td>11</td><td>Sn(s)</td><td>Sn(s) → Sn²⁺(aq) + 2e⁻</td></tr>
+<tr><td>12</td><td>Pb(s)</td><td>Pb(s) → Pb²⁺(aq) + 2e⁻</td></tr>
+<tr><td>13</td><td>H₂(g)</td><td>H₂(g) → 2H⁺(aq) + 2e⁻</td></tr>
+<tr><td>14</td><td>Cu(s)</td><td>Cu(s) → Cu²⁺(aq) + 2e⁻</td></tr>
+<tr><td>15</td><td>Ag(s)</td><td>Ag(s) → Ag⁺(aq) + e⁻</td></tr>
+<tr><td>16</td><td>Au(s)</td><td>Au(s) → Au³⁺(aq) + 3e⁻</td></tr>
+<tr><td colspan="3" style="background:#f3f4f6;font-weight:700;">⬇ MENOS ACTIVO — se oxida con dificultad</td></tr>
+</table>
+<div class="caja-tip">💡 Orden clave para memorizar: <strong>Li&gt;K&gt;Ca&gt;Na&gt;Mg&gt;Al&gt;Zn&gt;Cr&gt;Fe&gt;Ni&gt;Sn&gt;Pb&gt;H₂&gt;Cu&gt;Ag&gt;Au</strong></div>
+<ul style="font-size:0.9rem;">
+<li><strong>Regla 1 — Espontaneidad:</strong> Metal A + ion de Metal B → espontáneo SI A está ARRIBA de B.</li>
+<li><strong>Regla 2 — Ánodo/Cátodo:</strong> el más activo (arriba) = ÁNODO. El menos activo (abajo) = CÁTODO.</li>
+<li><strong>Regla 3 — H₂ referencia:</strong> metales sobre H₂ desplazan H⁺ de ácidos → producen H₂(g). Cu, Ag, Au NO reaccionan con ácidos diluidos.</li>
+</ul>
+<div class="caja-advertencia">⛔ La Tabla 15.3 NO tiene voltajes (eso es una tabla de E°, distinta). NO predice velocidad, solo si ocurre.</div>
+
+<h2 class="encabezado-seccion" id="rx-celda" data-nav-label="Celda Voltaica">8. Celda Voltaica — 3 Representaciones Obligatorias</h2>
+<div class="caja-concepto">Convierte energía química de una reacción redox espontánea en energía eléctrica. Los e⁻ fluyen solos del metal más activo (ánodo) al menos activo (cátodo).</div>
+<div class="caja-analogia">💡 Agua cuesta abajo: los e⁻ fluyen del más activo al menos activo igual que el agua fluye sola de una colina hacia abajo.</div>
+
+<h3 class="encabezado-sub">① Diagrama de la celda</h3>
+<div id="svg-celda-generica" class="svg-diagrama"></div>
+<div class="caja-tip">Regla mnemónica: <strong>AN-OX / RED-CAT</strong> — ÁNodo=OXidación (polo −) | CÁTodo=REDucción (polo +). e⁻ fluyen ánodo→alambre→cátodo.</div>
+
+<h3 class="encabezado-sub">② Notación abreviada</h3>
+<p><code>Ánodo(s) | sol. ánodo(aq) ‖ sol. cátodo(aq) | Cátodo(s)</code></p>
+<ul style="font-size:0.9rem;">
+<li><strong>|</strong> = interfaz sólido/solución. <strong>‖</strong> = puente salino.</li>
+<li>Izquierda = oxidación SIEMPRE. Derecha = reducción SIEMPRE.</li>
+<li>Sin sólido metálico propio → electrodo de Pt inerte, iones separados por coma.</li>
+</ul>
+
+<h3 class="encabezado-sub">③ Ecuación global balanceada</h3>
+<p>Se obtiene igualando electrones entre ánodo y cátodo (MCM) y sumando.</p>
+
+<div class="caja-advertencia"><strong>⛔ Checklist obligatorio de toda celda:</strong> ① posición en Tabla 15.3 para justificar ánodo/cátodo ② notación con ‖ correcta ③ diagrama con puente salino ④ ecuación global balanceada. Si falta el puente salino, la respuesta queda incompleta.</div>
+
+<h2 class="encabezado-seccion oculta-crisis" id="rx-baterias" data-nav-label="Baterías">9. Baterías — Tipos y Semirreacciones</h2>
+<table class="oculta-crisis">
+<tr><th>Tipo</th><th>Ánodo (Ox) [−]</th><th>Cátodo (Red) [+]</th><th>Electrolito</th><th>Recargable</th></tr>
+<tr><td>Lead Storage (12V, auto)</td><td>Pb+SO₄²⁻→PbSO₄+2e⁻</td><td>PbO₂+4H⁺+SO₄²⁻+2e⁻→PbSO₄+2H₂O</td><td>H₂SO₄</td><td>✅ SÍ</td></tr>
+<tr><td>Dry Cell Ácida (Leclanché)</td><td>Zn→Zn²⁺+2e⁻</td><td>2MnO₂+2NH₄⁺+2e⁻→Mn₂O₃+2NH₃+H₂O</td><td>NH₄Cl/MnO₂</td><td>❌ NO</td></tr>
+<tr><td>Alkaline Dry Cell</td><td>Zn+2OH⁻→ZnO+H₂O+2e⁻</td><td>2MnO₂+H₂O+2e⁻→Mn₂O₃+2OH⁻</td><td>KOH/NaOH</td><td>❌ NO</td></tr>
+<tr><td>NiCad</td><td>Cd+2OH⁻→Cd(OH)₂+2e⁻</td><td>NiO(OH)+H₂O+e⁻→Ni(OH)₂+OH⁻</td><td>KOH</td><td>✅ SÍ</td></tr>
+</table>
+<div class="caja-tip oculta-crisis">💡 Corrosión de hierro: Ánodo Fe→Fe²⁺+2e⁻ | Cátodo O₂+4H⁺+4e⁻→2H₂O. La galvanización con Zn protege al Fe porque Zn está MÁS ARRIBA en la Tabla 15.3 → se oxida primero como "ánodo de sacrificio".</div>
+
+<h2 class="encabezado-seccion oculta-crisis oculta-urgente" id="rx-comparativa" data-nav-label="Comparativa">📊 Tabla Comparativa — Voltaica vs Electrolítica</h2>
+<table class="oculta-crisis oculta-urgente">
+<tr><th>Característica</th><th>Celda Voltaica</th><th>Celda Electrolítica</th></tr>
+<tr><td>Reacción</td><td>ESPONTÁNEA</td><td>NO espontánea</td></tr>
+<tr><td>Energía</td><td>PRODUCE electricidad</td><td>CONSUME electricidad</td></tr>
+<tr><td>e⁻ fluyen</td><td>Solos</td><td>Batería los empuja</td></tr>
+<tr><td>Tabla 15.3</td><td>Determina ánodo/cátodo</td><td>No aplica (forzada)</td></tr>
+<tr><td>Ejemplo</td><td>Celda Zn/Cu, baterías</td><td>Electrochapado, NaCl fundido</td></tr>
+</table>
+
+<h2 class="encabezado-seccion" id="rx-practica" data-nav-label="Práctica">🎯 PROBLEMAS RESUELTOS — Nomenclatura, Números de Oxidación y Balanceo</h2>
+
+<div class="problema">
+<div class="problema-header dif-1"><span>⭐ Básico</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Assign oxidation numbers</div>
+<div class="enunciado">Asigna el N° de oxidación a todos los elementos: a) NCl₃ b) CO₃²⁻ c) H₃PO₄ d) MnO₄⁻ e) K₂Cr₂O₇ f) H₂O₂</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p1-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p1-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p1-exp"><strong>¿Qué concepto aplica?</strong> R1 (suma=0/carga), R6 (O=−2 salvo peróxido), R7 (H=+1 con no metal), R4 (K=+1), R5 (Cl=−1 si no hay O/F).</div>
+<div class="toggle-contenido" id="rx-p1-sol">
+<ol>
+<li><strong>a) NCl₃:</strong> identifica los elementos conocidos primero. Cl es un halógeno sin O ni F cerca → aplica R5, Cl=−1. Hay 3 átomos de Cl.</li>
+<li class="oculta-crisis oculta-urgente">Plantea la ecuación de suma (molécula neutra, R1): N + 3(Cl) = 0 → N + 3(−1) = 0</li>
+<li>Despeja: N − 3 = 0 → <strong>N = +3</strong></li>
+<li><strong>b) CO₃²⁻:</strong> identifica el conocido: O sin excepción presente → aplica R6, O=−2. Hay 3 átomos de O. Es un ion con carga −2, no una molécula neutra.</li>
+<li class="oculta-crisis oculta-urgente">Plantea la ecuación de suma (ion, R1: suma=carga del ion): C + 3(O) = −2 → C + 3(−2) = −2</li>
+<li>Despeja: C − 6 = −2 → C = −2+6 → <strong>C = +4</strong></li>
+<li><strong>c) H₃PO₄:</strong> identifica los conocidos: H unido a no metal → R7, H=+1 (hay 3). O sin excepción → R6, O=−2 (hay 4).</li>
+<li class="oculta-crisis oculta-urgente">Plantea la ecuación de suma (molécula neutra): 3(H) + P + 4(O) = 0 → 3(+1) + P + 4(−2) = 0</li>
+<li>Simplifica los términos conocidos: 3 + P − 8 = 0 → P − 5 = 0</li>
+<li>Despeja: <strong>P = +5</strong></li>
+<li><strong>d) MnO₄⁻:</strong> identifica el conocido: O sin excepción → R6, O=−2 (hay 4). Es un ion con carga −1.</li>
+<li class="oculta-crisis oculta-urgente">Plantea la ecuación de suma (ion, suma=carga): Mn + 4(O) = −1 → Mn + 4(−2) = −1</li>
+<li>Despeja: Mn − 8 = −1 → Mn = −1+8 → <strong>Mn = +7</strong> ⚠️ este resultado aparece muy seguido en examen, memorízalo</li>
+<li><strong>e) K₂Cr₂O₇:</strong> identifica los conocidos: K es grupo 1A → R4, K=+1 (hay 2). O sin excepción → R6, O=−2 (hay 7). Hay 2 átomos de Cr, ambos con el mismo #Ox (se tratan como una sola incógnita multiplicada por 2).</li>
+<li class="oculta-crisis oculta-urgente">Plantea la ecuación de suma (molécula neutra): 2(K) + 2(Cr) + 7(O) = 0 → 2(+1) + 2Cr + 7(−2) = 0</li>
+<li>Simplifica los términos conocidos: 2 + 2Cr − 14 = 0 → 2Cr − 12 = 0</li>
+<li>Despeja: 2Cr = 12 → Cr = 12/2 → <strong>Cr = +6</strong></li>
+<li><strong>f) H₂O₂:</strong> antes de aplicar R6 por defecto, revisa si hay excepción — busca el patrón O-O (enlace oxígeno-oxígeno directo, característico de peróxidos). En H₂O₂ SÍ existe ese enlace → es un peróxido → aplica la EXCEPCIÓN de R6, no la regla general.</li>
+<li>Como es peróxido: <strong>O = −1</strong> (no −2). H sigue con R7 normal (unido a no metal): <strong>H = +1</strong>.</li>
+<li class="oculta-crisis">Verifica con R1: 2(H)+2(O) = 2(+1)+2(−1) = 2−2 = 0 ✓ (molécula neutra, cierra correctamente)</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-2', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-2">
+<div class="respuesta-final">✅ N=+3 · C=+4 · P=+5 · Mn=+7 · Cr=+6 · O(en H₂O₂)=−1</div>
+<div class="leccion">💡 Cr=+6 en dicromato y Mn=+7 en permanganato son los más frecuentes en examen. Memorízalos.</div>
+<div class="error-comun">⚠️ H₂O₂ no es O=−2. Si usas −2 obtienes H=0, resultado absurdo.</div>
+</div>
+</div>
+</div>
+
+<div class="problema">
+<div class="problema-header dif-1"><span>⭐ Básico</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Identify oxidation vs reduction (half-reactions)</div>
+<div class="enunciado">Para cada media reacción, identifica si es oxidación o reducción: a) Cu²⁺+2e⁻→Cu b) Fe→Fe³⁺+3e⁻ c) Cr²⁺→Cr³⁺+e⁻ d) Li⁺+e⁻→Li</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p2-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p2-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p2-exp">OIL RIG: e⁻ entran (reactivo) = reducción. e⁻ salen (producto) = oxidación. No necesitas calcular #Ox aquí.</div>
+<div class="toggle-contenido" id="rx-p2-sol">
+<ol>
+<li>a) Cu²⁺ GANA 2e⁻ → <strong>REDUCCIÓN</strong> (+2→0)</li>
+<li>b) Fe PIERDE 3e⁻ → <strong>OXIDACIÓN</strong> (0→+3)</li>
+<li>c) Cr²⁺ PIERDE 1e⁻ → <strong>OXIDACIÓN</strong> (+2→+3)</li>
+<li>d) Li⁺ GANA 1e⁻ → <strong>REDUCCIÓN</strong> (+1→0)</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-3', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-3">
+<div class="respuesta-final">✅ a) Reducción · b) Oxidación · c) Oxidación · d) Reducción</div>
+<div class="leccion">💡 OIL RIG es tu regla de oro para problemas de solo semirreacciones.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-1"><span>⭐ Básico</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Balance without solution — Mg + N₂</div>
+<div class="enunciado">Balancea: Mg + N₂ → Mg₃N₂ (sin iones en solución — no se usa método iónico)</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p3-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p3-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p3-exp">Mg: 0→+2 (OXIDACIÓN, 2e⁻). N: 0→−3 (REDUCCIÓN, 3e⁻ por átomo). Sin solución → balanceo por álgebra directa, no método iónico.</div>
+<div class="toggle-contenido" id="rx-p3-sol">
+<ol>
+<li>Oxidación: Mg → Mg²⁺ + 2e⁻</li>
+<li>Reducción: N₂ + 6e⁻ → 2N³⁻ (2 átomos de N ganan 6e⁻ total)</li>
+<li>MCM(2,6)=6 → Oxidación ×3: 3Mg → 3Mg²⁺ + 6e⁻</li>
+<li>Sumar: <strong>3Mg + N₂ → Mg₃N₂</strong></li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-4', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-4">
+<div class="respuesta-final">✅ 3Mg + N₂ → Mg₃N₂</div>
+<div class="leccion">💡 Sin solución, el método iónico no aplica, pero igual identificas quién sube/baja para guiar el balanceo.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Balance in acid — SO₂ + Br₂ + H₂O</div>
+<div class="enunciado">Balancea en medio ácido: SO₂ + Br₂ + H₂O → HBr + H₂SO₄</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p4-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p4-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p4-exp">S: +4→+6 (OXIDACIÓN, 2e⁻). Br: 0→−1 en HBr (REDUCCIÓN, 2e⁻ para Br₂).</div>
+<div class="toggle-contenido" id="rx-p4-sol">
+<ol>
+<li><strong>Separa las dos semirreacciones</strong> (identifica qué elemento sube y cuál baja): Oxidación: SO₂ → SO₄²⁻ (S: +4→+6) | Reducción: Br₂ → 2Br⁻ (Br: 0→−1)</li>
+<li class="oculta-crisis"><strong>Balancea el átomo que cambia (S) en la oxidación:</strong> ya hay 1 S en cada lado — no necesita coeficiente.</li>
+<li><strong>Cuenta los átomos de O:</strong> el reactivo (SO₂) tiene 2 O; el producto (SO₄²⁻) tiene 4 O. Faltan 2 O en el reactivo.</li>
+<li><strong>Balancea el O agregando H₂O al lado que le falta</strong> (al reactivo, que tiene menos O): 2H₂O + SO₂ → SO₄²⁻</li>
+<li class="oculta-crisis"><strong>Cuenta los H que aparecieron:</strong> 2H₂O aportan 2×2=4 átomos de H al reactivo; el producto no tiene H todavía.</li>
+<li><strong>Balancea el H agregando H⁺ al lado que le falta</strong> (al producto): 2H₂O + SO₂ → SO₄²⁻ + 4H⁺</li>
+<li class="oculta-crisis"><strong>Verifica átomos antes de la carga:</strong> S:1=1 ✓ · O: 2+2=4, 4=4 ✓ · H: 4=4 ✓</li>
+<li><strong>Calcula la carga neta de cada lado:</strong> izquierda = 2(0)+0 = 0. Derecha = (−2)+4(+1) = +2. Diferencia de 2.</li>
+<li><strong>Agrega 2e⁻ al lado más positivo</strong> (a la derecha, que tiene +2): 2H₂O + SO₂ → SO₄²⁻ + 4H⁺ + 2e⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=0, der=−2+4+(−2)=0 ✓)</span></li>
+<li class="oculta-crisis"><strong>Ahora la reducción — balancea el átomo que cambia (Br):</strong> reactivo (Br₂) tiene 2 Br; producto (Br⁻) tiene solo 1 → agrega coeficiente 2: Br₂ → 2Br⁻</li>
+<li class="oculta-crisis"><strong>No hay O ni H en esta semirreacción</strong>, así que pasa directo a calcular la carga.</li>
+<li><strong>Calcula la carga neta de la reducción:</strong> izquierda = 0. Derecha = 2(−1) = −2. Diferencia de 2.</li>
+<li><strong>Agrega 2e⁻ al lado más positivo</strong> (a la izquierda, que tiene 0 frente a −2): 2e⁻ + Br₂ → 2Br⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=0+(−2)=−2, der=−2 ✓)</span></li>
+<li><strong>Compara los electrones:</strong> oxidación produce 2e⁻, reducción consume 2e⁻ — ya están igualados (MCM(2,2)=2, cada semirreacción se multiplica ×1). No hace falta escalar nada.</li>
+<li><strong>Suma las dos semirreacciones término por término</strong> (junta todos los reactivos a la izquierda y todos los productos a la derecha): 2H₂O+SO₂+Br₂+2e⁻ → SO₄²⁻+4H⁺+2e⁻+2Br⁻</li>
+<li class="oculta-crisis"><strong>Cancela los 2e⁻</strong> que aparecen en ambos lados: 2H₂O+SO₂+Br₂ → SO₄²⁻+4H⁺+2Br⁻</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta:</strong> S:1=1 ✓ · O:4=4 ✓ · H:4=4 ✓ · Br:2=2 ✓ · Carga: izq=0, der=(−2)+4+(−2)=0 ✓</li>
+<li><strong>Convierte a forma molecular</strong> (SO₄²⁻+2H⁺ se combina en H₂SO₄; Br⁻+H⁺ se combina en HBr): <strong>SO₂ + Br₂ + 2H₂O → H₂SO₄ + 2HBr</strong></li>
+<li class="oculta-crisis"><strong>Verificación final:</strong> S:1=1 ✓ · O:2+2=4, 4=4 ✓ · Br:2=2 ✓ · H:4=2+2=4 ✓</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-5', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-5">
+<div class="respuesta-final">✅ SO₂ + Br₂ + 2H₂O → H₂SO₄ + 2HBr</div>
+<div class="leccion">💡 SO₂ actúa como reductor. El agua entra para balancear el O extra que necesita el S.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Balance in acid — PbO₂ + HBr</div>
+<div class="enunciado">Balancea en medio ácido: PbO₂ + HBr → PbBr₂ + Br₂ + H₂O</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p5-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p5-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p5-exp">Pb: +4→+2 (REDUCCIÓN, 2e⁻). Br: −1→0 en Br₂ (OXIDACIÓN, 1e⁻ por Br).</div>
+<div class="toggle-contenido" id="rx-p5-sol">
+<ol>
+<li><strong>Separa las dos semirreacciones:</strong> Reducción: PbO₂ → Pb²⁺ (Pb: +4→+2) | Oxidación: Br⁻ → Br₂ (Br: −1→0)</li>
+<li class="oculta-crisis"><strong>Balancea Pb (átomo que cambia) en la reducción:</strong> ya hay 1 Pb en cada lado — sin coeficiente necesario.</li>
+<li><strong>Cuenta el O:</strong> reactivo (PbO₂) tiene 2 O; producto (Pb²⁺) no tiene ninguno.</li>
+<li><strong>Balancea el O agregando H₂O al lado que le falta</strong> (al producto): PbO₂ → Pb²⁺ + 2H₂O</li>
+<li class="oculta-crisis"><strong>Cuenta los H que aparecieron:</strong> 2H₂O aportan 4 H al producto; el reactivo no tiene H todavía.</li>
+<li><strong>Balancea el H agregando H⁺ al lado que le falta</strong> (al reactivo): 4H⁺ + PbO₂ → Pb²⁺ + 2H₂O</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> Pb:1=1 ✓ · O:2=2 ✓ · H:4=4 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = 4(+1)+0 = +4. Derecha = +2+0 = +2. Diferencia de 2.</li>
+<li><strong>Agrega 2e⁻ al lado más positivo</strong> (a la izquierda, +4 frente a +2): 2e⁻ + 4H⁺ + PbO₂ → Pb²⁺ + 2H₂O <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=4+(−2)=+2, der=+2 ✓)</span></li>
+<li class="oculta-crisis"><strong>Ahora la oxidación — balancea Br (átomo que cambia):</strong> reactivo (Br⁻) tiene 1 Br; producto (Br₂) tiene 2 → agrega coeficiente 2 al reactivo: 2Br⁻ → Br₂</li>
+<li class="oculta-crisis"><strong>No hay O ni H aquí</strong>, pasa directo a la carga.</li>
+<li><strong>Calcula la carga neta de la oxidación:</strong> izquierda = 2(−1)=−2. Derecha = 0. Diferencia de 2.</li>
+<li><strong>Agrega 2e⁻ al lado más positivo</strong> (a la derecha, 0 frente a −2): 2Br⁻ → Br₂ + 2e⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=−2, der=0+(−2)=−2 ✓)</span></li>
+<li><strong>Compara electrones:</strong> reducción consume 2e⁻, oxidación produce 2e⁻ — ya coinciden (MCM(2,2)=2), no hace falta multiplicar ninguna semirreacción.</li>
+<li><strong>Suma término por término:</strong> 2e⁻+4H⁺+PbO₂+2Br⁻ → Pb²⁺+2H₂O+Br₂+2e⁻</li>
+<li class="oculta-crisis"><strong>Cancela los 2e⁻</strong> presentes en ambos lados: 4H⁺+PbO₂+2Br⁻ → Pb²⁺+2H₂O+Br₂</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta:</strong> Pb:1=1 ✓ · O:2=2 ✓ · H:4=4 ✓ · Br:2=2 ✓ · Carga: izq=4+(−2)=+2, der=+2 ✓</li>
+<li><strong>Convierte a forma molecular</strong> (Pb²⁺+2Br⁻ se combina en PbBr₂; H⁺+Br⁻ ya se usó en el paso de Br): <strong>PbO₂ + 4HBr → PbBr₂ + 2H₂O + Br₂</strong></li>
+<li class="oculta-crisis"><strong>Verificación final:</strong> Pb:1=1 ✓ · O:2=2 ✓ · H:4=4 ✓ · Br:4=2+2=4 ✓</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-6', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-6">
+<div class="respuesta-final">✅ PbO₂ + 4HBr → PbBr₂ + 2H₂O + Br₂</div>
+<div class="leccion">💡 PbO₂ es otro oxidante común, patrón +4→+2 igual que MnO₂.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Balance in acid — K₂Cr₂O₇ + H₂C₂O₄ (oxalic acid) + HCl</div>
+<div class="enunciado">Balancea en medio ácido (trata H₂C₂O₄ como 2H⁺+C₂O₄²⁻): K₂Cr₂O₇ + H₂C₂O₄ + HCl → CrCl₃ + CO₂ + KCl + H₂O</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p6-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p6-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p6-exp">Cr: +6→+3 (REDUCCIÓN, 2Cr gana 6e⁻). C en C₂O₄²⁻: +3→+4 en CO₂ (OXIDACIÓN, 2C pierde 2e⁻).</div>
+<div class="toggle-contenido" id="rx-p6-sol">
+<ol>
+<li><strong>Separa las dos semirreacciones:</strong> Reducción: Cr₂O₇²⁻ → Cr³⁺ (Cr: +6→+3, ya son 2 átomos de Cr desde el inicio) | Oxidación: C₂O₄²⁻ → CO₂ (C: +3→+4)</li>
+<li class="oculta-crisis"><strong>Balancea Cr en la reducción:</strong> reactivo tiene 2 Cr; producto tiene 1 → agrega coeficiente 2 al producto: Cr₂O₇²⁻ → 2Cr³⁺</li>
+<li><strong>Cuenta el O:</strong> reactivo tiene 7 O; producto no tiene ninguno.</li>
+<li><strong>Balancea el O agregando H₂O al producto</strong> (que tiene menos O): Cr₂O₇²⁻ → 2Cr³⁺ + 7H₂O</li>
+<li class="oculta-crisis"><strong>Cuenta los H que aparecieron:</strong> 7H₂O aportan 14 H al producto; el reactivo no tiene H todavía.</li>
+<li><strong>Balancea el H agregando H⁺ al reactivo</strong> (que tiene menos H): 14H⁺ + Cr₂O₇²⁻ → 2Cr³⁺ + 7H₂O</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> Cr:2=2 ✓ · O:7=7 ✓ · H:14=14 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = 14(+1)+(−2) = +12. Derecha = 2(+3)+0 = +6. Diferencia de 6.</li>
+<li><strong>Agrega 6e⁻ al lado más positivo</strong> (izquierda, +12 frente a +6): 6e⁻ + 14H⁺ + Cr₂O₇²⁻ → 2Cr³⁺ + 7H₂O <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=12+(−6)=+6, der=+6 ✓)</span></li>
+<li class="oculta-crisis"><strong>Ahora la oxidación — balancea C en C₂O₄²⁻ → CO₂:</strong> reactivo tiene 2 C; producto (CO₂) tiene 1 C → agrega coeficiente 2 al producto: C₂O₄²⁻ → 2CO₂</li>
+<li><strong>Cuenta el O:</strong> reactivo tiene 4 O; producto (2CO₂) tiene 2×2=4 O. Ya coinciden — no necesitas agregar H₂O aquí.</li>
+<li class="oculta-crisis"><strong>No hay H que balancear en esta semirreacción</strong> (ni en reactivo ni en producto), así que pasa directo a la carga.</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = −2. Derecha = 2(0) = 0. Diferencia de 2.</li>
+<li><strong>Agrega 2e⁻ al lado más positivo</strong> (derecha, 0 frente a −2): C₂O₄²⁻ → 2CO₂ + 2e⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=−2, der=0+(−2)=−2 ✓)</span></li>
+<li><strong>Compara electrones:</strong> reducción consume 6e⁻, oxidación produce 2e⁻ — no coinciden. Calcula MCM(6,2)=6.</li>
+<li><strong>Multiplica la reducción por 1</strong> (ya maneja 6e⁻, queda igual) y <strong>la oxidación completa por 3</strong> (2e⁻×3=6e⁻): C₂O₄²⁻×3=3C₂O₄²⁻ → 2CO₂×3=6CO₂ + 2e⁻×3=6e⁻. Resultado: 3C₂O₄²⁻ → 6CO₂ + 6e⁻</li>
+<li class="oculta-crisis"><strong>Verifica que ambas manejan 6e⁻ ahora:</strong> reducción consume 6e⁻, oxidación produce 6e⁻ ✓ — ya puedes sumarlas.</li>
+<li><strong>Suma término por término:</strong> 6e⁻+14H⁺+Cr₂O₇²⁻+3C₂O₄²⁻ → 2Cr³⁺+7H₂O+6CO₂+6e⁻</li>
+<li class="oculta-crisis"><strong>Cancela los 6e⁻</strong> presentes en ambos lados: 14H⁺+Cr₂O₇²⁻+3C₂O₄²⁻ → 2Cr³⁺+7H₂O+6CO₂</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta:</strong> H:14=14 ✓ · Cr:2=2 ✓ · O:7+12=19, 7+12=19 ✓ · C:6=6 ✓ · Carga: izq=14+(−2)+(−6)=+6, der=+6 ✓</li>
+<li><strong>Reintroduce los espectadores</strong> (K⁺ de K₂Cr₂O₇ y Cl⁻ de HCl) para formar KCl, y usa H₂C₂O₄ en vez de C₂O₄²⁻ libre (el enunciado ya indica tratarlo como 2H⁺+C₂O₄²⁻): de los 14H⁺ totales que pide la ecuación iónica, 3H₂C₂O₄ aportan 3×2=6H⁺, así que el HCl debe aportar los 14−6=8H⁺ restantes → se necesitan 8HCl (no menos), y esos 8Cl⁻ deben repartirse en los productos: <strong>K₂Cr₂O₇ + 3H₂C₂O₄ + 8HCl → 2CrCl₃ + 6CO₂ + 2KCl + 7H₂O</strong></li>
+<li class="oculta-crisis"><strong>Verificación final completa:</strong> K:2=2 ✓ · Cr:2=2 ✓ · O:7+12=19, 12+7=19 ✓ · H:6+8=14, 14=14 ✓ · C:6=6 ✓ · Cl:8=6(en 2CrCl₃)+2(en 2KCl)=8 ✓</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-7', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-7">
+<div class="respuesta-final">✅ K₂Cr₂O₇ + 3H₂C₂O₄ + 8HCl → 2CrCl₃ + 6CO₂ + 2KCl + 7H₂O</div>
+<div class="leccion">💡 Cuando hay DOS fuentes distintas de H⁺ (aquí H₂C₂O₄ y HCl), reparte los H⁺ totales entre ambas fuentes según la cantidad de cada una — no asumas que el ácido "extra" (HCl) solo aporta el mínimo. Aquí HCl debe aportar 8, no 2, porque también debe suministrar todo el Cl⁻ que necesitan los productos.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Aqua regia — Au + HCl + HNO₃</div>
+<div class="enunciado">Balancea: Au + HCl + HNO₃ → HAuCl₄ + NO + H₂O</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p7-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p7-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p7-exp">Au: 0→+3 (OXIDACIÓN, 3e⁻). N en HNO₃: +5→+2 en NO (REDUCCIÓN, 3e⁻). HAuCl₄ = H⁺+AuCl₄⁻ con Au³⁺ complejado por 4Cl⁻.</div>
+<div class="toggle-contenido" id="rx-p7-sol">
+<ol>
+<li><strong>Separa las dos semirreacciones:</strong> Oxidación: Au → Au³⁺ (Au: 0→+3) | Reducción: NO₃⁻ → NO (N: +5→+2)</li>
+<li class="oculta-crisis"><strong>Balancea el Au (átomo que cambia) en la oxidación:</strong> ya hay 1 Au en cada lado — sin coeficiente necesario. No hay O ni H aquí, pasa directo a la carga.</li>
+<li><strong>Calcula la carga neta de la oxidación:</strong> izquierda = 0. Derecha = +3. Diferencia de 3.</li>
+<li><strong>Agrega 3e⁻ al lado más positivo</strong> (a la derecha, que tiene +3): Au → Au³⁺ + 3e⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=0, der=3+(−3)=0 ✓)</span></li>
+<li class="oculta-crisis"><strong>Ahora la reducción — balancea N (átomo que cambia):</strong> ya hay 1 N en cada lado — sin coeficiente necesario.</li>
+<li><strong>Cuenta el O:</strong> reactivo (NO₃⁻) tiene 3 O; producto (NO) tiene 1 O. Faltan 2 O en el producto.</li>
+<li><strong>Balancea el O agregando H₂O al lado que le falta</strong> (al producto): NO₃⁻ → NO + 2H₂O</li>
+<li class="oculta-crisis"><strong>Cuenta los H que aparecieron:</strong> 2H₂O aportan 4 H al producto; el reactivo no tiene H todavía.</li>
+<li><strong>Balancea el H agregando H⁺ al reactivo</strong> (que tiene menos H): 4H⁺ + NO₃⁻ → NO + 2H₂O</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> N:1=1 ✓ · O:3=1+2=3 ✓ · H:4=4 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = 4(+1)+(−1) = +3. Derecha = 0+0 = 0. Diferencia de 3.</li>
+<li><strong>Agrega 3e⁻ al lado más positivo</strong> (a la izquierda, +3 frente a 0): 3e⁻ + 4H⁺ + NO₃⁻ → NO + 2H₂O <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=3+(−3)+0=0, der=0 ✓)</span></li>
+<li><strong>Compara electrones:</strong> oxidación produce 3e⁻, reducción consume 3e⁻ — ya coinciden (MCM(3,3)=3), no hace falta multiplicar ninguna semirreacción.</li>
+<li><strong>Suma término por término:</strong> Au+3e⁻+4H⁺+NO₃⁻ → Au³⁺+3e⁻+NO+2H₂O</li>
+<li class="oculta-crisis"><strong>Cancela los 3e⁻</strong> presentes en ambos lados: Au+4H⁺+NO₃⁻ → Au³⁺+NO+2H₂O</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta:</strong> Au:1=1 ✓ · N:1=1 ✓ · H:4=4 ✓ · O:3=1+2=3 ✓ · Carga: izq=4+(−1)=+3, der=+3 ✓</li>
+<li><strong>Convierte a molecular</strong> reintroduciendo HNO₃ (que aporta H⁺+NO₃⁻ juntos): Au + HNO₃ → Au³⁺ + NO + 2H₂O</li>
+<li><strong>Añade el complejo con Cl⁻:</strong> el Au³⁺ no existe libre en esta reacción — el HCl aporta 4Cl⁻ que rodean al Au³⁺ formando el ion complejo AuCl₄⁻, el cual se combina con 1H⁺ para dar HAuCl₄. Por eso necesitas 4HCl adicionales: <strong>Au + 4HCl + HNO₃ → HAuCl₄ + NO + 2H₂O</strong></li>
+<li class="oculta-crisis"><strong>Verificación final completa:</strong> Au:1=1 ✓ · H:4+1=5, 1+2×2=5 ✓ · Cl:4=4 ✓ · N:1=1 ✓ · O:3=1+2=3 ✓</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-8', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-8">
+<div class="respuesta-final">✅ Au + 4HCl + HNO₃ → HAuCl₄ + NO + 2H₂O</div>
+<div class="leccion">💡 El agua regia disuelve oro porque HNO₃ oxida a Au (0→+3) y el HCl forma el complejo AuCl₄⁻.</div>
+<div class="error-comun">⚠️ No olvides los 4Cl⁻ al reconvertir a molecular — el Au³⁺ no existe libre, forma AuCl₄⁻.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Bromine preparation in lab — HBr + MnO₂</div>
+<div class="enunciado">Reacción usada para preparar bromo en laboratorio. Balancea en medio ácido: HBr + MnO₂ → MnBr₂ + H₂O + Br₂</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p10-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p10-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p10-exp">Mn: +4→+2 (REDUCCIÓN, 2e⁻). Br: −1→0 en Br₂ (OXIDACIÓN, 1e⁻ por Br, 2 Br⁻ dan 2e⁻ total). Mismo patrón que MnO₂+HCl→Cl₂, cambiando el haluro.</div>
+<div class="toggle-contenido" id="rx-p10-sol">
+<ol>
+<li>Red: MnO₂→Mn²⁺ | Ox: 2Br⁻→Br₂</li>
+<li>Balance masa Red: 4H⁺+MnO₂→Mn²⁺+2H₂O</li>
+<li>Balance carga: Red: 2e⁻+4H⁺+MnO₂→Mn²⁺+2H₂O | Ox: 2Br⁻→Br₂+2e⁻</li>
+<li>e⁻ ya igualados (2=2). Sumar, molecular: <strong>MnO₂ + 4HBr → MnBr₂ + 2H₂O + Br₂</strong></li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-9', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-9">
+<div class="respuesta-final">✅ MnO₂ + 4HBr → MnBr₂ + 2H₂O + Br₂</div>
+<div class="leccion">💡 MnO₂ es un oxidante versátil que oxida haluros (Cl⁻, Br⁻) a halógenos (Cl₂, Br₂) — el patrón es idéntico, solo cambia el haluro.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Manganese dioxide + Hydrogen peroxide + Hydrochloric acid</div>
+<div class="enunciado">Balancea en medio ácido: MnO₂ + H₂O₂ + HCl → MnCl₂ + O₂ + H₂O</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p11-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p11-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p11-exp">Mn: +4→+2 (REDUCCIÓN, 2e⁻). O en H₂O₂: −1→0 en O₂ (OXIDACIÓN, 2e⁻). Otro ejemplo de H₂O₂ actuando como REDUCTOR — el contexto (con qué reacciona) siempre decide su rol.</div>
+<div class="toggle-contenido" id="rx-p11-sol">
+<ol>
+<li>Red: MnO₂ tiene 2 O → 4H⁺+MnO₂→Mn²⁺+2H₂O | Ox: H₂O₂→O₂+2H⁺</li>
+<li>Balance carga: Red: 2e⁻+4H⁺+MnO₂→Mn²⁺+2H₂O | Ox: H₂O₂→O₂+2H⁺+2e⁻</li>
+<li>e⁻ ya igualados (2=2). Sumar: 4H⁺+MnO₂+H₂O₂→Mn²⁺+2H₂O+O₂+2H⁺</li>
+<li>Cancela 2H⁺ repetidos, reintroduce Cl⁻: <strong>MnO₂ + H₂O₂ + 2HCl → MnCl₂ + 2H₂O + O₂</strong></li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-10', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-10">
+<div class="respuesta-final">✅ MnO₂ + H₂O₂ + 2HCl → MnCl₂ + 2H₂O + O₂</div>
+<div class="leccion">💡 H₂O₂ puede actuar como reductor (O: −1→0) frente a MnO₂, igual que frente a KMnO₄ — practica reconocer cuándo H₂O₂ es el reductor vs el oxidante.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Carbon dioxide + Hydroxylamine (medio básico, H⁺ se cancelan)</div>
+<div class="enunciado">Balancea en medio básico: CO₂ + NH₂OH → CO + N₂ + H₂O</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p12-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p12-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p12-exp">C: +4→+2 (REDUCCIÓN, 2e⁻). N en NH₂OH: −1→0 en N₂ (OXIDACIÓN, 1e⁻ por N, 2N dan 2e⁻ total). NH₂OH (hidroxilamina) es covalente, actúa como reductor del CO₂.</div>
+<div class="toggle-contenido" id="rx-p12-sol">
+<ol>
+<li>Red: CO₂+2H⁺+2e⁻→CO+H₂O | Ox: 2NH₂OH→N₂+2H₂O+2H⁺+2e⁻</li>
+<li>e⁻ ya igualados (2=2). Sumar: CO₂+2H⁺+2NH₂OH→CO+H₂O+N₂+2H₂O+2H⁺</li>
+<li>Cancela 2H⁺ (aparecen en ambos lados) y suma H₂O (1+2=3): <strong>CO₂ + 2NH₂OH → CO + N₂ + 3H₂O</strong></li>
+<li>Como los H⁺ se cancelan exactamente, la conversión a medio básico no requiere OH⁻ adicionales — la ecuación queda igual</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-11', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-11">
+<div class="respuesta-final">✅ CO₂ + 2NH₂OH → CO + N₂ + 3H₂O</div>
+<div class="leccion">💡 Cuando los H⁺ generados y consumidos se cancelan exactamente, la ecuación en "medio básico" resulta idéntica a la ácida — no siempre necesitas agregar OH⁻.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Balance in base — Bi(OH)₃ + K₂SnO₂</div>
+<div class="enunciado">Balancea en medio básico: Bi(OH)₃ + K₂SnO₂ → Bi + K₂SnO₃</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p8-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p8-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p8-exp">Bi: +3→0 (REDUCCIÓN, 3e⁻). Sn: +2→+4 (OXIDACIÓN, 2e⁻). Bi(OH)₃ es sólido insoluble → NO se ioniza.</div>
+<div class="toggle-contenido" id="rx-p8-sol">
+<ol>
+<li><strong>Separa las dos semirreacciones</strong> (en medio básico, Bi(OH)₃ es un sólido insoluble y NO se ioniza — va entero): Reducción: Bi(OH)₃ → Bi (Bi: +3→0) | Oxidación: SnO₂²⁻ → SnO₃²⁻ (Sn: +2→+4)</li>
+<li class="oculta-crisis"><strong>Balancea Bi (átomo que cambia) en la reducción:</strong> ya hay 1 Bi en cada lado — sin coeficiente necesario.</li>
+<li><strong>En medio básico, balancea el O usando OH⁻</strong> (no H₂O directamente en este primer paso): el reactivo Bi(OH)₃ tiene 3 O; el producto Bi no tiene ninguno. Como el O "sobra" en el reactivo, pasa como 3OH⁻ al producto: Bi(OH)₃ → Bi + 3OH⁻</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> Bi:1=1 ✓ · O:3=3 ✓ · H:3=3 ✓ (los 3OH⁻ conservan los 3 O y 3 H originales del hidróxido)</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = 0 (Bi(OH)₃ es neutro). Derecha = 0+3(−1) = −3. Diferencia de 3.</li>
+<li><strong>Agrega 3e⁻ al lado más positivo</strong> (a la izquierda, 0 frente a −3): 3e⁻ + Bi(OH)₃ → Bi + 3OH⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=0+(−3)=−3, der=−3 ✓)</span></li>
+<li class="oculta-crisis"><strong>Ahora la oxidación — balancea Sn (átomo que cambia):</strong> ya hay 1 Sn en cada lado — sin coeficiente necesario.</li>
+<li><strong>Cuenta el O:</strong> reactivo (SnO₂²⁻) tiene 2 O; producto (SnO₃²⁻) tiene 3 O. Falta 1 O en el reactivo.</li>
+<li><strong>En medio básico, agrega OH⁻ al lado que le falta O</strong> (2 OH⁻ aportan el O extra que falta, más H que deberás compensar): 2OH⁻ + SnO₂²⁻ → SnO₃²⁻</li>
+<li class="oculta-crisis"><strong>Cuenta los H que sobran:</strong> los 2OH⁻ aportan 2 H al reactivo, pero el producto no los necesita todos — el exceso se compensa formando H₂O.</li>
+<li><strong>Agrega H₂O al producto para absorber el H sobrante:</strong> 2OH⁻ + SnO₂²⁻ → SnO₃²⁻ + H₂O</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> Sn:1=1 ✓ · O:2+2=4, 3+1=4 ✓ · H:2=2 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = 2(−1)+(−2) = −4. Derecha = −2+0 = −2. Diferencia de 2.</li>
+<li><strong>Agrega 2e⁻ al lado más positivo</strong> (a la derecha, −2 frente a −4): 2OH⁻ + SnO₂²⁻ → SnO₃²⁻ + H₂O + 2e⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=−4, der=−2+0+(−2)=−4 ✓)</span></li>
+<li><strong>Compara electrones:</strong> reducción consume 3e⁻, oxidación produce 2e⁻ — no coinciden. Calcula MCM(3,2)=6.</li>
+<li><strong>Multiplica la reducción completa ×2</strong> (3e⁻×2=6e⁻): 3e⁻×2=6e⁻ + Bi(OH)₃×2=2Bi(OH)₃ → Bi×2=2Bi + 3OH⁻×2=6OH⁻. Resultado: 6e⁻+2Bi(OH)₃ → 2Bi+6OH⁻</li>
+<li><strong>Multiplica la oxidación completa ×3</strong> (2e⁻×3=6e⁻): 2OH⁻×3=6OH⁻ + SnO₂²⁻×3=3SnO₂²⁻ → SnO₃²⁻×3=3SnO₃²⁻ + H₂O×3=3H₂O + 2e⁻×3=6e⁻. Resultado: 6OH⁻+3SnO₂²⁻ → 3SnO₃²⁻+3H₂O+6e⁻</li>
+<li class="oculta-crisis"><strong>Verifica que ambas manejan 6e⁻ ahora:</strong> reducción consume 6e⁻, oxidación produce 6e⁻ ✓</li>
+<li><strong>Suma término por término:</strong> 6e⁻+2Bi(OH)₃+6OH⁻+3SnO₂²⁻ → 2Bi+6OH⁻+3SnO₃²⁻+3H₂O+6e⁻</li>
+<li class="oculta-crisis"><strong>Cancela los 6e⁻ y los 6OH⁻</strong> que aparecen en ambos lados: 2Bi(OH)₃+3SnO₂²⁻ → 2Bi+3SnO₃²⁻+3H₂O</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta:</strong> Bi:2=2 ✓ · O:6+6=12, 9+3=12 ✓ · H:6=6 ✓ · Sn:3=3 ✓ · Carga: izq=0+3(−2)=−6, der=0+3(−2)+0=−6 ✓</li>
+<li><strong>Reintroduce el K⁺ espectador</strong> (2 por cada fórmula de K₂SnO₂/K₂SnO₃, sin cambiar): <strong>2Bi(OH)₃ + 3K₂SnO₂ → 2Bi + 3K₂SnO₃ + 3H₂O</strong></li>
+<li class="oculta-crisis"><strong>Verificación final completa:</strong> Bi:2=2 ✓ · O:6+6=12, 9+3=12 ✓ · H:6=6 ✓ · K:6=6 ✓ · Sn:3=3 ✓</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-12', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-12">
+<div class="respuesta-final">✅ 2Bi(OH)₃ + 3K₂SnO₂ → 2Bi + 3K₂SnO₃ + 3H₂O</div>
+<div class="leccion">💡 En básico usas OH⁻/H₂O. Los sólidos insolubles (Bi(OH)₃) van enteros, nunca se ionizan.</div>
+<div class="error-comun">⚠️ Si ionizas Bi(OH)₃ en Bi³⁺+3OH⁻ la semirreacción queda incorrecta.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Balance in base — KMnO₄ + NH₃ (el más difícil de todos)</div>
+<div class="enunciado">Balancea en medio básico: KMnO₄ + NH₃ → KNO₃ + MnO₂ + KOH + H₂O</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-p9-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-p9-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-p9-exp">Mn: +7→+4 (REDUCCIÓN, 3e⁻). N: −3→+5 en NO₃⁻ (OXIDACIÓN, 8e⁻ — el salto más grande común). NH₃ es covalente, NUNCA se ioniza.</div>
+<div class="toggle-contenido" id="rx-p9-sol">
+<ol>
+<li>Red: 3e⁻+2H₂O+MnO₄⁻→MnO₂+4OH⁻ | Ox: 9OH⁻+NH₃→NO₃⁻+6H₂O+8e⁻</li>
+<li>MCM(3,8)=24 → Red×8, Ox×3 (coeficientes grandes son correctos)</li>
+<li>Red×8: 24e⁻+16H₂O+8MnO₄⁻→8MnO₂+32OH⁻</li>
+<li>Ox×3: 27OH⁻+3NH₃→3NO₃⁻+18H₂O+24e⁻</li>
+<li>Cancelar 24e⁻, simplificar H₂O y OH⁻ → Molecular: <strong>8KMnO₄ + 3NH₃ → 8MnO₂ + 3KNO₃ + 5KOH + 2H₂O</strong></li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-13', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-13">
+<div class="respuesta-final">✅ 8KMnO₄ + 3NH₃ → 8MnO₂ + 3KNO₃ + 5KOH + 2H₂O</div>
+<div class="leccion">💡 El N pierde 8e⁻ — el mayor salto común en examen. MCM=24 es correcto, no un error.</div>
+<div class="error-comun">⚠️ NH₃ NO es NH₄⁺. Si lo ionizas, la semirreacción de oxidación queda completamente incorrecta.</div>
+</div>
+</div>
+</div>
+
+<h3 class="encabezado-sub" id="rx-celdas-practica">Problemas de Celda Voltaica — Traducción + 3 representaciones</h3>
+
+<div class="problema">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Zinc / Copper(II) sulfate voltaic cell</div>
+<div class="enunciado">"A strip of zinc metal is placed in zinc sulfate solution, connected through a salt bridge to copper metal in copper(II) sulfate solution." Da las 3 representaciones.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-c1-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-c1-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-c1-exp">Traducción: zinc sulfate=ZnSO₄ | copper(II) sulfate=CuSO₄. Tabla 15.3: Zn(pos.7) está ARRIBA de Cu(pos.14) → Zn=ÁNODO, Cu=CÁTODO.</div>
+<div class="toggle-contenido" id="rx-c1-sol">
+<ol>
+<li>Ánodo: Zn → Zn²⁺ + 2e⁻ (directo de la tabla)</li>
+<li>Cátodo: Cu²⁺ + 2e⁻ → Cu (invertida de la tabla, e⁻ ya igualados)</li>
+<li>Global: <strong>Zn(s) + Cu²⁺(aq) → Zn²⁺(aq) + Cu(s)</strong></li>
+<li>Notación: Zn(s) | Zn²⁺(aq) ‖ Cu²⁺(aq) | Cu(s)</li>
+</ol>
+</div>
+<div id="svg-celda-znCu" class="svg-diagrama"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-14', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-14">
+<div class="respuesta-final">✅ Zn(s)+Cu²⁺(aq)→Zn²⁺(aq)+Cu(s) | Zn(s)|Zn²⁺(aq)‖Cu²⁺(aq)|Cu(s)</div>
+<div class="leccion">💡 Zn siempre se oxida frente a Cu — es el ejemplo clásico de celda voltaica.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Aluminum / Iron(II) chloride — coeficientes desiguales</div>
+<div class="enunciado">"Aluminum metal in aluminum chloride solution connected via salt bridge to iron in iron(II) chloride solution."</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-c2-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-c2-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-c2-exp">Al(pos.6) ARRIBA de Fe(pos.9) → Al=ÁNODO, Fe=CÁTODO. Al pierde 3e⁻, Fe gana 2e⁻ → MCM(3,2)=6.</div>
+<div class="toggle-contenido" id="rx-c2-sol">
+<ol>
+<li>Ánodo ×2: 2Al → 2Al³⁺ + 6e⁻</li>
+<li>Cátodo ×3: 3Fe²⁺ + 6e⁻ → 3Fe</li>
+<li>Global: <strong>2Al(s) + 3Fe²⁺(aq) → 2Al³⁺(aq) + 3Fe(s)</strong></li>
+<li>Notación: Al(s) | Al³⁺(aq) ‖ Fe²⁺(aq) | Fe(s)</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-15', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-15">
+<div class="respuesta-final">✅ 2Al(s)+3Fe²⁺(aq)→2Al³⁺(aq)+3Fe(s)</div>
+<div class="leccion">💡 Cuando las cargas no coinciden directo, usa siempre el MCM de los electrones perdidos/ganados.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Inert Pt electrode: Sn²⁺/Sn⁴⁺ vs Silver nitrate</div>
+<div class="enunciado">"A platinum electrode in a solution with both tin(II) chloride and tin(IV) chloride, connected to silver in silver nitrate solution."</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-c3-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-c3-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-c3-exp">No hay metal sólido propio en la semicelda de Sn (ambos iones disueltos del mismo elemento) → se necesita electrodo INERTE de Pt. Sn está ARRIBA de Ag → Sn se oxida.</div>
+<div class="toggle-contenido" id="rx-c3-sol">
+<ol>
+<li>Ánodo: Sn²⁺ → Sn⁴⁺ + 2e⁻</li>
+<li>Cátodo ×2: 2Ag⁺ + 2e⁻ → 2Ag</li>
+<li>Global: <strong>Sn²⁺(aq) + 2Ag⁺(aq) → Sn⁴⁺(aq) + 2Ag(s)</strong></li>
+<li>Notación (con Pt inerte, iones separados por coma): Pt(s) | Sn²⁺(aq), Sn⁴⁺(aq) ‖ Ag⁺(aq) | Ag(s)</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-16', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-16">
+<div class="respuesta-final">✅ Sn²⁺(aq)+2Ag⁺(aq)→Sn⁴⁺(aq)+2Ag(s)</div>
+<div class="leccion">💡 Cuando ambos iones del par redox están en la misma solución sin metal sólido propio, el electrodo es Pt inerte.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Copper / Silver nitrate voltaic cell</div>
+<div class="enunciado">"Copper metal is immersed in a copper(II) nitrate solution; it is connected via a salt bridge to a silver electrode in silver nitrate solution." Da las 3 representaciones.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-c4-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-c4-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-c4-exp">Traducción: copper(II) nitrate=Cu(NO₃)₂ | silver nitrate=AgNO₃. Tabla 15.3: Cu(pos.14) está ARRIBA de Ag(pos.15) → Cu=ÁNODO, Ag=CÁTODO.</div>
+<div class="toggle-contenido" id="rx-c4-sol">
+<ol>
+<li>Ánodo: Cu → Cu²⁺ + 2e⁻</li>
+<li>Cátodo ×2: 2Ag⁺ + 2e⁻ → 2Ag</li>
+<li>Global: <strong>Cu(s) + 2Ag⁺(aq) → Cu²⁺(aq) + 2Ag(s)</strong></li>
+<li>Notación: Cu(s) | Cu²⁺(aq) ‖ Ag⁺(aq) | Ag(s)</li>
+</ol>
+</div>
+<div id="svg-celda-cuAg" class="svg-diagrama"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-17', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-17">
+<div class="respuesta-final">✅ Cu(s)+2Ag⁺(aq)→Cu²⁺(aq)+2Ag(s)</div>
+<div class="leccion">💡 Aunque Cu y Ag están cerca en la Tabla 15.3, su orden relativo sigue determinando ánodo/cátodo sin ambigüedad.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Magnesium / Tin(II) chloride voltaic cell</div>
+<div class="enunciado">"Magnesium metal in a magnesium chloride solution is connected to a beaker containing tin metal in a tin(II) chloride solution."</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-c5-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-c5-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-c5-exp">Traducción: magnesium chloride=MgCl₂ | tin(II) chloride=SnCl₂. Mg(pos.5) muy ARRIBA de Sn(pos.11) → Mg=ÁNODO, Sn=CÁTODO. Cuanto más separados en la tabla, más "fuerte" cualitativamente la reacción (sin número de voltaje).</div>
+<div class="toggle-contenido" id="rx-c5-sol">
+<ol>
+<li>Ánodo: Mg → Mg²⁺ + 2e⁻</li>
+<li>Cátodo: Sn²⁺ + 2e⁻ → Sn (e⁻ ya igualados, 2=2)</li>
+<li>Global: <strong>Mg(s) + Sn²⁺(aq) → Mg²⁺(aq) + Sn(s)</strong></li>
+<li>Notación: Mg(s) | Mg²⁺(aq) ‖ Sn²⁺(aq) | Sn(s)</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-18', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-18">
+<div class="respuesta-final">✅ Mg(s)+Sn²⁺(aq)→Mg²⁺(aq)+Sn(s)</div>
+<div class="leccion">💡 Entre más separados estén los metales en la Tabla 15.3, más espontánea (cualitativamente) es la reacción.</div>
+</div></div>
+</div>
+
+<h3 class="encabezado-sub oculta-crisis" id="rx-baterias-practica">Problemas de Baterías</h3>
+
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-1"><span>⭐ Básico</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Lead storage (car) battery</div>
+<div class="enunciado">Identify the anode and cathode reactions of a lead storage battery, using lead, lead(IV) oxide, and sulfuric acid.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-b1-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-b1-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-b1-exp">lead=Pb | lead(IV) oxide=PbO₂ | sulfuric acid=H₂SO₄. Ambos electrodos producen PbSO₄ insoluble.</div>
+<div class="toggle-contenido" id="rx-b1-sol">
+<ol><li>Ánodo: Pb(s)+SO₄²⁻(aq)→PbSO₄(s)+2e⁻</li><li>Cátodo: PbO₂(s)+4H⁺(aq)+SO₄²⁻(aq)+2e⁻→PbSO₄(s)+2H₂O(l)</li></ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-19', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-19">
+<div class="respuesta-final">✅ Ánodo: Pb+SO₄²⁻→PbSO₄+2e⁻ | Cátodo: PbO₂+4H⁺+SO₄²⁻+2e⁻→PbSO₄+2H₂O</div>
+<div class="leccion">💡 Al recargar con el alternador, la reacción se invierte y el PbSO₄ se descompone.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Alkaline dry cell battery</div>
+<div class="enunciado">Identify the anode and cathode reactions of an alkaline battery, using zinc and manganese(IV) oxide in a basic electrolyte.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-b1b-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-b1b-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-b1b-exp">zinc=Zn | manganese(IV) oxide=MnO₂. Medio básico → se usa OH⁻/H₂O, igual que NiCad.</div>
+<div class="toggle-contenido" id="rx-b1b-sol">
+<ol><li>Ánodo: Zn(s)+2OH⁻(aq)→ZnO(s)+H₂O(l)+2e⁻</li><li>Cátodo ×2: 2MnO₂(s)+H₂O(l)+2e⁻→Mn₂O₃(s)+2OH⁻(aq)</li></ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-20', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-20">
+<div class="respuesta-final">✅ Ánodo: Zn+2OH⁻→ZnO+H₂O+2e⁻ | Cátodo: 2MnO₂+H₂O+2e⁻→Mn₂O₃+2OH⁻</div>
+<div class="leccion">💡 La versión alcalina reemplaza el electrolito ácido (NH₄Cl) por uno básico (KOH/NaOH), lo que la hace durar más y tener menos fugas.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">NiCad rechargeable battery</div>
+<div class="enunciado">Identify anode and cathode reactions of a NiCad battery, using cadmium and nickel(III) oxide-hydroxide in basic electrolyte.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-b2-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-b2-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-b2-exp">cadmium=Cd | nickel(III) oxide-hydroxide=NiO(OH). Medio básico → se usa OH⁻.</div>
+<div class="toggle-contenido" id="rx-b2-sol">
+<ol><li>Ánodo: Cd(s)+2OH⁻(aq)→Cd(OH)₂(s)+2e⁻</li><li>Cátodo: 2NiO(OH)(s)+2H₂O(l)+2e⁻→2Ni(OH)₂(s)+2OH⁻(aq)</li></ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-21', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-21">
+<div class="respuesta-final">✅ Ánodo: Cd+2OH⁻→Cd(OH)₂+2e⁻ | Cátodo: 2NiO(OH)+2H₂O+2e⁻→2Ni(OH)₂+2OH⁻</div>
+<div class="leccion">💡 A diferencia de otras baterías, el NiCad es recargable muchas veces porque sus sólidos no se desprenden.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Iron corrosion + galvanic (sacrificial anode) protection</div>
+<div class="enunciado">Write the anode and cathode reactions for the corrosion of iron, then explain how galvanizing with zinc protects it.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-b3-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-b3-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-b3-exp">La corrosión del Fe es una celda galvánica natural. La protección catódica usa un metal MÁS ARRIBA en la Tabla 15.3 como "ánodo de sacrificio".</div>
+<div class="toggle-contenido" id="rx-b3-sol">
+<ol>
+<li>Ánodo: Fe(s)→Fe²⁺(aq)+2e⁻ | Cátodo: O₂(g)+4H⁺(aq)+4e⁻→2H₂O(l)</li>
+<li>Global: 4Fe(s)+3O₂(g)→2Fe₂O₃(s)</li>
+<li>Galvanización: Zn está ARRIBA de Fe → Zn se oxida primero, protegiendo al Fe</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-22', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-22">
+<div class="respuesta-final">✅ Fe(an)→Fe²⁺ | O₂+H⁺(cat)→H₂O | Zn protege por estar más arriba en la Tabla 15.3</div>
+<div class="leccion">💡 El metal que protege siempre debe estar MÁS ARRIBA (más activo) que el metal que se quiere proteger.</div>
+</div></div>
+</div>
+
+<h2 class="encabezado-seccion oculta-crisis oculta-urgente" id="rx-doble-elemento" data-nav-label="2 elementos⭐⭐⭐">10. Cuando DOS Elementos Cambian de #Ox a la Vez</h2>
+<div class="caja-concepto oculta-crisis oculta-urgente">Ocurre cuando la fórmula tiene 2 elementos distintos que cambian su #Ox en la MISMA ecuación (no confundir con desproporción, donde es el MISMO elemento el que cambia dos veces).</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Copper(II) sulfide + Nitric acid</div>
+<div class="enunciado">Balancea: CuS + HNO₃ → Cu(NO₃)₂ + NO + S + H₂O</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-d1-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-d1-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-d1-exp">CuS: Cu=+2, S=−2. HNO₃: N=+5. En productos: Cu(NO₃)₂ Cu=+2(no cambia), NO: N=+2, S libre=0. Dos elementos DISTINTOS cambian: S(−2→0, OXIDACIÓN) y N(+5→+2, REDUCCIÓN). Cu es espectador — no confundas esto con desproporción.</div>
+<div class="toggle-contenido" id="rx-d1-sol">
+<ol>
+<li>Ox: S²⁻ → S + 2e⁻</li>
+<li>Red: 3e⁻ + 4H⁺ + NO₃⁻ → NO + 2H₂O</li>
+<li>MCM(2,3)=6 → Ox×3, Red×2</li>
+<li>Ox×3: 3S²⁻ → 3S + 6e⁻</li>
+<li>Red×2: 6e⁻ + 8H⁺ + 2NO₃⁻ → 2NO + 4H₂O</li>
+<li>Sumar (Cu de espectador se reintroduce): <strong>3CuS + 8HNO₃ → 3Cu(NO₃)₂ + 2NO + 3S + 4H₂O</strong></li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-23', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-23">
+<div class="respuesta-final">✅ 3CuS + 8HNO₃ → 3Cu(NO₃)₂ + 2NO + 3S + 4H₂O</div>
+<div class="leccion">💡 Cuando hay dos elementos distintos que cambian en reactivos, identifica primero cuál sube y cuál baja — el elemento que NO cambia (aquí Cu) es solo espectador.</div>
+<div class="error-comun">⚠️ Confundir esto con desproporción: aquí S y N son elementos DISTINTOS que cambian, no el mismo elemento dos veces.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Antimony(III) sulfate + Potassium permanganate</div>
+<div class="enunciado">Balancea en medio ácido: Sb₂(SO₄)₃ + KMnO₄ + H₂O → H₃SbO₄ + K₂SO₄ + MnSO₄ + H₂SO₄</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-d2-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-d2-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-d2-exp">Sb en Sb₂(SO₄)₃: SO₄²⁻ es espectador (S no cambia) → 2Sb+3(−2)=0 → Sb=+3. En H₃SbO₄: Sb=+5 (OXIDACIÓN). Mn: +7→+2 en MnSO₄ (REDUCCIÓN). S de los sulfatos nunca cambia — es espectador puro en toda la ecuación.</div>
+<div class="toggle-contenido" id="rx-d2-sol">
+<ol>
+<li>Ox: Sb³⁺ + 4H₂O → H₃SbO₄ + 5H⁺ + 2e⁻</li>
+<li>Red: 5e⁻ + 8H⁺ + MnO₄⁻ → Mn²⁺ + 4H₂O</li>
+<li>MCM(2,5)=10 → Ox×5, Red×2</li>
+<li>Ox×5: 5Sb³⁺+20H₂O→5H₃SbO₄+25H⁺+10e⁻</li>
+<li>Red×2: 16H⁺+2MnO₄⁻+10e⁻→2Mn²⁺+8H₂O</li>
+<li>Sumar y cancelar 10e⁻; simplificar H₂O(20−8=12 netas izq) y H⁺(25−16=9 netos der): <strong>5Sb³⁺ + 2MnO₄⁻ + 12H₂O → 5H₃SbO₄ + 2Mn²⁺ + 9H⁺</strong> (iónica neta)</li>
+<li>Multiplica ×2 para trabajar con Sb₂(SO₄)₃ completo: 10Sb³⁺+4MnO₄⁻+24H₂O→10H₃SbO₄+4Mn²⁺+18H⁺</li>
+<li>Reintroduce espectadores: 5Sb₂(SO₄)₃ aporta 15 SO₄²⁻; 4KMnO₄ aporta 4K⁺. Repártelos en productos: 2K₂SO₄(2 SO₄) + 4MnSO₄(4 SO₄) + 9H₂SO₄(9 SO₄) = 15 SO₄ ✓ → <strong>5Sb₂(SO₄)₃ + 4KMnO₄ + 24H₂O → 10H₃SbO₄ + 2K₂SO₄ + 4MnSO₄ + 9H₂SO₄</strong></li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-24', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-24">
+<div class="respuesta-final">✅ 5Sb₂(SO₄)₃ + 4KMnO₄ + 24H₂O → 10H₃SbO₄ + 2K₂SO₄ + 4MnSO₄ + 9H₂SO₄ <span style="font-weight:400;">(reverificado: Sb 10=10, S 15=15, O 100=100, K 4=4, Mn 4=4, H 48=48)</span></div>
+<div class="leccion">💡 Los sulfatos (SO₄²⁻) son espectadores — no cambian su #Ox — pero SÍ debes contarlos con cuidado al repartirlos entre los productos (K₂SO₄, MnSO₄, H₂SO₄); un conteo apresurado de espectadores es la fuente más común de error en este tipo de problema.</div>
+</div></div>
+</div>
+
+<h2 class="encabezado-seccion oculta-crisis oculta-urgente oculta-corto" id="rx-excepciones" data-nav-label="Excepciones⭐⭐⭐⭐">🚨 EXCEPCIONES AVANZADAS ⭐⭐⭐⭐ — Lo que NO viene en libros normales</h2>
+<div class="caja-advertencia oculta-crisis oculta-urgente oculta-corto">
+<strong>⚠️ Por qué esta sección existe:</strong> tu profesor dijo que redox tiene MUCHÍSIMAS excepciones. Esta sección cubre los casos que las 4 guías originales NO tenían: el peróxido de hidrógeno actuando como oxidante Y reductor en la MISMA molécula según el contexto, la diferencia entre ácido nítrico diluido y concentrado (dan productos distintos), y electrólisis (donde la Tabla 15.3 NO aplica). Todo verificado simbólicamente antes de escribirse aquí.
+</div>
+
+<div class="problema oculta-crisis oculta-urgente oculta-corto">
+<div class="problema-header dif-4"><span>⭐⭐⭐⭐ EXCEPCIÓN</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Hydrogen peroxide as a REDUCING agent (not oxidizing)</div>
+<div class="enunciado">Balancea en medio ácido: KMnO₄ + H₂O₂ + H₂SO₄ → MnSO₄ + O₂ + K₂SO₄ + H₂O</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-e1-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-e1-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-e1-exp">
+<strong>La trampa:</strong> H₂O₂ casi siempre aparece en tus otras guías como OXIDANTE (O:−1→−2). Aquí frente a un oxidante MÁS fuerte (KMnO₄), el H₂O₂ actúa al revés: como REDUCTOR (O:−1→0, libera O₂ gas). <strong>El rol de H₂O₂ depende de con qué reacciona</strong> — nunca asumas su rol sin ver el otro reactivo.
+</div>
+<div class="toggle-contenido" id="rx-e1-sol">
+<ol>
+<li>Mn: +7→+2 (REDUCCIÓN, 5e⁻). O en H₂O₂: −1→0 en O₂ (OXIDACIÓN, 2e⁻ por molécula de H₂O₂)</li>
+<li>Red: MnO₄⁻+8H⁺+5e⁻→Mn²⁺+4H₂O | Ox: H₂O₂→O₂+2H⁺+2e⁻</li>
+<li>MCM(5,2)=10 → Red×2, Ox×5</li>
+<li>Red×2: 2MnO₄⁻+16H⁺+10e⁻→2Mn²⁺+8H₂O</li>
+<li>Ox×5: 5H₂O₂→5O₂+10H⁺+10e⁻</li>
+<li>Sumar y cancelar 10e⁻ y simplificar H⁺ (16−10=6 netos): <strong>2KMnO₄ + 5H₂O₂ + 3H₂SO₄ → 2MnSO₄ + 5O₂ + K₂SO₄ + 8H₂O</strong></li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-25', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-25">
+<div class="respuesta-final">✅ 2KMnO₄ + 5H₂O₂ + 3H₂SO₄ → 2MnSO₄ + 5O₂ + K₂SO₄ + 8H₂O <span style="font-weight:400;">(verificado: O 26=26, H 16=16, carga balanceada)</span></div>
+<div class="leccion">💡 H₂O₂ es "anfótero redox": oxida frente a reductores débiles (Fe²⁺), pero se oxida (actúa como reductor) frente a oxidantes más fuertes que él (KMnO₄, Cl₂).</div>
+<div class="error-comun">⚠️ Error fatal: asumir que H₂O₂ siempre se reduce. Revisa SIEMPRE el otro reactivo antes de decidir su rol.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente oculta-corto">
+<div class="problema-header dif-4"><span>⭐⭐⭐⭐ EXCEPCIÓN</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Dilute vs Concentrated Nitric Acid — different products!</div>
+<div class="enunciado">Compara: Cu + HNO₃(diluido) → ? vs Cu + HNO₃(concentrado) → ?</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-e2-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-e2-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-e2-exp">
+<strong>La trampa:</strong> el HNO₃ NO siempre reduce N igual. La concentración cambia el producto de reducción: diluido → NO (N:+5→+2, gana 3e⁻). Concentrado → NO₂ (N:+5→+4, gana solo 1e⁻). Cu no reacciona con ácidos comunes (está debajo de H₂ en Tabla 15.3) pero SÍ con HNO₃ porque este oxida al Cu directamente, no libera H₂.
+</div>
+<div class="toggle-contenido" id="rx-e2-sol">
+<strong>DILUIDO (produce NO):</strong>
+<ol>
+<li>Ox: Cu→Cu²⁺+2e⁻ | Red: NO₃⁻+4H⁺+3e⁻→NO+2H₂O</li>
+<li>MCM(2,3)=6 → Ox×3, Red×2</li>
+<li>Global: <strong>3Cu + 8HNO₃(dil) → 3Cu(NO₃)₂ + 2NO + 4H₂O</strong></li>
+</ol>
+<strong>CONCENTRADO (produce NO₂):</strong>
+<ol>
+<li>Ox: Cu→Cu²⁺+2e⁻ | Red: NO₃⁻+2H⁺+e⁻→NO₂+H₂O</li>
+<li>MCM(2,1)=2 → Red×2</li>
+<li>Global: <strong>Cu + 4HNO₃(conc) → Cu(NO₃)₂ + 2NO₂ + 2H₂O</strong></li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-26', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-26">
+<div class="respuesta-final">✅ Diluido: 3Cu+8HNO₃→3Cu(NO₃)₂+2NO+4H₂O (gas incoloro) | Concentrado: Cu+4HNO₃→Cu(NO₃)₂+2NO₂+2H₂O (gas café)</div>
+<div class="leccion">💡 Pista de examen: si el problema menciona "gas café/pardo" = NO₂ = concentrado. Si menciona "gas incoloro que se oscurece en el aire" = NO = diluido.</div>
+<div class="error-comun">⚠️ No confundas esto con la Tabla 15.3 — HNO₃ oxida metales por su nitrógeno (+5), no por H⁺, por eso hasta Cu y Ag reaccionan con él.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente oculta-corto">
+<div class="problema-header dif-4"><span>⭐⭐⭐⭐ EXCEPCIÓN</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Electrolysis of molten NaCl — Tabla 15.3 NO aplica</div>
+<div class="enunciado">Explica los productos de la electrólisis de NaCl fundido (celda electrolítica, no voltaica).</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-e3-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-e3-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-e3-exp">
+<strong>La trampa:</strong> en una celda ELECTROLÍTICA, una batería externa FUERZA la reacción — la Tabla 15.3 (que predice espontaneidad) ya NO decide quién se oxida/reduce. La batería lo decide: conectado al polo (−) de la batería = cátodo (reducción); conectado al (+) = ánodo (oxidación). Esta reacción NO sería espontánea sola (Na⁺ nunca se reduciría solo frente a Cl⁻), por eso necesita electricidad forzada.
+</div>
+<div class="toggle-contenido" id="rx-e3-sol">
+<ol>
+<li>Cátodo (conectado al − de la batería, reducción forzada): Na⁺(l) + e⁻ → Na(l)</li>
+<li>Ánodo (conectado al + de la batería, oxidación forzada): 2Cl⁻(l) → Cl₂(g) + 2e⁻</li>
+<li>e⁻ igualados (2Na⁺ necesitan 2e⁻ = lo que produce 2Cl⁻)</li>
+<li>Global: <strong>2NaCl(l) —electrólisis→ 2Na(l) + Cl₂(g)</strong></li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-27', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-27">
+<div class="respuesta-final">✅ 2NaCl(l) —electrólisis→ 2Na(l) + Cl₂(g). AN-OX/RED-CAT sigue igual, pero el ánodo/cátodo lo define la batería, NO la Tabla 15.3.</div>
+<div class="leccion">💡 Este es el método comercial real (proceso Downs) para producir sodio metálico — imposible por reacción espontánea porque Na⁺ es de los más difíciles de reducir.</div>
+<div class="error-comun">⚠️ Error crítico de examen: usar la Tabla 15.3 para decidir ánodo/cátodo en una celda ELECTROLÍTICA. Esa tabla solo aplica a celdas VOLTAICAS (espontáneas).</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente oculta-corto">
+<div class="problema-header dif-4"><span>⭐⭐⭐⭐ EXCEPCIÓN</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Complex disproportionation — Cl₂ in hot vs cold base</div>
+<div class="enunciado">Compara: Cl₂ + NaOH(frío/diluido) → ? vs Cl₂ + NaOH(caliente/concentrado) → ?</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('rx-e4-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('rx-e4-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="rx-e4-exp">
+<strong>La trampa:</strong> ambos son desproporción del Cl (0→−1 y 0→+algo), pero la temperatura cambia el estado final de oxidación del Cl positivo: frío → Cl alcanza solo +1 (hipoclorito). Caliente → Cl llega hasta +5 (clorato), porque a mayor temperatura el hipoclorito intermedio se desproporciona una segunda vez.
+</div>
+<div class="toggle-contenido" id="rx-e4-sol">
+<strong>FRÍO/DILUIDO (produce hipoclorito, Cl a +1):</strong>
+<ol><li>Cl₂ + 2NaOH(frío) → <strong>NaCl + NaClO + H₂O</strong> (Cl: 0→−1 y 0→+1)</li></ol>
+<strong>CALIENTE/CONCENTRADO (produce clorato, Cl a +5):</strong>
+<ol><li>3Cl₂ + 6NaOH(caliente) → <strong>5NaCl + NaClO₃ + 3H₂O</strong> (Cl: 0→−1 ×5 y 0→+5 ×1)</li></ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-28', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-28">
+<div class="respuesta-final">✅ Frío: NaCl+NaClO (blanqueador) | Caliente: NaCl+NaClO₃ (usado en fósforos/explosivos)</div>
+<div class="leccion">💡 La temperatura NO es un detalle decorativo en redox — puede cambiar completamente el producto final. Lee el enunciado con cuidado.</div>
+</div></div>
+</div>
+
+<h2 class="encabezado-seccion" id="rx-cheatsheet" data-nav-label="Cheatsheet">📋 CHEATSHEET FINAL — Redox</h2>
+<div class="cheatsheet">
+<div class="bloque-cheat"><h4>🔑 7 Reglas Express</h4>R1: Neutra=0/Ion=carga · R2: Puro=0 · R3: Ion solo=carga · R4: 1A=+1,2A=+2 · R5: F=−1 siempre · R6: O=−2 (H₂O₂→−1) · R7: H=+1(no metal)/−1(metal)</div>
+<div class="bloque-cheat"><h4>🔤 Nomenclatura rápida</h4>-ide=ion simple · -ate=más O · -ite=menos O · Romano=#Ox · permanganate=MnO₄⁻(+7) · dichromate=Cr₂O₇²⁻(+6)</div>
+<div class="bloque-cheat"><h4>📊 Tabla 15.3 — orden</h4>Li&gt;K&gt;Ca&gt;Na&gt;Mg&gt;Al&gt;Zn&gt;Cr&gt;Fe&gt;Ni&gt;Sn&gt;Pb&gt;H₂&gt;Cu&gt;Ag&gt;Au. Arriba=ánodo. NO tiene voltajes.</div>
+<div class="bloque-cheat"><h4>🔋 Celda voltaica — checklist</h4>① Tabla 15.3 ② Notación A|A²⁺‖B²⁺|B ③ Diagrama con puente salino ④ Ecuación global</div>
+<div class="bloque-cheat"><h4>🔌 Baterías clave</h4>Lead: Pb→PbSO₄(an)|PbO₂→PbSO₄(cat) · NiCad: Cd(an)|NiO(OH)(cat), recargable</div>
+<div class="bloque-cheat"><h4>⚖️ Ion-Electrón 5 pasos</h4>0.Nomenclatura 1.Ecuación iónica 2.Semirreacciones 3.Átomos(O→H₂O,H→H⁺) 4.Carga(e⁻) 5.Igualar e⁻ y sumar</div>
+<div class="bloque-cheat"><h4>🚨 Excepciones ⭐⭐⭐⭐</h4>H₂O₂ oxida O reduce según rival · HNO₃ dil→NO, conc→NO₂ · Electrólisis: Tabla 15.3 NO aplica · Cl₂+base: frío→ClO⁻, caliente→ClO₃⁻</div>
+<div class="bloque-cheat"><h4>🚫 Errores fatales</h4>H₂O₂→O=−1 no −2 · e⁻ izq=reducción,der=oxidación · NO ionizar covalentes · Multiplicar TODO al escalar · Cr₂O₇²⁻ tiene 2Cr→6e⁻ no 3</div>
+</div>
+
+</div>
+
+<!-- ========================================================= -->
+<!-- ========== SECCIÓN ORGÁNICA (se inserta aquí) =========== -->
+<!-- ========================================================= -->
+<div class="tema-seccion" id="tema-organica">
+
+<div class="portada">
+  <div class="emoji-grande">🧪⚛️</div>
+  <h1>Química Orgánica — Guía Magistral Fusionada</h1>
+  <div class="sub">Capítulo 17 · Nomenclatura IUPAC · 21 Grupos Funcionales · RDKit.js — Geometría Molecular Real</div>
+  <div class="chips">
+    <span class="chip">📚 Química 12vo</span>
+    <span class="chip">🎓 Instituto Bern Bautista Bilingüe</span>
+    <span class="chip">📅 Examen Trimestral 2026</span>
+  </div>
+</div>
+
+<div class="lee-primero">
+  <strong>📌 LEE ESTO PRIMERO:</strong> El profesor exige el nombre IUPAC perfecto — <em>"o tienen todo bueno o lo tienen todo mal"</em>. Este documento cubre: (1) nomenclatura de hidrocarburos (alcanos, cicloalcanos, alquenos, alquinos, aromáticos) con énfasis en <strong>estructura→nombre</strong> (la dirección menos practicada en el libro), y (2) los 21 grupos funcionales con reconocimiento de patrones + construcción del nombre IUPAC completo, terminando con súper-moléculas de 11-12 grupos funcionales simultáneos — el formato real del taller. Todas las estructuras están dibujadas con <strong>RDKit.js</strong>: geometría 2D calculada, no aproximada.
+</div>
+
+<h2 class="encabezado-seccion" id="og-mapa" data-nav-label="Mapa">🗺️ TABLA MAESTRA DE DECISIÓN</h2>
+<table class="tabla-decision">
+<tr><th>Si necesitas…</th><th>Entonces usa…</th><th>Ir a</th></tr>
+<tr><td>Identificar un grupo funcional por su patrón</td><td>Tabla de 21 grupos + árbol del carbonilo</td><td><a href="#og-21grupos">21 Grupos</a></td></tr>
+<tr><td>Nombrar un alcano/cicloalcano/alqueno/alquino</td><td>Cadena principal + numeración + sustituyentes</td><td><a href="#og-nomenclatura-hc">Nomenclatura HC</a></td></tr>
+<tr><td>Construir el nombre IUPAC completo de un compuesto con grupo funcional</td><td>Método de 5 pasos (prioridad, cadena, numerar, prefijos, ensamblar)</td><td><a href="#og-metodo-iupac">Método IUPAC</a></td></tr>
+<tr><td>Reconocer TODOS los grupos en una molécula densa</td><td>Escaneo sistemático N/S → C=O → enlaces múltiples</td><td><a href="#og-supermoleculas">Súper-moléculas</a></td></tr>
+<tr><td>Ver geometría real de anillos fusionados o estereoquímica</td><td>RDKit.js (SMILES → SVG 2D exacto)</td><td><a href="#og-rdkit-demo">Demo RDKit</a></td></tr>
+</table>
+
+<h2 class="encabezado-seccion" id="og-concepto" data-nav-label="Concepto">1. ¿Qué es un Grupo Funcional?</h2>
+<div class="caja-concepto">Es un átomo o conjunto de átomos dentro de una molécula orgánica responsable de <strong>cómo reacciona</strong> esa molécula. El resto de la cadena ("R") casi no importa para la reactividad — lo que importa es el grupo.</div>
+<div class="caja-analogia">🔑 <strong>Analogía:</strong> la molécula es una llave (R) con distintas "puntas" intercambiables (grupos funcionales). La cerradura que abre depende de la punta, no del resto de la llave.</div>
+<p><strong>Regla clave:</strong> reconocer un grupo funcional = reconocer un patrón específico de átomos y enlaces (C=O, O-H, C≡N), sin importar qué tan larga sea el resto de la cadena.</p>
+
+<h3 class="encabezado-sub">Las 7 categorías</h3>
+<table>
+<tr><th>Categoría</th><th>Grupos incluidos</th><th>Patrón común</th></tr>
+<tr><td>🔴 Hidrocarburos</td><td>Alkane, Alkene, Alkyne</td><td>Solo C-H, C-C, C=C, C≡C</td></tr>
+<tr><td>🔵 Oxígeno simple</td><td>Alcohol, Ether, Epoxide</td><td>C-O-H o C-O-C</td></tr>
+<tr><td>🟠 Halógeno</td><td>Haloalkane</td><td>C-X (X=F,Cl,Br,I)</td></tr>
+<tr><td>🟢 Carbonilo</td><td>Aldehyde, Ketone, Acid, Anhydride, Ester, Amide, Acyl halide</td><td>Todos tienen C=O</td></tr>
+<tr><td>🩷 Nitrógeno</td><td>Amine, Nitrile, Imine, Isocyanate, Azo</td><td>Contienen N</td></tr>
+<tr><td>🟡 Azufre</td><td>Thiol</td><td>C-S-H</td></tr>
+<tr><td>🔵 Aromático</td><td>Arene</td><td>Anillo bencénico</td></tr>
+</table>
+<div class="caja-adicional">[Contenido adicional] La familia carbonilo (verde) es la más grande porque todos comparten C=O como base — lo que cambia es qué está pegado al otro lado: -OH(ácido), -O-R(ester), -N(amida), -X(haluro de acilo), -O-C=O(anhídrido), o nada extra(aldehído/cetona). Dominar este árbol de decisión resuelve 7 de los 21 grupos.</div>
+
+<h2 class="encabezado-seccion" id="og-21grupos" data-nav-label="21 Grupos">2. Base Clave — Los 21 Grupos Funcionales</h2>
+<p style="font-size:0.88rem;">Tabla de memorización rápida. No la memorices ejemplo por ejemplo: <strong>reconoce el patrón de átomos</strong>. Cada tarjeta usa RDKit.js para mostrar la geometría real.</p>
+<div id="grid-21-grupos" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:14px 0;"></div>
+
+<h3 class="encabezado-sub">3. Tips y Estrategias</h3>
+<div class="caja-tip">💡 <strong>Escanea de "más específico" a "menos específico":</strong> primero N y S (raros, saltan a la vista), luego C=O (define familia carbonilo), y al final enlaces C-C simples/dobles/triples.</div>
+<div class="caja-tip">💡 <strong>Árbol del carbonilo:</strong> ¿ves C=O? → nada extra=cetona/aldehído · -OH=ácido · -O-C=ester · -N=amida · -X=haluro de acilo · -O-C(=O)-=anhídrido.</div>
+<div class="caja-advertencia">⚠️ No confundas ester con ácido: el ácido tiene H disponible en el O (-OH); el ester tiene ese O unido a otro carbono (-O-R). Tampoco confundas imina (C=N) con nitrilo (C≡N) — cuenta los enlaces.</div>
+
+<h2 class="encabezado-seccion" id="og-nomenclatura-hc" data-nav-label="Nomenclatura HC">4. Nomenclatura de Hidrocarburos — Método</h2>
+<div class="caja-concepto">8 de cada 10 problemas de examen dan la <strong>estructura</strong> y piden el <strong>nombre</strong> — es la dirección que el libro practica menos. En todos los diagramas de esta sección: <strong>cadena principal en azul, sustituyentes en negro.</strong></div>
+<ul style="font-size:0.9rem;">
+<li><strong>Paso 1:</strong> encuentra la cadena más larga que contenga el doble/triple enlace si existe (no siempre es la rama más "recta" visualmente)</li>
+<li><strong>Paso 2:</strong> numera para dar el número MÁS BAJO al enlace múltiple, o al primer sustituyente si es un alcano</li>
+<li><strong>Paso 3:</strong> nombra sustituyentes en orden alfabético (ignorando di-/tri-/tetra-)</li>
+</ul>
+<div class="caja-tip">💡 Mnemotécnico de sufijos: Meth-Eth-Prop-But-Pent-Hex-Hept-Oct-Non-Dec = "My Elephant Plays But Please Help Others Not Die" (1 al 10).</div>
+<table class="oculta-crisis">
+<tr><th>Familia</th><th>Fórmula general</th><th>Sufijo</th></tr>
+<tr><td>Alcano</td><td>C<sub>n</sub>H<sub>2n+2</sub></td><td>-ane</td></tr>
+<tr><td>Alqueno / Cicloalcano</td><td>C<sub>n</sub>H<sub>2n</sub></td><td>-ene</td></tr>
+<tr><td>Alquino</td><td>C<sub>n</sub>H<sub>2n-2</sub></td><td>-yne</td></tr>
+</table>
+<div class="caja-advertencia">⚠️ Halogenuros como sustituyentes: fluoro, chloro, bromo, iodo — <strong>NUNCA "bromuro"/"ioduro"</strong> (eso es para el ion libre Br⁻/I⁻ en sales, no en hidrocarburos). Se alfabetizan junto con los alquilos.</div>
+<div class="caja-tip">💡 Anillos: un sustituyente = no se numera (C1 automático). Dos o más = numera desde el carbono con más sustituyentes, dirección que da el conjunto de números más bajo.</div>
+
+<h2 class="encabezado-seccion" id="og-metodo-iupac" data-nav-label="Método IUPAC">5. Cómo Construir el Nombre IUPAC Completo</h2>
+<p>Cuando una molécula tiene VARIOS grupos funcionales, solo UNO se nombra como sufijo (el de mayor prioridad); el resto son prefijos.</p>
+<div class="caja-concepto">
+<strong>Orden de prioridad (12vo grado, mayor→menor):</strong><br>
+Ácido carboxílico &gt; Anhídrido &gt; Éster &gt; Haluro de acilo &gt; Amida &gt; Nitrilo &gt; Aldehído &gt; Cetona &gt; Alcohol &gt; Amina &gt; (alqueno/alquino/éter/haloalcano/tiol — siempre prefijo)
+</div>
+<div class="caja-analogia">🔑 Es como elegir apellido en familia con muchos títulos — el de mayor "rango" se vuelve el sufijo; el resto son adjetivos (prefijos) delante del nombre.</div>
+<table>
+<tr><th>Paso</th><th>Acción</th></tr>
+<tr><td>1</td><td>Encuentra el grupo funcional principal (mayor prioridad) → define el sufijo</td></tr>
+<tr><td>2</td><td>Encuentra la cadena principal: la más larga que CONTENGA el grupo principal</td></tr>
+<tr><td>3</td><td>Numera desde el extremo que dé el localizador MÁS BAJO al grupo principal</td></tr>
+<tr><td>4</td><td>Nombra sustituyentes como prefijos, en orden alfabético con su localizador</td></tr>
+<tr><td>5</td><td>Ensambla: [localizadores+prefijos alfabético] + [cadena principal] + [sufijo]</td></tr>
+</table>
+<p style="font-size:0.88rem;"><strong>Prefijos comunes:</strong> -OH→hydroxy- · halógenos→chloro-/bromo-/fluoro-/iodo- · -NH₂→amino- · C=O(como sustituyente)→oxo- · -O-R→alcoxy- · -SH→sulfanyl-</p>
+<div class="caja-adicional">[Contenido adicional] Cuando el grupo principal está fuera de la cadena principal (ej. un éster donde ácido y alcohol son cadenas distintas), el nombre se separa en dos palabras: [alcohol como sustituyente "-yl"] + [ácido con sufijo "-oate"]. Ej: <em>methyl ethanoate</em> = "methyl"(del metanol) + "ethanoate"(del ácido etanoico).</div>
+<div class="caja-advertencia">⚠️ Error que el profesor SIEMPRE revisa: nombrar sustituyentes en el orden en que aparecen en la cadena en vez de orden alfabético.</div>
+
+<h2 class="encabezado-seccion" id="og-practica-hc" data-nav-label="Práctica HC">🎯 PROBLEMAS — Nomenclatura de Hidrocarburos</h2>
+
+<div class="problema">
+<div class="problema-header dif-1"><span>⭐ Básico</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Heptane (nombre → estructura)</div>
+<div class="enunciado">El profesor dice: "heptane" — dibuja la fórmula y da su fórmula molecular.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-h1-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-h1-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-h1-exp">"Hept"=7 carbonos. Sufijo "-ane"=alcano (solo enlaces simples). Fórmula general CₙH₂ₙ₊₂.</div>
+<div class="toggle-contenido" id="og-h1-sol"><ol><li>Hept=7C, cadena sin ramas</li><li>Fórmula: n=7 → C₇H₁₆</li></ol></div>
+<div class="mol-caja" data-smiles="CCCCCCC" data-mol-id="og-h1"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-29', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-29">
+<div class="respuesta-final">✅ C₇H₁₆ (heptano, sin ramas)</div>
+<div class="leccion">💡 Alcanos sin sustituyentes: prefijo numérico + "-ane" directo, sin numerar carbonos.</div>
+</div></div>
+</div>
+
+<div class="problema">
+<div class="problema-header dif-1"><span>⭐ Básico</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto HC2 · C7H16</div>
+<div class="enunciado">Cadena principal de 6 carbonos con un grupo -CH₃ colgando de un carbono interno. Da su nombre IUPAC.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-h2-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-h2-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-h2-exp">Cadena azul=6C ("hexane"). Numera desde el extremo que dé el número más bajo al metilo.</div>
+<div class="toggle-contenido" id="og-h2-sol"><ol><li>6C → hexane</li><li>Metilo cae en C3</li><li>"3-methyl"+"hexane"</li></ol></div>
+<div class="mol-caja" data-smiles="CCC(C)CCC" data-mol-id="og-h2"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-30', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-30">
+<div class="respuesta-final">✅ 3-methylhexane</div>
+<div class="leccion">💡 El número del sustituyente siempre es del carbono de la cadena PRINCIPAL, contado desde el extremo que da el número más bajo.</div>
+<div class="error-comun">⚠️ Contar desde el extremo equivocado da 4-methylhexane en vez de 3-methylhexane.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto HC3 · C16H34</div>
+<div class="enunciado">Cadena de 8 carbonos con varios metilos repetidos + una rama etilo. Da su nombre IUPAC.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-h3-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-h3-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-h3-exp">Prefijos multiplicadores (di,tri,tetra,penta,hexa) indican CUÁNTAS veces se repite el sustituyente — no cambian el orden alfabético (se alfabetiza por "methyl"/"ethyl").</div>
+<div class="toggle-contenido" id="og-h3-sol">
+<ol>
+<li>8C → octane, numera dando el conjunto más bajo</li>
+<li>C2: dos metilos → "2,2-"</li>
+<li>C3: un metilo → "3-"</li>
+<li>C4: un etilo → "4-ethyl"</li>
+<li>C5: dos metilos → "5,5-"</li>
+<li>C6: un metilo → "6-"</li>
+<li>Alfabetiza: ethyl(e) antes que methyl(m)</li>
+</ol>
+</div>
+<div class="mol-caja" data-smiles="CC(C)(C)C(C)C(CC)C(C)C(C)(C)CC" data-mol-id="og-h3"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-31', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-31">
+<div class="respuesta-final">✅ 4-ethyl-2,2,3,5,5,6-hexamethyloctane</div>
+<div class="leccion">💡 Sustituyentes iguales en el MISMO carbono repiten el número (ej. "2,2-dimethyl"). Alfabetiza ignorando siempre di-/tri-/tetra-/hexa-.</div>
+<div class="error-comun">⚠️ Alfabetizar por "hexamethyl" (la H) en vez de por "methyl" (la M) es el error #1 aquí.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto HC4 · C9H15BrI4</div>
+<div class="enunciado">Cadena de 7 carbonos con iodos, metilos y un bromo. Da su nombre IUPAC.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-h4-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-h4-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-h4-exp">Los halógenos se alfabetizan JUNTO con los alquilos: bromo(b) &lt; iodo(i) &lt; methyl(m).</div>
+<div class="toggle-contenido" id="og-h4-sol"><ol><li>7C → heptane</li><li>C2: 2I → "2,2-"</li><li>C3: 2CH₃ → "3,3-"</li><li>C4: 1Br → "4-"</li><li>C5: 2I → junto con C2="tetraiodo"</li><li>Alfabetiza: bromo, iodo, methyl</li></ol></div>
+<div class="mol-caja" data-smiles="CC(I)(I)C(C)(C)C(Br)C(I)(I)CC" data-mol-id="og-h4"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-32', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-32">
+<div class="respuesta-final">✅ 4-bromo-2,2,5,5-tetraiodo-3,3-dimethylheptane</div>
+<div class="leccion">💡 Cuenta cuántos átomos iguales hay en TOTAL en la molécula para elegir el prefijo multiplicador correcto.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Methylcyclohexane (nombre → estructura)</div>
+<div class="enunciado">El profesor dice: "methylcyclohexane" — dibuja la estructura.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-h5-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-h5-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-h5-exp">Con UN solo sustituyente en un anillo, NO se numera — se asume carbono 1 automáticamente.</div>
+<div class="toggle-contenido" id="og-h5-sol"><ol><li>Cyclohexane=anillo de 6C</li><li>Methyl=un -CH₃ en cualquier vértice</li></ol></div>
+<div class="mol-caja" data-smiles="CC1CCCCC1" data-mol-id="og-h5"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-33', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-33">
+<div class="respuesta-final">✅ Anillo de 6C con un -CH₃ en un vértice (methylcyclohexane)</div>
+<div class="leccion">💡 En anillos con UN sustituyente, jamás verás "1-methylcyclohexane" — el "1" se omite por innecesario.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto HC6 · C7H9Cl3I2 (diagrama usa Cl en vez de Br, ver nota)</div>
+<div class="enunciado">Anillo de 6C con múltiples halógenos y un metilo. Da su nombre IUPAC.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-h6-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-h6-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-h6-exp">Con DOS o más sustituyentes en anillo: numera empezando por el carbono con MÁS sustituyentes, dirección que dé el conjunto más bajo.</div>
+<div class="toggle-contenido" id="og-h6-sol"><ol><li>Carbono con 2 Br → C1</li><li>Vecino con 3er Br → C2 ("tribromo" en 1,1,2)</li><li>Dirección de números más bajos: C3=methyl, C4/C5=iodo</li></ol></div>
+<div class="mol-caja" data-smiles="ClC1(Cl)C(Cl)C(C)C(I)C(I)C1" data-mol-id="og-h6-note"></div>
+<div class="caja-advertencia">Nota: se usa Cl en el diagrama de demostración por limitaciones de render; la lógica de numeración es idéntica con Br.</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-34', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-34">
+<div class="respuesta-final">✅ 1,1,2-tribromo-4,5-diiodo-3-methylcyclohexane</div>
+<div class="leccion">💡 En anillos, la numeración empieza en el carbono MÁS sustituido, no arbitrariamente.</div>
+<div class="error-comun">⚠️ Usar "bromuro"(sal iónica Br⁻) en vez de "bromo"(sustituyente orgánico) — son conceptos distintos.</div>
+</div>
+</div>
+</div>
+
+<div class="problema">
+<div class="problema-header dif-1"><span>⭐ Básico</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto HC7 · C5H10</div>
+<div class="enunciado">Cadena de 5 carbonos con un doble enlace. Da su nombre IUPAC.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-h7-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-h7-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-h7-exp">Sufijo "-ene"=doble enlace. El número indica el carbono donde EMPIEZA el doble enlace (el más bajo de los dos).</div>
+<div class="toggle-contenido" id="og-h7-sol"><ol><li>5C→pent, doble enlace determina "-ene"</li><li>Numera dando número más bajo: cae en C2</li></ol></div>
+<div class="mol-caja" data-smiles="CC=CCC" data-mol-id="og-h7"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-35', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-35">
+<div class="respuesta-final">✅ 2-pentene (C₅H₁₀)</div>
+<div class="leccion">💡 A diferencia de alcanos, los alquenos se numeran para dar el número MÁS BAJO al doble enlace, sin importar sustituyentes.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">2-methyl-2-butene + hidrogenación</div>
+<div class="enunciado">Da el nombre del alqueno y el producto (con nombre) si reacciona con H₂/Pt.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-h8-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-h8-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-h8-exp">H₂/Pt convierte doble enlace en simple (hidrogenación). El sufijo pasa de "-ene" a "-ane", el esqueleto no cambia.</div>
+<div class="toggle-contenido" id="og-h8-sol"><ol><li>4C+doble en C2-C3="2-ene", metilo en C2</li><li>Nombre: 2-methyl-2-butene</li><li>Hidrogenar: agrega H a cada C del doble enlace</li></ol></div>
+<div class="mol-caja" data-smiles="CC=C(C)C" data-mol-id="og-h8a"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-36', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-36">
+<div class="respuesta-final">✅ 2-methyl-2-butene → (H₂/Pt) → 2-methylbutane</div>
+</div><div class="mol-caja" data-smiles="CC(C)CC" data-mol-id="og-h8b"></div>
+<div class="leccion">💡 Hidrogenar SIEMPRE convierte alqueno→alcano añadiendo 1H a cada carbono del doble enlace.</div>
+</div>
+</div>
+
+<div class="problema">
+<div class="problema-header dif-1"><span>⭐ Básico</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">2-butyne (nombre → estructura)</div>
+<div class="enunciado">El profesor dice: "2-butyne" — dibuja la estructura.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-h9-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-h9-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-h9-exp">Sufijo "-yne"=triple enlace, mismas reglas de numeración que alquenos.</div>
+<div class="toggle-contenido" id="og-h9-sol"><ol><li>But=4C, -yne=triple, "2-"=entre C2-C3</li></ol></div>
+<div class="mol-caja" data-smiles="CC#CC" data-mol-id="og-h9"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-37', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-37">
+<div class="respuesta-final">✅ CH₃-C≡C-CH₃ (2-butyne)</div>
+<div class="leccion">💡 El triple enlace ocupa 2 posiciones de valencia — esos carbonos no llevan H extra ni ramas ahí.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto HC10 · C7H7Cl</div>
+<div class="enunciado">Anillo aromático con un Cl. Da su nombre y explica qué pasaría con un segundo sustituyente en posición 4.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-h10-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-h10-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-h10-exp">Benceno=anillo de 6C con electrones deslocalizados. Un sustituyente=sin número. Dos=orto(1,2)/meta(1,3)/para(1,4).</div>
+<div class="toggle-contenido" id="og-h10-sol"><ol><li>Anillo azul=benceno</li><li>Un Cl → "chloro"+"benzene", sin número</li><li>Si hubiera 2do en posición 4 → "para"</li></ol></div>
+<div class="mol-caja" data-smiles="Clc1ccccc1" data-mol-id="og-h10"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-38', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-38">
+<div class="respuesta-final">✅ chlorobenzene</div>
+<div class="leccion">💡 Toluene, aniline y phenol son nombres comunes IUPAC aceptados — memorízalos, no siguen el patrón "sustituyente+benzene".</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto HC11 · C11H20 (dieno con empate — el más difícil de esta sección)</div>
+<div class="enunciado">Dieno ramificado con 11 carbonos totales. Da su nombre IUPAC completo.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-h11-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-h11-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-h11-exp">La cadena principal debe incluir el MÁXIMO número de dobles enlaces posible, aunque no sea la más "recta" visualmente. Cuando hay empate en ambos sentidos de numeración, el desempate lo deciden los sustituyentes.</div>
+<div class="toggle-contenido" id="og-h11-sol">
+<ol>
+<li>Cadena más larga que pase por AMBOS dobles enlaces: 6C → "hexadiene"; la rama propilo queda como sustituyente</li>
+<li>Numera de ambos extremos: dobles enlaces caen en 2,4 en ambos sentidos → empate</li>
+<li>Desempate por sustituyentes: el sentido que da números más bajos a metilo/propilo gana (2,3,4 en vez de 3,4,5)</li>
+<li>Metilo en C2, propilo en C3, metilo en C4. Dobles en C2=C3 y C4=C5</li>
+<li>Alfabetiza: methyl(m) antes que propyl(p)</li>
+</ol>
+</div>
+<div class="mol-caja" data-smiles="CC(C)=C(CCC)C(C)=CC" data-mol-id="og-h11"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-39', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-39">
+<div class="respuesta-final">✅ 2,4-dimethyl-3-propylhexa-2,4-diene (C₁₁H₂₀: 6+1+1+3=11 ✓)</div>
+<div class="leccion">💡 Cuando hay empate en los locantes de los dobles enlaces, el desempate lo hacen los sustituyentes — no vuelvas a mirar los dobles enlaces (ya estaban empatados).</div>
+<div class="error-comun">⚠️ Elegir como cadena principal la rama propilo (más "recta" a simple vista) en vez de la que realmente contiene ambos dobles enlaces.</div>
+</div>
+</div>
+</div>
+
+<h2 class="encabezado-seccion" id="og-basicos" data-nav-label="Básicos⭐">6. Reconocimiento Básico — 1 Grupo Funcional (20 compuestos)</h2>
+<div class="caja-concepto">Objetivo: identifica el único grupo funcional presente en cada molécula pequeña. Memoriza el <strong>patrón</strong>, no el ejemplo.</div>
+<div id="grid-basicos-21" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:14px 0;"></div>
+
+<h2 class="encabezado-seccion oculta-crisis" id="og-intermedios" data-nav-label="Intermedios⭐⭐">7. Reconocimiento Intermedio — 3-4 Grupos Funcionales</h2>
+<div class="caja-concepto oculta-crisis">Objetivo: identifica TODOS los grupos combinados en una misma molécula. Escanea la cadena de un extremo al otro.</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto D1 · C4H9ClO</div>
+<div class="enunciado">Identifica todos los grupos funcionales presentes y da el <strong>nombre IUPAC completo</strong> de esta molécula.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-i1-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-i1-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-i1-exp">Escaneo sistemático: revisa cada punta de la cadena por separado.</div>
+<div class="toggle-contenido" id="og-i1-sol"><ol><li>C1: -OH con H → alcohol</li><li>C4: -Cl en carbono sp3 → haloalcano</li></ol></div>
+<button class="toggle-btn" data-label="🏷️ Ver nombre IUPAC ▸" onclick="toggleCaja('og-i1-iupac', this)">🏷️ Ver nombre IUPAC ▸</button>
+<div class="toggle-contenido" id="og-i1-iupac">Grupo principal: alcohol (prioridad sobre haloalcano, que es prefijo). Cadena de 4C, OH en C1, Cl en C4.<br><strong>4-chlorobutan-1-ol</strong></div>
+<div class="mol-caja" data-smiles="OCCCCCl" data-mol-id="og-i1"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-40', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-40">
+<div class="respuesta-final">✅ Alcohol + Haloalkane → <strong>4-chlorobutan-1-ol</strong></div>
+<div class="leccion">💡 Grupos en extremos opuestos: revisa cada punta por separado.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto D2 · C6H10O3</div>
+<div class="enunciado">Identifica todos los grupos funcionales presentes (dos carbonilos distintos) y da el <strong>nombre IUPAC completo</strong>.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-i2-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-i2-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-i2-exp">Dos C=O distintos: revisa CADA UNO por separado con el árbol de decisión del carbonilo.</div>
+<div class="toggle-contenido" id="og-i2-sol"><ol><li>1er C=O: O-CH₃ al lado → éster</li><li>2do C=O: flanqueado solo por carbonos → cetona</li></ol></div>
+<button class="toggle-btn" data-label="🏷️ Ver nombre IUPAC ▸" onclick="toggleCaja('og-i2-iupac', this)">🏷️ Ver nombre IUPAC ▸</button>
+<div class="toggle-contenido" id="og-i2-iupac">Grupo principal: éster (mayor prioridad que cetona). Cadena de ácido: 5C con oxo en C4. Alcohol: metanol → "methyl".<br><strong>methyl 4-oxopentanoate</strong></div>
+<div class="mol-caja" data-smiles="COC(=O)CCC(=O)C" data-mol-id="og-i2"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-41', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-41">
+<div class="respuesta-final">✅ Ester + Ketone → <strong>methyl 4-oxopentanoate</strong></div>
+<div class="leccion">💡 "oxo-" indica cetona como sustituyente; "-oate" indica éster como grupo principal.</div>
+<div class="error-comun">⚠️ Asumir que ambos carbonilos son del mismo tipo sin revisar cada uno.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto D3 · C7H7NO2</div>
+<div class="enunciado">Identifica todos los grupos funcionales (anillo aromático con dos grupos) y da el <strong>nombre IUPAC completo</strong>.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-i3-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-i3-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-i3-exp">Grupos pegados directamente al anillo aromático se cuentan igual (amina aromática, ácido aromático).</div>
+<div class="toggle-contenido" id="og-i3-sol"><ol><li>Anillo de 6C con enlaces alternos → areno</li><li>N unido al anillo, sin carbonilo → amina</li><li>C=O con O-H, unido al anillo → ácido carboxílico</li></ol></div>
+<button class="toggle-btn" data-label="🏷️ Ver nombre IUPAC ▸" onclick="toggleCaja('og-i3-iupac', this)">🏷️ Ver nombre IUPAC ▸</button>
+<div class="toggle-contenido" id="og-i3-iupac">Grupo principal: ácido carboxílico (mayor prioridad que amina). Amina como prefijo "amino-" en posición 4 del anillo (para respecto al ácido).<br><strong>4-aminobenzoic acid</strong></div>
+<div class="mol-caja" data-smiles="Nc1ccc(cc1)C(=O)O" data-mol-id="og-i3"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-42', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-42">
+<div class="respuesta-final">✅ Amine + Arene + Carboxylic acid → <strong>4-aminobenzoic acid</strong></div>
+<div class="leccion">💡 Un grupo pegado directamente al anillo sigue contando igual que en cadena abierta.</div>
+</div></div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto D4 · C3H4O2</div>
+<div class="enunciado">Identifica todos los grupos funcionales (epóxido + aldehído) y da el <strong>nombre IUPAC completo</strong>.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-i4-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-i4-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-i4-exp">El epóxido casi siempre aparece como anillo pequeño "colgado" de la cadena principal.</div>
+<div class="toggle-contenido" id="og-i4-sol"><ol><li>Anillo de 3 con O → epóxido</li><li>C=O fuera del anillo, terminal → aldehído</li></ol></div>
+<button class="toggle-btn" data-label="🏷️ Ver nombre IUPAC ▸" onclick="toggleCaja('og-i4-iupac', this)">🏷️ Ver nombre IUPAC ▸</button>
+<div class="toggle-contenido" id="og-i4-iupac">Grupo principal: aldehído (mayor prioridad que epóxido). El anillo epóxido se nombra como "oxirane" con el aldehído como sustituyente "carbaldehyde" en C2.<br><strong>oxirane-2-carbaldehyde</strong></div>
+<div class="mol-caja" data-smiles="O=CC1CO1" data-mol-id="og-i4"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-43', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-43">
+<div class="respuesta-final">✅ Epoxide + Aldehyde → <strong>oxirane-2-carbaldehyde</strong></div>
+<div class="leccion">💡 Molécula pequeña pero con dos grupos funcionales bien diferenciados.</div>
+</div></div>
+</div>
+
+<h2 class="encabezado-seccion oculta-crisis oculta-urgente" id="og-avanzados" data-nav-label="Avanzados⭐⭐⭐">8. Reconocimiento Avanzado — 5-7 Grupos Funcionales</h2>
+<div class="caja-concepto oculta-crisis oculta-urgente">Moléculas densas, similares en escala a lo que el profesor puede pedir en el taller.</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto A · C13H12ClNO4</div>
+<div class="enunciado">Identifica TODOS los grupos funcionales de esta molécula con anillo aromático central, y da su <strong>nombre IUPAC completo</strong>.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-a1-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-a1-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<button class="toggle-btn" data-label="🏷️ Ver nombre IUPAC ▸" onclick="toggleCaja('og-a1-iupac', this)">🏷️ Ver nombre IUPAC ▸</button>
+<div class="toggle-contenido" id="og-a1-exp">Escaneo extremo a extremo, sin saltarte segmentos — 6 grupos distintos en una cadena con anillo central.</div>
+<div class="toggle-contenido" id="og-a1-sol">
+<ol>
+<li>Extremo izq: C≡N → nitrilo</li>
+<li>C=O flanqueado por carbonos → cetona</li>
+<li>Anillo de 6C con enlaces alternos → areno</li>
+<li>Otro lado del anillo: C=O con O-C → éster</li>
+<li>Cadena del lado alcohólico: -OH → alcohol</li>
+<li>Final de esa cadena: -Cl → haloalcano</li>
+</ol>
+</div>
+<div class="toggle-contenido" id="og-a1-iupac">Grupo principal: éster → sufijo "-oate". Cadena del ácido: anillo con cianoacetilo en posición 4. Cadena del alcohol: 3C con Cl en C3, OH en C2 (alfabético: chloro antes que hydroxy).<br><strong>3-chloro-2-hydroxypropyl 4-(2-cyanoacetyl)benzoate</strong></div>
+<div class="mol-caja" data-smiles="N#CCC(=O)c1ccc(cc1)C(=O)OCC(O)CCl" data-mol-id="og-a1"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-44', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-44">
+<div class="respuesta-final">✅ Nitrile, Ketone, Arene, Ester, Alcohol, Haloalkane (6 grupos)</div>
+<div class="leccion">💡 En moléculas grandes, recorre la cadena de un extremo al otro SIN saltarte segmentos.</div>
+<div class="error-comun">⚠️ Saltarse el escaneo del anillo aromático por estar "en medio" de la molécula.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-3"><span>⭐⭐⭐ Avanzado</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto B · C10H11NO3S</div>
+<div class="enunciado">Identifica TODOS los grupos funcionales (ácido, cetona, amida hacia anillo con azufre) y da su <strong>nombre IUPAC completo</strong>.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-a2-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-a2-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<button class="toggle-btn" data-label="🏷️ Ver nombre IUPAC ▸" onclick="toggleCaja('og-a2-iupac', this)">🏷️ Ver nombre IUPAC ▸</button>
+<div class="toggle-contenido" id="og-a2-exp">¡Cuidado! S-CH₃ (tioéter, sin H) es distinto de S-H (tiol). Verifica siempre si hay H libre sobre el heteroátomo.</div>
+<div class="toggle-contenido" id="og-a2-sol">
+<ol>
+<li>Extremo izq: C(=O)-OH → ácido carboxílico</li>
+<li>C central: C=O flanqueado por carbonos → cetona</li>
+<li>Siguiente C=O unido a N → amida</li>
+<li>N conecta a anillo aromático → areno (anilida)</li>
+<li>Otro lado del anillo: S unido a metilo (sin H) → tioéter, NO tiol</li>
+</ol>
+</div>
+<div class="toggle-contenido" id="og-a2-iupac">Grupo principal: ácido carboxílico → "-oic acid". Cadena: 3C con oxo en C3.<br><strong>3-oxo-3-{[4-(methylsulfanyl)phenyl]amino}propanoic acid</strong></div>
+<div class="mol-caja" data-smiles="OC(=O)CC(=O)Nc1ccc(SC)cc1" data-mol-id="og-a2"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-45', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-45">
+<div class="respuesta-final">✅ Carboxylic acid, Ketone, Amide, Arene, Thioether (no tiol)</div>
+<div class="leccion">💡 S-CH₃ (tioéter) ≠ S-H (tiol). Verifica siempre el H libre sobre el heteroátomo.</div>
+<div class="error-comun">⚠️ Etiquetar cualquier azufre como "tiol" sin verificar si tiene H libre.</div>
+</div>
+</div>
+</div>
+
+<h2 class="encabezado-seccion oculta-crisis oculta-urgente oculta-corto" id="og-supermoleculas" data-nav-label="🎯Súper-moléculas">9. EL EJERCICIO REAL DEL TALLER 🎯 — Súper-moléculas (10-12 grupos)</h2>
+<div class="caja-advertencia oculta-crisis oculta-urgente oculta-corto"><strong>⚠️ Esto es lo que el profesor va a poner en el taller.</strong> Practica las tres antes del examen — cada una tiene distribución distinta de grupos, así entrenas el método en vez de memorizar una sola estructura.</div>
+
+<div class="problema oculta-crisis oculta-urgente oculta-corto">
+<div class="problema-header dif-4"><span>⭐⭐⭐⭐ SÚPER-MOLÉCULA</span><span class="badge-meta">🎯 Formato real</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto C · C21H26ClN3O6S — 11 grupos funcionales</div>
+<div class="enunciado">Identifica los 11 grupos funcionales presentes, en el orden en que aparecen a lo largo de la cadena principal, y da el <strong>nombre IUPAC completo</strong> de la molécula.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-s1-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-s1-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<button class="toggle-btn" data-label="🏷️ Ver nombre IUPAC ▸" onclick="toggleCaja('og-s1-iupac', this)">🏷️ Ver nombre IUPAC ▸</button>
+<div class="toggle-contenido" id="og-s1-exp">Divide mentalmente la molécula en "zona izquierda del anillo" y "zona derecha del anillo". Mismo escaneo sistemático, más segmentos.</div>
+<div class="toggle-contenido" id="og-s1-sol">
+<ol>
+<li>Extremo izq: C≡N → <strong>Nitrile</strong></li>
+<li>C=O flanqueado por carbonos → <strong>Ketone</strong></li>
+<li>Anillo de 6C con enlaces alternos → <strong>Arene</strong></li>
+<li>Otro lado del anillo: C=O unido a N → <strong>Amide</strong></li>
+<li>Rama desde el N: S-H libre → <strong>Thiol</strong></li>
+<li>Continuando: C=O con O-C → <strong>Ester</strong></li>
+<li>Siguiente carbono: O-H libre → <strong>Alcohol</strong></li>
+<li>Siguiente segmento: O entre 2 carbonos sin H → <strong>Ether</strong></li>
+<li>Rama lateral: Cl en carbono sp3 → <strong>Haloalkane</strong></li>
+<li>Continuando: C=C → <strong>Alkene</strong></li>
+<li>Extremo final: N libre sin carbonilo → <strong>Amine</strong></li>
+</ol>
+</div>
+<div class="toggle-contenido" id="og-s1-iupac">Grupo principal: éster. Lado "ácido": -NH-C(=O)-[anillo con cianoacetilo] y -CH₂SH colgando. Lado "alcohol": 3C con -OH en C2, conectado por éter a cadena con Cl, alqueno y amina terminal.<br><strong>3-{[6-amino-1-(chloromethyl)hex-3-en-1-yl]oxy}-2-hydroxypropyl 2-{[4-(2-cyanoacetyl)phenyl]carbonylamino}-3-sulfanylpropanoate</strong></div>
+<div class="mol-caja" data-smiles="N#CCC(=O)c1ccc(cc1)C(=O)NC(CS)C(=O)OCC(O)COCC(Cl)C=CCN" data-mol-id="og-s1"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-46', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-46">
+<div class="respuesta-final">✅ Nitrile · Ketone · Arene · Amide · Thiol · Ester · Alcohol · Ether · Haloalkane · Alkene · Amine (11 grupos)</div>
+<div class="leccion">💡 Una molécula "gigante" no es más difícil — es solo más pasos del MISMO método. El anillo aromático es tu punto de referencia central.</div>
+<div class="error-comun">⚠️ Intentar leer toda la molécula de un vistazo en vez de recorrerla segmento por segmento. Marca (✓) cada grupo ya identificado.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente oculta-corto">
+<div class="problema-header dif-4"><span>⭐⭐⭐⭐ SÚPER-MOLÉCULA</span><span class="badge-meta">🎯 Formato real</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto E · C30H28ClN5O4S — 12 grupos funcionales (3 anillos)</div>
+<div class="enunciado">Tres anillos aromáticos: los dos primeros conectados por puente azo (N=N), el tercero por amida. Identifica los 12 grupos funcionales y da el <strong>nombre IUPAC completo</strong>.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-s2-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-s2-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<button class="toggle-btn" data-label="🏷️ Ver nombre IUPAC ▸" onclick="toggleCaja('og-s2-iupac', this)">🏷️ Ver nombre IUPAC ▸</button>
+<div class="toggle-contenido" id="og-s2-exp">Divide en "zona 1" (antes del 1er anillo), "zona 2" (entre anillos, con el puente azo), "zona 3" (después del 3er anillo, con la cadena final).</div>
+<div class="toggle-contenido" id="og-s2-sol">
+<ol>
+<li>Zona 1: C≡N → Nitrile</li>
+<li>C=O flanqueado por carbonos → Ketone</li>
+<li>Anillo #1 → Arene</li>
+<li>Puente N=N → Azo compound</li>
+<li>Anillo #2 (mismo grupo, no doble conteo) → Arene</li>
+<li>C=O unido a N → Amide</li>
+<li>Carbono con NH₂ libre (no es parte de la amida) → Amine</li>
+<li>N/carbono conecta a anillo #3 → Arene</li>
+<li>O entre anillo y cadena → Ether</li>
+<li>Carbono con Cl → Haloalkane</li>
+<li>Rama con S-H libre → Thiol</li>
+<li>C=C en la cadena final → Alkene</li>
+<li>C=O terminal con H → Aldehyde</li>
+</ol>
+</div>
+<div class="toggle-contenido" id="og-s2-iupac">Grupo principal: amida (mayor prioridad frente a cetona/aldehído en esta cadena). El "ácido" de la amida es el anillo con cianoacetilo+azo; el "amina" del N-sustituyente lleva la cadena con el resto de grupos.<br><strong>N-(2-amino-2-{4-[(4-cyanoacetylphenyl)diazenyl]... phenyl}ethyl)-4-{[(2-chloro-3-sulfanyl-4-oxobut-2-en-1-yl)oxy]phenyl}benzamide</strong><br><span style="font-size:0.82rem;color:var(--texto-sec);">(nombre denso de nivel taller — lo importante para el examen es nombrar CADA segmento correctamente, como en el toggle de solución, más que memorizar la cadena completa de un tirón)</span></div>
+<div class="mol-caja" data-smiles="N#CCC(=O)c1ccc(N=Nc2ccc(cc2)C(=O)NCC(N)c3ccc(OCC(Cl)C(CS)=CC=O)cc3)cc1" data-mol-id="og-s2"></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-47', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="resp-auto-47">
+<div class="respuesta-final">✅ Nitrile · Ketone · Arene(×3) · Azo · Amide · Amine · Ether · Haloalkane · Thiol · Alkene · Aldehyde (12 grupos, verificado con RDKit/SMARTS)</div>
+<div class="leccion">💡 Cuando hay VARIOS anillos, cada uno cuenta como una instancia del MISMO grupo (areno) — no los sumes como grupos distintos.</div>
+<div class="error-comun">⚠️ Contar "arene" tres veces como si fueran grupos distintos. Es un solo tipo que aparece tres veces.</div>
+</div>
+</div>
+</div>
+
+<h2 class="encabezado-seccion" id="og-cheatsheet" data-nav-label="Cheatsheet">📋 CHEATSHEET FINAL — Orgánica</h2>
+<div class="cheatsheet">
+<div class="bloque-cheat"><h4>🔑 21 Grupos por categoría</h4>Hidrocarburo: alkane(-ane)/alkene(-ene)/alkyne(-yne) · Oxígeno: alcohol(-ol)/ether(-oxy-)/epoxide · Halógeno: haloalkane(halo-) · Carbonilo: aldehyde(-al)/ketone(-one)/acid(-oic acid)/anhydride/ester(-oate)/amide/acyl halide · Nitrógeno: amine/nitrile/imine/isocyanate/azo · Azufre: thiol · Aromático: arene</div>
+<div class="bloque-cheat"><h4>🌳 Árbol del carbonilo</h4>¿Ves C=O? → nada extra=cetona/aldehído · -OH=ácido · -O-C=ester · -N=amida · -X=haluro de acilo · -O-C(=O)-=anhídrido</div>
+<div class="bloque-cheat"><h4>🔤 Sufijos numéricos</h4>Meth(1)·Eth(2)·Prop(3)·But(4)·Pent(5)·Hex(6)·Hept(7)·Oct(8)·Non(9)·Dec(10) — "My Elephant Plays But Please Help Others Not Die"</div>
+<div class="bloque-cheat"><h4>📐 Método IUPAC 5 pasos</h4>1.Grupo principal(prioridad) 2.Cadena más larga que lo contenga 3.Numerar(localizador más bajo al grupo principal) 4.Sustituyentes alfabético 5.Ensamblar: [prefijos]+[cadena]+[sufijo]</div>
+<div class="bloque-cheat"><h4>⚖️ Orden de prioridad IUPAC</h4>Ácido &gt; Anhídrido &gt; Éster &gt; Haluro de acilo &gt; Amida &gt; Nitrilo &gt; Aldehído &gt; Cetona &gt; Alcohol &gt; Amina &gt; (alqueno/éter/haloalcano/tiol = siempre prefijo)</div>
+<div class="bloque-cheat"><h4>🔍 Escaneo sistemático</h4>1° N y S (raros, saltan a la vista) → 2° C=O (define familia carbonilo) → 3° enlaces C-C simples/dobles/triples. Recorre de extremo a extremo, sin saltarte segmentos.</div>
+<div class="bloque-cheat"><h4>🚫 Errores fatales</h4>Ester≠Ácido(-O-R vs -OH) · Imina(C=N)≠Nitrilo(C≡N) · S-CH₃(tioéter)≠S-H(tiol) · "Bromuro" NO es sustituyente orgánico (es "bromo") · Alfabetizar ignorando di-/tri-/tetra-</div>
+<div class="bloque-cheat"><h4>💍 Numeración de anillos</h4>1 sustituyente = sin número. 2+ sustituyentes = numera desde el carbono MÁS sustituido, dirección de números más bajos.</div>
+</div>
+
+</div>
+
+</div><!-- fin contenido -->
+
+<div class="footer-doc">⚗️ Química 12vo · Instituto Bern Bautista Bilingüe · Guía Maestra Redox &amp; Orgánica · Examen Trimestral 2026</div>
+
+<div id="toc-lateral"><h4>📑 En esta sección</h4><div id="toc-lateral-links"></div></div>
+<button id="toc-movil-btn" onclick="toggleTocMovil()">📑</button>
+<div id="toc-movil-panel"></div>
+
+<button id="minimapa-toggle" onclick="toggleMinimapa()">🗺️</button>
+<div id="minimapa" style="display:none;"><div id="minimapa-puntos"></div></div>
+
+<script>
+/* ============================================================
+   INFRAESTRUCTURA: temas, modos de tiempo, navegación 3 capas
+   ============================================================ */
+
+let temaActivo = 'redox';
+
+function cambiarTema(tema){
+  temaActivo = tema;
+  document.querySelectorAll('.btn-tema').forEach(b=>b.classList.toggle('activo', b.dataset.tema===tema));
+  document.querySelectorAll('.tema-seccion').forEach(s=>s.classList.remove('visible'));
+  document.getElementById('tema-'+tema).classList.add('visible');
+  reconstruirNavegacion();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function cambiarModo(modo){
+  document.body.className = document.body.className.replace(/modo-\w+/g,'').trim();
+  document.body.classList.add('modo-'+modo);
+  document.querySelectorAll('.btn-modo').forEach(b=>b.classList.toggle('activo', b.dataset.modo===modo));
+  reconstruirNavegacion();
+}
+
+/* ---- Toggles independientes por problema ---- */
+function toggleCaja(id, btn){
+  const caja = document.getElementById(id);
+  caja.classList.toggle('abierto');
+  btn.classList.toggle('abierto');
+  const base = btn.dataset.label;
+  btn.innerHTML = (caja.classList.contains('abierto') ? base.replace('▸','▾').replace('Ver','Ocultar') : base);
+}
+
+/* ---- Capa 1: scroll spy en barra superior ---- */
+function reconstruirNavegacion(){
+  const nav = document.getElementById('nav-scroll');
+  const tocLat = document.getElementById('toc-lateral-links');
+  const tocMovil = document.getElementById('toc-movil-panel');
+  nav.innerHTML=''; tocLat.innerHTML=''; tocMovil.innerHTML='';
+
+  const activo = document.getElementById('tema-'+temaActivo);
+  const encabezados = activo.querySelectorAll('h2.encabezado-seccion:not(.oculta-crisis.modo-oculto), h2.encabezado-seccion');
+  const visibles = Array.from(activo.querySelectorAll('h2.encabezado-seccion')).filter(h=>{
+    return h.offsetParent !== null || getComputedStyle(h).display !== 'none';
+  });
+
+  visibles.forEach(h=>{
+    if(!h.id) return;
+    const label = h.dataset.navLabel || h.textContent.trim().slice(0,18);
+    const a1 = document.createElement('a'); a1.href='#'+h.id; a1.textContent=label; a1.dataset.target=h.id;
+    nav.appendChild(a1);
+    const a2 = document.createElement('a'); a2.href='#'+h.id; a2.textContent=h.textContent.trim(); a2.dataset.target=h.id;
+    tocLat.appendChild(a2);
+    const a3 = document.createElement('a'); a3.href='#'+h.id; a3.textContent=h.textContent.trim();
+    a3.onclick=()=>toggleTocMovil();
+    tocMovil.appendChild(a3);
+  });
+  observarSecciones();
+  construirMinimapa();
+}
+
+let observer;
+function observarSecciones(){
+  if(observer) observer.disconnect();
+  const encabezados = document.querySelectorAll('#tema-'+temaActivo+' h2.encabezado-seccion');
+  observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      const id = entry.target.id;
+      const linksNav = document.querySelectorAll('#nav-scroll a[data-target="'+id+'"]');
+      const linksToc = document.querySelectorAll('#toc-lateral-links a[data-target="'+id+'"]');
+      if(entry.isIntersecting){
+        document.querySelectorAll('#nav-scroll a').forEach(a=>a.classList.remove('activo'));
+        document.querySelectorAll('#toc-lateral-links a').forEach(a=>a.classList.remove('activo'));
+        linksNav.forEach(a=>a.classList.add('activo'));
+        linksToc.forEach(a=>a.classList.add('activo'));
+      }
+    });
+  }, {rootMargin:'-140px 0px -70% 0px'});
+  encabezados.forEach(h=>observer.observe(h));
+}
+
+/* ---- Capa 2: TOC móvil toggle ---- */
+function toggleTocMovil(){
+  document.getElementById('toc-movil-panel').classList.toggle('abierto');
+}
+
+/* ---- Capa 3: minimapa de progreso ---- */
+function toggleMinimapa(){
+  const m = document.getElementById('minimapa');
+  m.style.display = (m.style.display==='none') ? 'block' : 'none';
+}
+let miniObserver;
+function construirMinimapa(){
+  const cont = document.getElementById('minimapa-puntos');
+  cont.innerHTML='';
+  const problemas = document.querySelectorAll('#tema-'+temaActivo+' .problema');
+  if(miniObserver) miniObserver.disconnect();
+  miniObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const idx = Array.from(problemas).indexOf(entry.target);
+        const punto = cont.children[idx];
+        if(punto) punto.classList.add('visitado');
+      }
+    });
+  }, {threshold:0.3});
+  problemas.forEach((p,i)=>{
+    const dot = document.createElement('div');
+    dot.className='punto-mini';
+    dot.dataset.tip = 'Problema ' + (i+1);
+    dot.onclick = ()=> p.scrollIntoView({behavior:'smooth', block:'center'});
+    cont.appendChild(dot);
+    miniObserver.observe(p);
+  });
+}
+
+window.addEventListener('load', ()=>{
+  reconstruirNavegacion();
+  construirGrids();
+  iniciarRDKit();
+  dibujarDiagramasSVG();
+});
+
+/* ============================================================
+   DIAGRAMAS SVG — Celdas voltaicas (dibujados a mano, verificados)
+   ============================================================ */
+function svgCelda(anodoLabel, catodoLabel, anodoSol, catodoSol, eLabel){
+  return `
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:640px;">
+  <rect x="0" y="0" width="640" height="320" fill="#fafafa" rx="8"/>
+  <!-- Vaso izquierdo (ánodo) -->
+  <path d="M60,80 L60,260 Q60,275 75,275 L215,275 Q230,275 230,260 L230,80" fill="#eaf2ff" stroke="#1d4ed8" stroke-width="2.5"/>
+  <!-- Vaso derecho (cátodo) -->
+  <path d="M410,80 L410,260 Q410,275 425,275 L565,275 Q580,275 580,260 L580,80" fill="#eaf2ff" stroke="#1d4ed8" stroke-width="2.5"/>
+  <!-- Electrodo ánodo -->
+  <rect x="130" y="40" width="14" height="150" fill="#64748b" stroke="#334155" stroke-width="1.5"/>
+  <!-- Electrodo cátodo -->
+  <rect x="480" y="40" width="14" height="150" fill="#f59e0b" stroke="#92400e" stroke-width="1.5"/>
+  <!-- Puente salino -->
+  <path d="M230,110 Q320,40 410,110" fill="none" stroke="#94a3b8" stroke-width="16" stroke-linecap="round"/>
+  <path d="M230,110 Q320,40 410,110" fill="none" stroke="#cbd5e1" stroke-width="10" stroke-linecap="round"/>
+  <text x="320" y="55" text-anchor="middle" font-size="11" fill="#475569" font-family="sans-serif">puente salino</text>
+  <!-- Cable superior con voltimetro -->
+  <line x1="137" y1="40" x2="290" y2="20" stroke="#1e293b" stroke-width="2"/>
+  <line x1="487" y1="40" x2="350" y2="20" stroke="#1e293b" stroke-width="2"/>
+  <circle cx="320" cy="20" r="18" fill="#fff" stroke="#1e293b" stroke-width="2"/>
+  <text x="320" y="25" text-anchor="middle" font-size="14" fill="#1e293b" font-weight="700">V</text>
+  <!-- Flecha de electrones -->
+  <path d="M170,10 L300,10" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#dc2626"/></marker></defs>
+  <text x="235" y="8" text-anchor="middle" font-size="10" fill="#dc2626" font-family="sans-serif">e⁻</text>
+  <!-- Etiquetas -->
+  <text x="145" y="290" text-anchor="middle" font-size="15" fill="#1d4ed8" font-weight="700" font-family="sans-serif">ÁNODO (−)</text>
+  <text x="145" y="305" text-anchor="middle" font-size="12" fill="#1e3a8a" font-family="sans-serif">${anodoLabel}</text>
+  <text x="145" y="230" text-anchor="middle" font-size="12" fill="#334155" font-family="sans-serif">${anodoSol}</text>
+  <text x="495" y="290" text-anchor="middle" font-size="15" fill="#b45309" font-weight="700" font-family="sans-serif">CÁTODO (+)</text>
+  <text x="495" y="305" text-anchor="middle" font-size="12" fill="#78350f" font-family="sans-serif">${catodoLabel}</text>
+  <text x="495" y="230" text-anchor="middle" font-size="12" fill="#334155" font-family="sans-serif">${catodoSol}</text>
+  <text x="320" y="200" text-anchor="middle" font-size="11" fill="#64748b" font-family="sans-serif" font-style="italic">${eLabel}</text>
+</svg>`;
+}
+
+function dibujarDiagramasSVG(){
+  const generica = document.getElementById('svg-celda-generica');
+  if(generica) generica.innerHTML = svgCelda('Metal A (más activo)','Metal B (menos activo)','A²⁺(aq)','B²⁺(aq)','e⁻ fluyen: ánodo → alambre → cátodo');
+  const znCu = document.getElementById('svg-celda-znCu');
+  if(znCu) znCu.innerHTML = svgCelda('Zn(s)','Cu(s)','Zn²⁺(aq)','Cu²⁺(aq)','Zn pierde 2e⁻ · Cu²⁺ gana 2e⁻');
+  const cuAg = document.getElementById('svg-celda-cuAg');
+  if(cuAg) cuAg.innerHTML = svgCelda('Cu(s)','Ag(s)','Cu²⁺(aq)','Ag⁺(aq)','Cu pierde 2e⁻ · 2Ag⁺ ganan 2e⁻');
+}
+
+/* ============================================================
+   RDKit.js — renderiza todas las .mol-caja[data-smiles]
+   ============================================================ */
+let RDKitReady = null;
+function iniciarRDKit(){
+  if (typeof window.initRDKitModule !== 'function'){
+    document.querySelectorAll('.mol-caja[data-smiles]').forEach(el=>{
+      el.innerHTML = '<span style="font-size:0.78rem;color:#9ca3af;">RDKit no cargó (sin conexión al CDN). Abre el archivo .html directamente en tu navegador.</span>';
+    });
+    return;
+  }
+  window.initRDKitModule().then(function(RDKitModule){
+    RDKitReady = RDKitModule;
+    renderizarTodasLasMoleculas();
+  }).catch(function(err){
+    console.error('Error cargando RDKit:', err);
+  });
+}
+function renderizarTodasLasMoleculas(){
+  document.querySelectorAll('.mol-caja[data-smiles]').forEach(el=>{
+    const smiles = el.dataset.smiles;
+    try{
+      const mol = RDKitReady.get_mol(smiles);
+      const svg = mol.get_svg_with_highlights(JSON.stringify({bondLineWidth:2}));
+      el.innerHTML = forzarMonocromo(svg);
+      mol.delete();
+    }catch(e){
+      el.innerHTML = '<span style="font-size:0.78rem;color:#dc2626;">Error SMILES: '+e.message+'</span>';
+    }
+  });
+}
+
+/* Post-procesa el SVG de RDKit para forzar TODO a negro/gris (sin colores por átomo).
+   RDKit.js (get_svg_with_highlights) no expone useBWAtomPalette vía JSON en la API JS,
+   así que se reescriben aquí los colores reales que RDKit emite: hex de 6 dígitos
+   dentro de style="..." (stroke:#FF0000) y como atributo fill='#FF0000' con comillas simples. */
+function forzarMonocromo(svgString){
+  let s = svgString;
+  const negro = '#1A1A1A';
+  const blanco = '#FFFFFF';
+  const reemplazaHex = (hex) => (hex.toUpperCase() === 'FFFFFF' ? blanco : negro);
+  // Dentro de atributos style="...fill:#RRGGBB..." o "...stroke:#RRGGBB..."
+  s = s.replace(/(fill|stroke):#([0-9A-Fa-f]{6})/g, (m, prop, hex) => `${prop}:${reemplazaHex(hex)}`);
+  // Como atributo directo fill='#RRGGBB' o fill="#RRGGBB" (comillas simples o dobles)
+  s = s.replace(/fill=(['"])#([0-9A-Fa-f]{6})\1/g, (m, q, hex) => `fill=${q}${reemplazaHex(hex)}${q}`);
+  s = s.replace(/stroke=(['"])#([0-9A-Fa-f]{6})\1/g, (m, q, hex) => `stroke=${q}${reemplazaHex(hex)}${q}`);
+  return s;
+}
+
+/* ============================================================
+   GRID 21 GRUPOS FUNCIONALES + GRID BÁSICOS (generados por JS)
+   ============================================================ */
+const GRUPOS_21 = [
+  {cat:"Hidrocarburo", smiles:"CCC", nombre:"ALKANE", suf:"-ane · propane"},
+  {cat:"Hidrocarburo", smiles:"CC=C", nombre:"ALKENE", suf:"-ene · propene"},
+  {cat:"Hidrocarburo", smiles:"CC#C", nombre:"ALKYNE", suf:"-yne · propyne"},
+  {cat:"Oxígeno", smiles:"CCO", nombre:"ALCOHOL", suf:"-ol · ethanol"},
+  {cat:"Oxígeno", smiles:"CCOCC", nombre:"ETHER", suf:"-oxy- · ethoxyethane"},
+  {cat:"Oxígeno", smiles:"C1CO1", nombre:"EPOXIDE", suf:"-ene oxide"},
+  {cat:"Halógeno", smiles:"CCCl", nombre:"HALOALKANE", suf:"halo- · chloroethane"},
+  {cat:"Carbonilo", smiles:"CC=O", nombre:"ALDEHYDE", suf:"-al · ethanal"},
+  {cat:"Carbonilo", smiles:"CC(=O)C", nombre:"KETONE", suf:"-one · propanone"},
+  {cat:"Carbonilo", smiles:"CC(=O)O", nombre:"CARBOXYLIC ACID", suf:"-oic acid"},
+  {cat:"Carbonilo", smiles:"CC(=O)OC(=O)C", nombre:"ACID ANHYDRIDE", suf:"-oic anhydride"},
+  {cat:"Carbonilo", smiles:"COC(=O)C", nombre:"ESTER", suf:"-yl -oate"},
+  {cat:"Carbonilo", smiles:"CC(=O)N", nombre:"AMIDE", suf:"-amide"},
+  {cat:"Carbonilo", smiles:"CC(=O)Cl", nombre:"ACYL HALIDE", suf:"-oyl halide"},
+  {cat:"Nitrógeno", smiles:"CCN", nombre:"AMINE", suf:"-amine"},
+  {cat:"Nitrógeno", smiles:"CC#N", nombre:"NITRILE", suf:"-nitrile"},
+  {cat:"Nitrógeno", smiles:"CC=N", nombre:"IMINE", suf:"-imine"},
+  {cat:"Nitrógeno", smiles:"CCN=C=O", nombre:"ISOCYANATE", suf:"-yl isocyanate"},
+  {cat:"Nitrógeno", smiles:"CC/N=N/CC", nombre:"AZO COMPOUND", suf:"azo-"},
+  {cat:"Azufre", smiles:"CCS", nombre:"THIOL", suf:"-thiol"},
+  {cat:"Aromático", smiles:"CCc1ccccc1", nombre:"ARENE", suf:"-yl benzene"},
+];
+
+const BASICOS_20 = [
+  {smiles:"C=CC", nombre:"Propene", grupo:"Alkene"},
+  {smiles:"C#CC", nombre:"Propyne", grupo:"Alkyne"},
+  {smiles:"CCCO", nombre:"Propan-1-ol", grupo:"Alcohol"},
+  {smiles:"CCOCC", nombre:"Ethoxyethane", grupo:"Ether"},
+  {smiles:"C1CO1", nombre:"Ethylene oxide", grupo:"Epoxide"},
+  {smiles:"CCCCl", nombre:"1-chloropropane", grupo:"Haloalkane"},
+  {smiles:"CCC=O", nombre:"Propanal", grupo:"Aldehyde"},
+  {smiles:"CC(=O)CC", nombre:"Butan-2-one", grupo:"Ketone"},
+  {smiles:"CCC(=O)O", nombre:"Propanoic acid", grupo:"Carboxylic acid"},
+  {smiles:"CC(=O)OC(=O)C", nombre:"Ethanoic anhydride", grupo:"Anhydride"},
+  {smiles:"COC(=O)C", nombre:"Methyl ethanoate", grupo:"Ester"},
+  {smiles:"CC(=O)N", nombre:"Ethanamide", grupo:"Amide"},
+  {smiles:"CC(=O)Cl", nombre:"Ethanoyl chloride", grupo:"Acyl halide"},
+  {smiles:"CCCN", nombre:"Propan-1-amine", grupo:"Amine"},
+  {smiles:"CCC#N", nombre:"Propanenitrile", grupo:"Nitrile"},
+  {smiles:"CCC=N", nombre:"Propanimine", grupo:"Imine"},
+  {smiles:"CCN=C=O", nombre:"Ethyl isocyanate", grupo:"Isocyanate"},
+  {smiles:"CC/N=N/CC", nombre:"Azoethane", grupo:"Azo compound"},
+  {smiles:"CCS", nombre:"Ethanethiol", grupo:"Thiol"},
+  {smiles:"Cc1ccccc1", nombre:"Toluene", grupo:"Arene"},
+];
+
+function construirGrids(){
+  const grid21 = document.getElementById('grid-21-grupos');
+  if(grid21){
+    GRUPOS_21.forEach((g,i)=>{
+      const div = document.createElement('div');
+      div.style.cssText = "border:1px solid var(--borde);border-radius:8px;padding:10px;text-align:center;font-size:0.75rem;background:#fff;";
+      div.innerHTML = `<div style="font-size:0.65rem;color:var(--texto-sec);margin-bottom:4px;">${g.cat}</div>
+        <div class="mol-caja" data-smiles="${g.smiles}" style="min-height:90px;padding:4px;"></div>
+        <div style="font-weight:700;margin-top:4px;">${g.nombre}</div>
+        <div style="color:var(--texto-sec);font-size:0.68rem;">${g.suf}</div>`;
+      grid21.appendChild(div);
+    });
+  }
+  const gridB = document.getElementById('grid-basicos-21');
+  if(gridB){
+    BASICOS_20.forEach((b,i)=>{
+      const num = i+1;
+      const idExp = 'bas-exp-'+num, idResp = 'bas-resp-'+num;
+      const div = document.createElement('div');
+      div.className='problema';
+      div.style.cssText="margin:0;";
+      div.innerHTML = `
+        <div class="problema-header dif-1" style="font-size:0.78rem;padding:6px 10px;"><span>⭐ P${num}</span></div>
+        <div class="problema-body" style="padding:8px 10px;">
+          <div class="nombre-ingles" style="font-size:0.72rem;">Compuesto P${num}</div>
+          <div class="enunciado" style="font-size:0.78rem;">¿Qué grupo funcional está presente?</div>
+          <div class="mol-caja" data-smiles="${b.smiles}" style="min-height:100px;"></div>
+          <button class="toggle-btn" data-label="🧠 Ver ▸" onclick="toggleCaja('${idExp}', this)" style="font-size:0.7rem;padding:3px 8px;">🧠 Ver ▸</button>
+          <div class="toggle-contenido" id="${idExp}" style="font-size:0.75rem;">Reconoce el patrón de átomos característico — no necesitas el nombre para identificarlo.</div>
+          <button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('${idResp}', this)" style="font-size:0.7rem;padding:3px 8px;">✅ Ver respuesta ▸</button>
+          <div class="toggle-contenido" id="${idResp}" style="font-size:0.75rem;">
+            <div class="respuesta-final" style="font-size:0.78rem;padding:5px 8px;">✅ ${b.grupo} <span style="font-weight:400;">(${b.nombre})</span></div>
+          </div>
+        </div>`;
+      gridB.appendChild(div);
+    });
+  }
+}
+</script>
+
+</body>
+</html>
