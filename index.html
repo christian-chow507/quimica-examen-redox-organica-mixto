@@ -896,11 +896,31 @@ body.modo-corto .oculta-corto{ display:none !important; }
 <div class="toggle-contenido" id="rx-p9-exp">Mn: +7→+4 (REDUCCIÓN, 3e⁻). N: −3→+5 en NO₃⁻ (OXIDACIÓN, 8e⁻ — el salto más grande común). NH₃ es covalente, NUNCA se ioniza.</div>
 <div class="toggle-contenido" id="rx-p9-sol">
 <ol>
-<li>Red: 3e⁻+2H₂O+MnO₄⁻→MnO₂+4OH⁻ | Ox: 9OH⁻+NH₃→NO₃⁻+6H₂O+8e⁻</li>
-<li>MCM(3,8)=24 → Red×8, Ox×3 (coeficientes grandes son correctos)</li>
-<li>Red×8: 24e⁻+16H₂O+8MnO₄⁻→8MnO₂+32OH⁻</li>
-<li>Ox×3: 27OH⁻+3NH₃→3NO₃⁻+18H₂O+24e⁻</li>
-<li>Cancelar 24e⁻, simplificar H₂O y OH⁻ → Molecular: <strong>8KMnO₄ + 3NH₃ → 8MnO₂ + 3KNO₃ + 5KOH + 2H₂O</strong></li>
+<li><strong>Separa las dos semirreacciones:</strong> Reducción: MnO₄⁻ → MnO₂ (Mn: +7→+4) | Oxidación: NH₃ → NO₃⁻ (N: −3→+5). NH₃ es covalente y NUNCA se ioniza — va entero.</li>
+<li class="oculta-crisis"><strong>Balancea Mn (átomo que cambia) en la reducción:</strong> ya hay 1 Mn en cada lado — sin coeficiente necesario.</li>
+<li><strong>Cuenta el O:</strong> reactivo (MnO₄⁻) tiene 4 O; producto (MnO₂) tiene 2 O. Sobran 2 O en el reactivo.</li>
+<li><strong>En medio básico, balancea el O agregando H₂O al lado que le falta</strong> (al producto, que tiene menos O): MnO₄⁻ → MnO₂ + 2H₂O <span style="font-size:0.85em;color:var(--texto-sec);">(nota: aquí se usa H₂O y no OH⁻ porque el reactivo ya tiene el O de sobra — la técnica de "agregar OH⁻" se usa cuando falta O, como en el paso siguiente)</span></li>
+<li class="oculta-crisis"><strong>Cuenta los H que aparecieron:</strong> 2H₂O aportan 4 H al producto; el reactivo no tiene H todavía.</li>
+<li><strong>En medio básico, agrega OH⁻ al reactivo</strong> (que tiene menos H) y compensa con H₂O adicional en el otro lado si hace falta: 2H₂O + MnO₄⁻ → MnO₂ + 4OH⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(los 4H que sobraban en el producto ahora quedan como 4OH⁻, y el reactivo aporta el H que faltaba desde 2H₂O)</span></li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> Mn:1=1 ✓ · O:4+2=6, 2+4=6 ✓ · H:2×2=4, 4×1=4 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = 0+(−1) = −1. Derecha = 0+4(−1) = −4. Diferencia de 3.</li>
+<li><strong>Agrega 3e⁻ al lado más positivo</strong> (a la izquierda, −1 frente a −4): 3e⁻ + 2H₂O + MnO₄⁻ → MnO₂ + 4OH⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=−3+0+(−1)=−4, der=−4 ✓)</span></li>
+<li class="oculta-crisis"><strong>Ahora la oxidación — balancea N (átomo que cambia):</strong> ya hay 1 N en cada lado — sin coeficiente necesario.</li>
+<li><strong>Cuenta el O:</strong> reactivo (NH₃) no tiene O; producto (NO₃⁻) tiene 3 O. Faltan 3 O netos en el reactivo.</li>
+<li class="oculta-crisis"><strong>En medio básico, cuando falta O, se agrega OH⁻</strong> (cada OH⁻ aporta 1 O y 1 H) — pero cada O que necesitas en el producto final "cuesta" 2 OH⁻ en el reactivo, porque el H extra debe convertirse en H₂O del otro lado. Para 3 O netos se necesitan 9 OH⁻ (no 3), como verás en el siguiente paso.</li>
+<li><strong>Agrega 9OH⁻ al reactivo y 6H₂O al producto</strong> para que todo cierre: NH₃ + 9OH⁻ → NO₃⁻ + 6H₂O <span style="font-size:0.85em;color:var(--texto-sec);">(los 9 O de 9OH⁻ se reparten en 3 para el NO₃⁻ y 6 para los 6H₂O; los 9 H de 9OH⁻ más los 3 H del NH₃ dan 12 H, que coinciden con los 6H₂O×2H=12H del producto)</span></li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> N:1=1 ✓ · O:9=3+6=9 ✓ · H:3+9=12, 6×2=12 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = 0+9(−1) = −9. Derecha = −1+0 = −1. Diferencia de 8.</li>
+<li><strong>Agrega 8e⁻ al lado más positivo</strong> (a la derecha, −1 frente a −9): NH₃ + 9OH⁻ → NO₃⁻ + 6H₂O + 8e⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=−9, der=−1+0+(−8)=−9 ✓)</span></li>
+<li><strong>Compara electrones:</strong> reducción consume 3e⁻, oxidación produce 8e⁻ — no coinciden. Calcula MCM(3,8)=24 (coeficientes grandes, pero correctos — no los reduzcas).</li>
+<li><strong>Multiplica la reducción completa ×8</strong> (3e⁻×8=24e⁻): 3e⁻×8=24e⁻ + 2H₂O×8=16H₂O + MnO₄⁻×8=8MnO₄⁻ → MnO₂×8=8MnO₂ + 4OH⁻×8=32OH⁻. Resultado: 24e⁻+16H₂O+8MnO₄⁻ → 8MnO₂+32OH⁻</li>
+<li><strong>Multiplica la oxidación completa ×3</strong> (8e⁻×3=24e⁻): NH₃×3=3NH₃ + 9OH⁻×3=27OH⁻ → NO₃⁻×3=3NO₃⁻ + 6H₂O×3=18H₂O + 8e⁻×3=24e⁻. Resultado: 3NH₃+27OH⁻ → 3NO₃⁻+18H₂O+24e⁻</li>
+<li class="oculta-crisis"><strong>Verifica que ambas manejan 24e⁻ ahora:</strong> reducción consume 24e⁻, oxidación produce 24e⁻ ✓</li>
+<li><strong>Suma término por término:</strong> 24e⁻+16H₂O+8MnO₄⁻+3NH₃+27OH⁻ → 8MnO₂+32OH⁻+3NO₃⁻+18H₂O+24e⁻</li>
+<li class="oculta-crisis"><strong>Cancela los 24e⁻</strong> que aparecen en ambos lados, y simplifica H₂O (18−16=2 netas en el producto) y OH⁻ (32−27=5 netos en el producto): 8MnO₄⁻+3NH₃ → 8MnO₂+3NO₃⁻+5OH⁻+2H₂O</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta:</strong> Mn:8=8 ✓ · O:32=16+9+5+2=32 ✓ · N:3=3 ✓ · H:9=5+4=9 ✓ · Carga: izq=−8, der=−3+(−5)=−8 ✓</li>
+<li><strong>Reintroduce el K⁺ espectador</strong> (1 por cada KMnO₄, formando KNO₃ y KOH en los productos): <strong>8KMnO₄ + 3NH₃ → 8MnO₂ + 3KNO₃ + 5KOH + 2H₂O</strong></li>
+<li class="oculta-crisis"><strong>Verificación final completa:</strong> K:8=3+5=8 ✓ · Mn:8=8 ✓ · O:32=16+9+5+2=32 ✓ · N:3=3 ✓ · H:9=5+4=9 ✓</li>
 </ol>
 </div>
 <button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-13', this)">✅ Ver respuesta ▸</button>
@@ -1123,12 +1143,27 @@ body.modo-corto .oculta-corto{ display:none !important; }
 <div class="toggle-contenido" id="rx-d1-exp">CuS: Cu=+2, S=−2. HNO₃: N=+5. En productos: Cu(NO₃)₂ Cu=+2(no cambia), NO: N=+2, S libre=0. Dos elementos DISTINTOS cambian: S(−2→0, OXIDACIÓN) y N(+5→+2, REDUCCIÓN). Cu es espectador — no confundas esto con desproporción.</div>
 <div class="toggle-contenido" id="rx-d1-sol">
 <ol>
-<li>Ox: S²⁻ → S + 2e⁻</li>
-<li>Red: 3e⁻ + 4H⁺ + NO₃⁻ → NO + 2H₂O</li>
-<li>MCM(2,3)=6 → Ox×3, Red×2</li>
-<li>Ox×3: 3S²⁻ → 3S + 6e⁻</li>
-<li>Red×2: 6e⁻ + 8H⁺ + 2NO₃⁻ → 2NO + 4H₂O</li>
-<li>Sumar (Cu de espectador se reintroduce): <strong>3CuS + 8HNO₃ → 3Cu(NO₃)₂ + 2NO + 3S + 4H₂O</strong></li>
+<li><strong>Separa las dos semirreacciones</strong> (identifica los DOS elementos distintos que cambian, no el mismo elemento dos veces): Oxidación: S²⁻ → S (S: −2→0) | Reducción: NO₃⁻ → NO (N: +5→+2)</li>
+<li class="oculta-crisis"><strong>Balancea S (átomo que cambia) en la oxidación:</strong> ya hay 1 S en cada lado — sin coeficiente necesario. No hay O ni H aquí, pasa directo a la carga.</li>
+<li><strong>Calcula la carga neta de la oxidación:</strong> izquierda = −2. Derecha = 0. Diferencia de 2.</li>
+<li><strong>Agrega 2e⁻ al lado más positivo</strong> (a la derecha, 0 frente a −2): S²⁻ → S + 2e⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=−2, der=0+(−2)=−2 ✓)</span></li>
+<li class="oculta-crisis"><strong>Ahora la reducción — balancea N (átomo que cambia):</strong> ya hay 1 N en cada lado — sin coeficiente necesario.</li>
+<li><strong>Cuenta el O:</strong> reactivo (NO₃⁻) tiene 3 O; producto (NO) tiene 1 O. Faltan 2 O en el producto.</li>
+<li><strong>Balancea el O agregando H₂O al lado que le falta</strong> (al producto): NO₃⁻ → NO + 2H₂O</li>
+<li class="oculta-crisis"><strong>Cuenta los H que aparecieron:</strong> 2H₂O aportan 4 H al producto; el reactivo no tiene H todavía.</li>
+<li><strong>Balancea el H agregando H⁺ al reactivo</strong> (que tiene menos H): 4H⁺ + NO₃⁻ → NO + 2H₂O</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> N:1=1 ✓ · O:3=1+2=3 ✓ · H:4=4 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = 4(+1)+(−1) = +3. Derecha = 0. Diferencia de 3.</li>
+<li><strong>Agrega 3e⁻ al lado más positivo</strong> (a la izquierda, +3 frente a 0): 3e⁻ + 4H⁺ + NO₃⁻ → NO + 2H₂O <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=3+(−3)+0=0... revisa: 4H⁺ aporta +4, NO₃⁻ aporta −1, 3e⁻ aporta −3 → +4−1−3=0, der=0 ✓)</span></li>
+<li><strong>Compara electrones:</strong> oxidación produce 2e⁻, reducción consume 3e⁻ — no coinciden. Calcula MCM(2,3)=6.</li>
+<li><strong>Multiplica la oxidación completa ×3</strong> (2e⁻×3=6e⁻): S²⁻×3=3S²⁻ → S×3=3S + 2e⁻×3=6e⁻. Resultado: 3S²⁻ → 3S+6e⁻</li>
+<li><strong>Multiplica la reducción completa ×2</strong> (3e⁻×2=6e⁻): 3e⁻×2=6e⁻ + 4H⁺×2=8H⁺ + NO₃⁻×2=2NO₃⁻ → NO×2=2NO + 2H₂O×2=4H₂O. Resultado: 6e⁻+8H⁺+2NO₃⁻ → 2NO+4H₂O</li>
+<li class="oculta-crisis"><strong>Verifica que ambas manejan 6e⁻ ahora:</strong> oxidación produce 6e⁻, reducción consume 6e⁻ ✓</li>
+<li><strong>Suma término por término:</strong> 3S²⁻+6e⁻+8H⁺+2NO₃⁻ → 3S+6e⁻+2NO+4H₂O</li>
+<li class="oculta-crisis"><strong>Cancela los 6e⁻</strong> que aparecen en ambos lados: 3S²⁻+8H⁺+2NO₃⁻ → 3S+2NO+4H₂O</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta:</strong> S:3=3 ✓ · H:8=8 ✓ · N:2=2 ✓ · O:6=2+4=6 ✓ · Carga: izq=−6+8+(−2)=0, der=0 ✓</li>
+<li><strong>Reintroduce el Cu²⁺ espectador</strong> (que forma CuS con el S²⁻ en el reactivo, y Cu(NO₃)₂ en el producto): como hay 3S²⁻, necesitas 3Cu²⁺ para formar 3CuS; esos mismos 3Cu²⁺ deben aparecer como 3Cu(NO₃)₂ en el producto, usando 6 de los NO₃⁻ disponibles (pero solo hay 2NO₃⁻ libres en la ecuación iónica — el resto de NO₃⁻ que necesita el Cu(NO₃)₂ viene de HNO₃ adicional que no participó en la reducción, solo actuó como espectador formando la sal): <strong>3CuS + 8HNO₃ → 3Cu(NO₃)₂ + 2NO + 3S + 4H₂O</strong></li>
+<li class="oculta-crisis"><strong>Verificación final completa:</strong> Cu:3=3 ✓ · S:3=3 ✓ · H:8=8 ✓ · N:8=6+2=8 ✓ · O:24=18+2+4=24 ✓</li>
 </ol>
 </div>
 <button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-23', this)">✅ Ver respuesta ▸</button>
@@ -1150,14 +1185,33 @@ body.modo-corto .oculta-corto{ display:none !important; }
 <div class="toggle-contenido" id="rx-d2-exp">Sb en Sb₂(SO₄)₃: SO₄²⁻ es espectador (S no cambia) → 2Sb+3(−2)=0 → Sb=+3. En H₃SbO₄: Sb=+5 (OXIDACIÓN). Mn: +7→+2 en MnSO₄ (REDUCCIÓN). S de los sulfatos nunca cambia — es espectador puro en toda la ecuación.</div>
 <div class="toggle-contenido" id="rx-d2-sol">
 <ol>
-<li>Ox: Sb³⁺ + 4H₂O → H₃SbO₄ + 5H⁺ + 2e⁻</li>
-<li>Red: 5e⁻ + 8H⁺ + MnO₄⁻ → Mn²⁺ + 4H₂O</li>
-<li>MCM(2,5)=10 → Ox×5, Red×2</li>
-<li>Ox×5: 5Sb³⁺+20H₂O→5H₃SbO₄+25H⁺+10e⁻</li>
-<li>Red×2: 16H⁺+2MnO₄⁻+10e⁻→2Mn²⁺+8H₂O</li>
-<li>Sumar y cancelar 10e⁻; simplificar H₂O(20−8=12 netas izq) y H⁺(25−16=9 netos der): <strong>5Sb³⁺ + 2MnO₄⁻ + 12H₂O → 5H₃SbO₄ + 2Mn²⁺ + 9H⁺</strong> (iónica neta)</li>
-<li>Multiplica ×2 para trabajar con Sb₂(SO₄)₃ completo: 10Sb³⁺+4MnO₄⁻+24H₂O→10H₃SbO₄+4Mn²⁺+18H⁺</li>
-<li>Reintroduce espectadores: 5Sb₂(SO₄)₃ aporta 15 SO₄²⁻; 4KMnO₄ aporta 4K⁺. Repártelos en productos: 2K₂SO₄(2 SO₄) + 4MnSO₄(4 SO₄) + 9H₂SO₄(9 SO₄) = 15 SO₄ ✓ → <strong>5Sb₂(SO₄)₃ + 4KMnO₄ + 24H₂O → 10H₃SbO₄ + 2K₂SO₄ + 4MnSO₄ + 9H₂SO₄</strong></li>
+<li><strong>Separa las dos semirreacciones:</strong> Oxidación: Sb³⁺ → H₃SbO₄ (Sb: +3→+5) | Reducción: MnO₄⁻ → Mn²⁺ (Mn: +7→+2). Nota: Sb³⁺ viene de Sb₂(SO₄)₃ (SO₄²⁻ es espectador, no cambia su #Ox).</li>
+<li class="oculta-crisis"><strong>Balancea Sb (átomo que cambia) en la oxidación:</strong> ya hay 1 Sb en cada lado — sin coeficiente necesario.</li>
+<li><strong>Cuenta el O:</strong> reactivo (Sb³⁺) no tiene O; producto (H₃SbO₄) tiene 4 O. Faltan 4 O en el reactivo.</li>
+<li><strong>Balancea el O agregando H₂O al reactivo</strong> (que tiene menos O): Sb³⁺ + 4H₂O → H₃SbO₄</li>
+<li class="oculta-crisis"><strong>Cuenta los H:</strong> 4H₂O aportan 8 H al reactivo; el producto (H₃SbO₄) ya tiene 3 H incluidos en su fórmula. Faltan 8−3=5 H por compensar en el producto.</li>
+<li><strong>Balancea el H agregando H⁺ al lado que le falta</strong> (al producto, que necesita 5 H más): Sb³⁺ + 4H₂O → H₃SbO₄ + 5H⁺</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> Sb:1=1 ✓ · O:4=4 ✓ · H:8=3+5=8 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = +3+0 = +3. Derecha = 0+5(+1) = +5. Diferencia de 2.</li>
+<li><strong>Agrega 2e⁻ al lado más positivo</strong> (a la derecha, +5 frente a +3): Sb³⁺ + 4H₂O → H₃SbO₄ + 5H⁺ + 2e⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=+3, der=0+5+(−2)=+3 ✓)</span></li>
+<li class="oculta-crisis"><strong>Ahora la reducción — balancea Mn (átomo que cambia):</strong> ya hay 1 Mn en cada lado — sin coeficiente necesario.</li>
+<li><strong>Cuenta el O:</strong> reactivo (MnO₄⁻) tiene 4 O; producto (Mn²⁺) no tiene ninguno.</li>
+<li><strong>Balancea el O agregando H₂O al producto</strong> (que tiene menos O): MnO₄⁻ → Mn²⁺ + 4H₂O</li>
+<li class="oculta-crisis"><strong>Cuenta los H que aparecieron:</strong> 4H₂O aportan 8 H al producto; el reactivo no tiene H todavía.</li>
+<li><strong>Balancea el H agregando H⁺ al reactivo</strong> (que tiene menos H): 8H⁺ + MnO₄⁻ → Mn²⁺ + 4H₂O</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> Mn:1=1 ✓ · O:4=4 ✓ · H:8=8 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = 8(+1)+(−1) = +7. Derecha = +2+0 = +2. Diferencia de 5.</li>
+<li><strong>Agrega 5e⁻ al lado más positivo</strong> (a la izquierda, +7 frente a +2): 5e⁻ + 8H⁺ + MnO₄⁻ → Mn²⁺ + 4H₂O <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=−5+8+(−1)=+2, der=+2 ✓)</span></li>
+<li><strong>Compara electrones:</strong> oxidación produce 2e⁻, reducción consume 5e⁻ — no coinciden. Calcula MCM(2,5)=10.</li>
+<li><strong>Multiplica la oxidación completa ×5</strong> (2e⁻×5=10e⁻): Sb³⁺×5=5Sb³⁺ + 4H₂O×5=20H₂O → H₃SbO₄×5=5H₃SbO₄ + 5H⁺×5=25H⁺ + 2e⁻×5=10e⁻. Resultado: 5Sb³⁺+20H₂O → 5H₃SbO₄+25H⁺+10e⁻</li>
+<li><strong>Multiplica la reducción completa ×2</strong> (5e⁻×2=10e⁻): 5e⁻×2=10e⁻ + 8H⁺×2=16H⁺ + MnO₄⁻×2=2MnO₄⁻ → Mn²⁺×2=2Mn²⁺ + 4H₂O×2=8H₂O. Resultado: 10e⁻+16H⁺+2MnO₄⁻ → 2Mn²⁺+8H₂O</li>
+<li class="oculta-crisis"><strong>Verifica que ambas manejan 10e⁻ ahora:</strong> oxidación produce 10e⁻, reducción consume 10e⁻ ✓</li>
+<li><strong>Suma término por término:</strong> 5Sb³⁺+20H₂O+10e⁻+16H⁺+2MnO₄⁻ → 5H₃SbO₄+25H⁺+10e⁻+2Mn²⁺+8H₂O</li>
+<li class="oculta-crisis"><strong>Cancela los 10e⁻</strong> presentes en ambos lados, y simplifica H₂O (20−8=12 netas quedan en el reactivo) y H⁺ (25−16=9 netos quedan en el producto): 5Sb³⁺+2MnO₄⁻+12H₂O → 5H₃SbO₄+2Mn²⁺+9H⁺</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta:</strong> Sb:5=5 ✓ · Mn:2=2 ✓ · O:8+12=20, 20=20 ✓ · H:24=15+9=24 ✓ · Carga: izq=15+(−2)+0=+13, der=0+4+9=+13 ✓</li>
+<li><strong>Multiplica toda la ecuación ×2</strong> para trabajar con múltiplos completos de Sb₂(SO₄)₃ (que tiene 2 Sb por fórmula): 5Sb³⁺×2=10Sb³⁺ + 2MnO₄⁻×2=4MnO₄⁻ + 12H₂O×2=24H₂O → 5H₃SbO₄×2=10H₃SbO₄ + 2Mn²⁺×2=4Mn²⁺ + 9H⁺×2=18H⁺</li>
+<li><strong>Reintroduce los espectadores</strong> (SO₄²⁻ de Sb₂(SO₄)₃, K⁺ de KMnO₄): 5Sb₂(SO₄)₃ aporta 5×2=10 Sb³⁺ (coincide) y 5×3=15 SO₄²⁻ en total. 4KMnO₄ aporta 4Mn (coincide) y 4K⁺. Reparte los 15 SO₄²⁻ entre los productos que los necesitan: 2K₂SO₄ usa 2 SO₄²⁻ (para los 4K⁺), 4MnSO₄ usa 4 SO₄²⁻ (para los 4Mn²⁺), y el resto (15−2−4=9) forma 9H₂SO₄ (para los 18H⁺): <strong>5Sb₂(SO₄)₃ + 4KMnO₄ + 24H₂O → 10H₃SbO₄ + 2K₂SO₄ + 4MnSO₄ + 9H₂SO₄</strong></li>
+<li class="oculta-crisis"><strong>Verificación final completa:</strong> Sb:10=10 ✓ · S:15=2+4+9=15 ✓ · O:5×3×4+4×4+24=100, 10×4+2×4+4×4+9×4=100 ✓ · K:4=2×2=4 ✓ · Mn:4=4 ✓ · H:24×2=48, 9×2×2+... revisa: H₃SbO₄ aporta 10×3=30H, 9H₂SO₄ aporta 9×2=18H, total 48 ✓</li>
 </ol>
 </div>
 <button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-24', this)">✅ Ver respuesta ▸</button>
@@ -1184,12 +1238,29 @@ body.modo-corto .oculta-corto{ display:none !important; }
 </div>
 <div class="toggle-contenido" id="rx-e1-sol">
 <ol>
-<li>Mn: +7→+2 (REDUCCIÓN, 5e⁻). O en H₂O₂: −1→0 en O₂ (OXIDACIÓN, 2e⁻ por molécula de H₂O₂)</li>
-<li>Red: MnO₄⁻+8H⁺+5e⁻→Mn²⁺+4H₂O | Ox: H₂O₂→O₂+2H⁺+2e⁻</li>
-<li>MCM(5,2)=10 → Red×2, Ox×5</li>
-<li>Red×2: 2MnO₄⁻+16H⁺+10e⁻→2Mn²⁺+8H₂O</li>
-<li>Ox×5: 5H₂O₂→5O₂+10H⁺+10e⁻</li>
-<li>Sumar y cancelar 10e⁻ y simplificar H⁺ (16−10=6 netos): <strong>2KMnO₄ + 5H₂O₂ + 3H₂SO₄ → 2MnSO₄ + 5O₂ + K₂SO₄ + 8H₂O</strong></li>
+<li><strong>Separa las dos semirreacciones:</strong> Reducción: MnO₄⁻ → Mn²⁺ (Mn: +7→+2) | Oxidación: H₂O₂ → O₂ (O: −1→0, este es el rol invertido de H₂O₂ frente a un oxidante más fuerte)</li>
+<li class="oculta-crisis"><strong>Balancea Mn (átomo que cambia) en la reducción:</strong> ya hay 1 Mn en cada lado — sin coeficiente necesario.</li>
+<li><strong>Cuenta el O:</strong> reactivo (MnO₄⁻) tiene 4 O; producto (Mn²⁺) no tiene ninguno.</li>
+<li><strong>Balancea el O agregando H₂O al producto</strong> (que tiene menos O): MnO₄⁻ → Mn²⁺ + 4H₂O</li>
+<li class="oculta-crisis"><strong>Cuenta los H que aparecieron:</strong> 4H₂O aportan 8 H al producto; el reactivo no tiene H todavía.</li>
+<li><strong>Balancea el H agregando H⁺ al reactivo</strong> (que tiene menos H): 8H⁺ + MnO₄⁻ → Mn²⁺ + 4H₂O</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> Mn:1=1 ✓ · O:4=4 ✓ · H:8=8 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = 8(+1)+(−1) = +7. Derecha = +2+0 = +2. Diferencia de 5.</li>
+<li><strong>Agrega 5e⁻ al lado más positivo</strong> (a la izquierda, +7 frente a +2): 5e⁻ + 8H⁺ + MnO₄⁻ → Mn²⁺ + 4H₂O <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=−5+8+(−1)=+2, der=+2 ✓)</span></li>
+<li class="oculta-crisis"><strong>Ahora la oxidación — balancea el átomo que cambia (O) en H₂O₂ → O₂:</strong> reactivo (H₂O₂) tiene 2 O; producto (O₂) tiene 2 O — ya coinciden, sin coeficiente necesario.</li>
+<li><strong>El H de H₂O₂ no cambia de #Ox, pero sí hay que balancearlo:</strong> reactivo tiene 2 H; producto no tiene ninguno. Balancea agregando H⁺ al producto (que tiene menos H): H₂O₂ → O₂ + 2H⁺</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> O:2=2 ✓ · H:2=2 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda = 0. Derecha = 0+2(+1) = +2. Diferencia de 2.</li>
+<li><strong>Agrega 2e⁻ al lado más positivo</strong> (a la derecha, +2 frente a 0): H₂O₂ → O₂ + 2H⁺ + 2e⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=0, der=0+2+(−2)=0 ✓)</span></li>
+<li><strong>Compara electrones:</strong> reducción consume 5e⁻, oxidación produce 2e⁻ — no coinciden. Calcula MCM(5,2)=10.</li>
+<li><strong>Multiplica la reducción completa ×2</strong> (5e⁻×2=10e⁻): 5e⁻×2=10e⁻ + 8H⁺×2=16H⁺ + MnO₄⁻×2=2MnO₄⁻ → Mn²⁺×2=2Mn²⁺ + 4H₂O×2=8H₂O. Resultado: 10e⁻+16H⁺+2MnO₄⁻ → 2Mn²⁺+8H₂O</li>
+<li><strong>Multiplica la oxidación completa ×5</strong> (2e⁻×5=10e⁻): H₂O₂×5=5H₂O₂ → O₂×5=5O₂ + 2H⁺×5=10H⁺ + 2e⁻×5=10e⁻. Resultado: 5H₂O₂ → 5O₂+10H⁺+10e⁻</li>
+<li class="oculta-crisis"><strong>Verifica que ambas manejan 10e⁻ ahora:</strong> reducción consume 10e⁻, oxidación produce 10e⁻ ✓</li>
+<li><strong>Suma término por término:</strong> 10e⁻+16H⁺+2MnO₄⁻+5H₂O₂ → 2Mn²⁺+8H₂O+5O₂+10H⁺+10e⁻</li>
+<li class="oculta-crisis"><strong>Cancela los 10e⁻</strong> que aparecen en ambos lados, y simplifica H⁺ (16−10=6 netos quedan en el reactivo): 6H⁺+2MnO₄⁻+5H₂O₂ → 2Mn²⁺+8H₂O+5O₂</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta:</strong> H:6+10=16, 16=16 ✓ (nota: 6H⁺+5H₂O₂ aporta 6+10=16H en izquierda, 8H₂O aporta 16H en derecha) · Mn:2=2 ✓ · O:8+10=18, 8+10=18 ✓ · Carga: izq=6+(−2)+0=+4, der=+4+0+0=+4 ✓</li>
+<li><strong>Reintroduce los espectadores</strong> (K⁺ de KMnO₄ y SO₄²⁻ de H₂SO₄, que aporta los 6H⁺ como 3H₂SO₄): 2K⁺ forman K₂SO₄ con 1 SO₄²⁻; 2Mn²⁺ forman 2MnSO₄ con 2 SO₄²⁻; en total se necesitan 3 SO₄²⁻ = 3H₂SO₄, que coincide exactamente con los 6H⁺ (3×2=6) que pedía la ecuación iónica: <strong>2KMnO₄ + 5H₂O₂ + 3H₂SO₄ → 2MnSO₄ + 5O₂ + K₂SO₄ + 8H₂O</strong></li>
+<li class="oculta-crisis"><strong>Verificación final completa:</strong> K:2=2 ✓ · Mn:2=2 ✓ · O:8+10+12=30, 8+10+4+8=30 ✓ · H:10+6=16, 16=16 ✓ · S:3=2+1=3 ✓</li>
 </ol>
 </div>
 <button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-25', this)">✅ Ver respuesta ▸</button>
@@ -1212,17 +1283,47 @@ body.modo-corto .oculta-corto{ display:none !important; }
 <strong>La trampa:</strong> el HNO₃ NO siempre reduce N igual. La concentración cambia el producto de reducción: diluido → NO (N:+5→+2, gana 3e⁻). Concentrado → NO₂ (N:+5→+4, gana solo 1e⁻). Cu no reacciona con ácidos comunes (está debajo de H₂ en Tabla 15.3) pero SÍ con HNO₃ porque este oxida al Cu directamente, no libera H₂.
 </div>
 <div class="toggle-contenido" id="rx-e2-sol">
-<strong>DILUIDO (produce NO):</strong>
+<strong>DILUIDO (el N se reduce hasta NO):</strong>
 <ol>
-<li>Ox: Cu→Cu²⁺+2e⁻ | Red: NO₃⁻+4H⁺+3e⁻→NO+2H₂O</li>
-<li>MCM(2,3)=6 → Ox×3, Red×2</li>
-<li>Global: <strong>3Cu + 8HNO₃(dil) → 3Cu(NO₃)₂ + 2NO + 4H₂O</strong></li>
+<li><strong>Separa las dos semirreacciones:</strong> Oxidación: Cu → Cu²⁺ (Cu: 0→+2) | Reducción: NO₃⁻ → NO (N: +5→+2)</li>
+<li class="oculta-crisis"><strong>Balancea Cu (átomo que cambia) en la oxidación:</strong> ya hay 1 Cu en cada lado. No hay O ni H, pasa directo a la carga.</li>
+<li><strong>Calcula la carga neta de la oxidación:</strong> izquierda=0. Derecha=+2. Diferencia de 2.</li>
+<li><strong>Agrega 2e⁻ al lado más positivo</strong> (derecha): Cu → Cu²⁺ + 2e⁻ <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=0, der=2+(−2)=0 ✓)</span></li>
+<li class="oculta-crisis"><strong>Ahora la reducción — balancea N:</strong> ya hay 1 N en cada lado.</li>
+<li><strong>Cuenta el O:</strong> reactivo (NO₃⁻) tiene 3 O; producto (NO) tiene 1 O. Faltan 2 O en el producto.</li>
+<li><strong>Balancea el O agregando H₂O al producto:</strong> NO₃⁻ → NO + 2H₂O</li>
+<li class="oculta-crisis"><strong>Cuenta los H:</strong> 2H₂O aportan 4 H al producto; el reactivo no tiene H todavía.</li>
+<li><strong>Balancea el H agregando H⁺ al reactivo:</strong> 4H⁺ + NO₃⁻ → NO + 2H₂O</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> N:1=1 ✓ · O:3=1+2=3 ✓ · H:4=4 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda=4+(−1)=+3. Derecha=0. Diferencia de 3.</li>
+<li><strong>Agrega 3e⁻ al lado más positivo</strong> (izquierda): 3e⁻+4H⁺+NO₃⁻ → NO+2H₂O <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=−3+4+(−1)=0, der=0 ✓)</span></li>
+<li><strong>Compara electrones:</strong> oxidación produce 2e⁻, reducción consume 3e⁻ — no coinciden. MCM(2,3)=6.</li>
+<li><strong>Multiplica la oxidación ×3</strong> (2e⁻×3=6e⁻): Cu×3=3Cu → Cu²⁺×3=3Cu²⁺+2e⁻×3=6e⁻. Resultado: 3Cu → 3Cu²⁺+6e⁻</li>
+<li><strong>Multiplica la reducción ×2</strong> (3e⁻×2=6e⁻): 3e⁻×2=6e⁻+4H⁺×2=8H⁺+NO₃⁻×2=2NO₃⁻ → NO×2=2NO+2H₂O×2=4H₂O. Resultado: 6e⁻+8H⁺+2NO₃⁻ → 2NO+4H₂O</li>
+<li class="oculta-crisis"><strong>Verifica 6e⁻ en ambas:</strong> oxidación produce 6e⁻, reducción consume 6e⁻ ✓</li>
+<li><strong>Suma y cancela los 6e⁻:</strong> 3Cu+8H⁺+2NO₃⁻ → 3Cu²⁺+2NO+4H₂O</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta:</strong> Cu:3=3 ✓ · H:8=8 ✓ · N:2=2 ✓ · O:6=2+4=6 ✓ · Carga: izq=8+(−2)=+6, der=6+0+0=+6 ✓</li>
+<li><strong>Reintroduce el NO₃⁻ espectador</strong> (el Cu²⁺ necesita 2 NO₃⁻ adicionales por cada Cu para formar Cu(NO₃)₂, que no participaron en la reducción): 3Cu²⁺ necesita 6 NO₃⁻ espectadores más los 2 ya usados en la reducción = 8 HNO₃ totales: <strong>3Cu + 8HNO₃ → 3Cu(NO₃)₂ + 2NO + 4H₂O</strong></li>
+<li class="oculta-crisis"><strong>Verificación final:</strong> Cu:3=3 ✓ · H:8=8 ✓ · N:8=6+2=8 ✓ · O:24=18+2+4=24 ✓</li>
 </ol>
-<strong>CONCENTRADO (produce NO₂):</strong>
+<strong>CONCENTRADO (el N se reduce solo hasta NO₂ — un paso menos):</strong>
 <ol>
-<li>Ox: Cu→Cu²⁺+2e⁻ | Red: NO₃⁻+2H⁺+e⁻→NO₂+H₂O</li>
-<li>MCM(2,1)=2 → Red×2</li>
-<li>Global: <strong>Cu + 4HNO₃(conc) → Cu(NO₃)₂ + 2NO₂ + 2H₂O</strong></li>
+<li><strong>La oxidación del Cu es idéntica al caso diluido:</strong> Cu → Cu²⁺ + 2e⁻ (ya verificada arriba)</li>
+<li><strong>La reducción cambia de producto — ahora es NO₂, no NO:</strong> balancea N: ya 1=1 en cada lado.</li>
+<li><strong>Cuenta el O:</strong> reactivo (NO₃⁻) tiene 3 O; producto (NO₂) tiene 2 O. Falta 1 O en el producto.</li>
+<li><strong>Balancea el O agregando H₂O al producto:</strong> NO₃⁻ → NO₂ + H₂O</li>
+<li class="oculta-crisis"><strong>Cuenta los H:</strong> 1H₂O aporta 2 H al producto; el reactivo no tiene H todavía.</li>
+<li><strong>Balancea el H agregando H⁺ al reactivo:</strong> 2H⁺ + NO₃⁻ → NO₂ + H₂O</li>
+<li class="oculta-crisis"><strong>Verifica átomos:</strong> N:1=1 ✓ · O:3=2+1=3 ✓ · H:2=2 ✓</li>
+<li><strong>Calcula la carga neta:</strong> izquierda=2+(−1)=+1. Derecha=0. Diferencia de 1 (mucho menor que en el caso diluido, que era 3).</li>
+<li><strong>Agrega 1e⁻ al lado más positivo</strong> (izquierda): e⁻+2H⁺+NO₃⁻ → NO₂+H₂O <span style="font-size:0.85em;color:var(--texto-sec);">(verificación: izq=−1+2+(−1)=0, der=0 ✓)</span></li>
+<li><strong>Compara electrones:</strong> oxidación produce 2e⁻, reducción consume solo 1e⁻ — no coinciden. MCM(2,1)=2.</li>
+<li><strong>La oxidación ya tiene 2e⁻, se queda igual (×1).</strong> Multiplica la reducción completa ×2 (1e⁻×2=2e⁻): e⁻×2=2e⁻+2H⁺×2=4H⁺+NO₃⁻×2=2NO₃⁻ → NO₂×2=2NO₂+H₂O×2=2H₂O. Resultado: 2e⁻+4H⁺+2NO₃⁻ → 2NO₂+2H₂O</li>
+<li class="oculta-crisis"><strong>Verifica 2e⁻ en ambas:</strong> oxidación produce 2e⁻, reducción consume 2e⁻ ✓</li>
+<li><strong>Suma y cancela los 2e⁻:</strong> Cu+4H⁺+2NO₃⁻ → Cu²⁺+2NO₂+2H₂O</li>
+<li class="oculta-crisis"><strong>Verifica la ecuación iónica neta:</strong> Cu:1=1 ✓ · H:4=4 ✓ · N:2=2 ✓ · O:6=4+2=6 ✓ · Carga: izq=4+(−2)=+2, der=+2+0+0=+2 ✓</li>
+<li><strong>Reintroduce el NO₃⁻ espectador</strong> (el Cu²⁺ necesita 2 NO₃⁻ más para formar Cu(NO₃)₂, ya incluidos en los 4HNO₃ totales — aquí no sobra ninguno adicional porque el coeficiente de Cu es 1, no 3): <strong>Cu + 4HNO₃ → Cu(NO₃)₂ + 2NO₂ + 2H₂O</strong></li>
+<li class="oculta-crisis"><strong>Verificación final:</strong> Cu:1=1 ✓ · H:4=4 ✓ · N:4=2+2=4 ✓ · O:12=6+4+2=12 ✓</li>
 </ol>
 </div>
 <button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('resp-auto-26', this)">✅ Ver respuesta ▸</button>
@@ -1324,8 +1425,10 @@ body.modo-corto .oculta-corto{ display:none !important; }
 <tr><td>Identificar un grupo funcional por su patrón</td><td>Tabla de 21 grupos + árbol del carbonilo</td><td><a href="#og-21grupos">21 Grupos</a></td></tr>
 <tr><td>Nombrar un alcano/cicloalcano/alqueno/alquino</td><td>Cadena principal + numeración + sustituyentes</td><td><a href="#og-nomenclatura-hc">Nomenclatura HC</a></td></tr>
 <tr><td>Construir el nombre IUPAC completo de un compuesto con grupo funcional</td><td>Método de 5 pasos (prioridad, cadena, numerar, prefijos, ensamblar)</td><td><a href="#og-metodo-iupac">Método IUPAC</a></td></tr>
+<tr><td>Predecir el PRODUCTO de una reacción (combustión, hidrogenación, ésteres, amidas...)</td><td>6 reacciones características por familia — contenido adicional</td><td><a href="#og-reacciones-adicional">Reacciones (adicional)</a></td></tr>
+<tr><td>Dibujar una estructura a partir de un nombre en inglés (aminas, amidas, aromáticos)</td><td>Traducción nombre↔estructura</td><td><a href="#og-practica-multi">Nombre→Estructura</a></td></tr>
 <tr><td>Reconocer TODOS los grupos en una molécula densa</td><td>Escaneo sistemático N/S → C=O → enlaces múltiples</td><td><a href="#og-supermoleculas">Súper-moléculas</a></td></tr>
-<tr><td>Ver geometría real de anillos fusionados o estereoquímica</td><td>RDKit.js (SMILES → SVG 2D exacto)</td><td><a href="#og-rdkit-demo">Demo RDKit</a></td></tr>
+<tr><td>Ver geometría real de anillos fusionados o estereoquímica</td><td>RDKit.js (SMILES → SVG 2D exacto)</td><td><a href="#og-21grupos">21 Grupos (con diagramas)</a></td></tr>
 </table>
 
 <h2 class="encabezado-seccion" id="og-concepto" data-nav-label="Concepto">1. ¿Qué es un Grupo Funcional?</h2>
@@ -1390,6 +1493,238 @@ body.modo-corto .oculta-corto{ display:none !important; }
 <p style="font-size:0.88rem;"><strong>Prefijos comunes:</strong> -OH→hydroxy- · halógenos→chloro-/bromo-/fluoro-/iodo- · -NH₂→amino- · C=O(como sustituyente)→oxo- · -O-R→alcoxy- · -SH→sulfanyl-</p>
 <div class="caja-adicional">[Contenido adicional] Cuando el grupo principal está fuera de la cadena principal (ej. un éster donde ácido y alcohol son cadenas distintas), el nombre se separa en dos palabras: [alcohol como sustituyente "-yl"] + [ácido con sufijo "-oate"]. Ej: <em>methyl ethanoate</em> = "methyl"(del metanol) + "ethanoate"(del ácido etanoico).</div>
 <div class="caja-advertencia">⚠️ Error que el profesor SIEMPRE revisa: nombrar sustituyentes en el orden en que aparecen en la cadena en vez de orden alfabético.</div>
+
+<h2 class="encabezado-seccion oculta-crisis oculta-urgente oculta-corto" id="og-reacciones-adicional" data-nav-label="Adicional: Reacciones">📎 CONTENIDO ADICIONAL — Reacciones Características (por si el profesor las pide)</h2>
+<div class="caja-advertencia">⚠️ Esta sección es material EXTRA más allá de identificar/nombrar grupos funcionales. Cúbrela si el profesor menciona predecir productos de reacciones (combustión, hidrogenación, esterificación, etc.) — si no, el foco principal del examen sigue siendo nomenclatura e identificación de grupos.</div>
+<button class="toggle-btn" data-label="📎 Ver contenido adicional completo ▸" onclick="toggleCaja('og-reacciones-adicional-body', this)">📎 Ver contenido adicional completo ▸</button>
+<div class="toggle-contenido" id="og-reacciones-adicional-body">
+<h3 class="encabezado-sub" id="og-reacciones" data-nav-label="Reacciones">6. Reacciones Características de los Grupos Funcionales</h3>
+<div class="caja-concepto">El profesor no solo pide nombrar — también pide predecir el PRODUCTO de una reacción dado el reactivo. Cada familia de compuestos orgánicos tiene una reacción característica. Esta sección cubre las 6 reacciones que vienen en el capítulo del libro (17.1–17.7): combustión, hidrogenación, halogenación, polimerización, esterificación y amidación.</div>
+
+<h3 class="encabezado-sub">① Combustión de alcanos</h3>
+<div class="caja-concepto">Los enlaces C–C simples son difíciles de romper, por eso los alcanos son la familia MENOS reactiva — pero arden con facilidad (combustión) en presencia de O₂, liberando CO₂, H₂O y energía.</div>
+<p>\( \text{Alcano} + O_2 \xrightarrow{\Delta} CO_2 + H_2O + \text{energía} \)</p>
+<div class="caja-tip">💡 Para balancear combustión: primero iguala los C (van directo a CO₂), luego los H (van directo a H₂O, cada H₂O necesita 2H), y al final ajusta el O₂ contando cuántos O necesitas en total (puede quedar coeficiente fraccionario — multiplica todo ×2 al final si el profesor pide números enteros).</div>
+
+<h3 class="encabezado-sub oculta-crisis">② Hidrogenación de alquenos/alquinos (reacción de adición)</h3>
+<div class="caja-concepto oculta-crisis">H₂ se agrega a cada carbono del doble (o triple) enlace, usando un catalizador metálico (Pt, Ni o Pd) para acelerar la reacción. El doble enlace se convierte en simple — el alqueno se vuelve alcano.</div>
+<p class="oculta-crisis">\( \text{Alqueno} + H_2 \xrightarrow{Pt} \text{Alcano} \)</p>
+<div class="caja-tip oculta-crisis">💡 Aplicación real: hidrogenar aceites vegetales insaturados (con dobles enlaces, líquidos) los convierte en grasas saturadas más sólidas (como margarina) — cuantos más dobles enlaces se hidrogenan, más sólido queda el producto.</div>
+
+<h3 class="encabezado-sub oculta-crisis oculta-urgente">③ Halogenación de alquenos (otra reacción de adición)</h3>
+<div class="caja-concepto oculta-crisis oculta-urgente">Un halógeno (Cl₂, Br₂) se agrega a cada carbono del doble enlace, igual que el H₂ en la hidrogenación — pero sin necesitar catalizador. El doble enlace se rompe y cada carbono queda unido a un átomo de halógeno.</div>
+<p class="oculta-crisis oculta-urgente">\( \text{Alqueno} + X_2 \to \text{Dihaloalcano} \)</p>
+
+<h3 class="encabezado-sub">④ Polimerización</h3>
+<div class="caja-concepto">Un polímero es una molécula gigante hecha de miles de unidades repetidas (monómeros) — se forma cuando muchas moléculas de alqueno se unen entre sí bajo alta temperatura, catalizador y alta presión. El doble enlace de cada monómero se "abre" para conectarse con el siguiente.</div>
+<table class="oculta-crisis">
+<tr><th>Monómero</th><th>Polímero</th><th>Uso común</th></tr>
+<tr><td>Etileno (CH₂=CH₂)</td><td>Polietileno</td><td>Botellas, bolsas plásticas</td></tr>
+<tr><td>Cloruro de vinilo (CH₂=CHCl)</td><td>PVC (policloruro de vinilo)</td><td>Tuberías, mangueras</td></tr>
+<tr><td>Propileno (CH₂=CHCH₃)</td><td>Polipropileno</td><td>Envases, alfombras</td></tr>
+<tr><td>Tetrafluoroetileno (CF₂=CF₂)</td><td>Teflón</td><td>Sartenes antiadherentes</td></tr>
+<tr><td>Estireno</td><td>Poliestireno</td><td>Vasos desechables, espuma</td></tr>
+</table>
+<div class="caja-tip">💡 Para dibujar el polímero: repite la unidad monomérica varias veces conectada por enlaces simples donde antes había el doble enlace, y usa paréntesis con subíndice "n" para indicar que se repite muchas veces.</div>
+
+<h3 class="encabezado-sub">⑤ Esterificación (ácido carboxílico + alcohol → éster)</h3>
+<div class="caja-concepto">Un ácido carboxílico reacciona con un alcohol en presencia de un catalizador ácido (H₂SO₄) y calor, formando un éster + agua. El −OH del ácido y el −H del alcohol se combinan para formar el agua liberada.</div>
+<p>\( \text{Ácido carboxílico} + \text{Alcohol} \xrightarrow[\text{calor}]{H^+} \text{Éster} + H_2O \)</p>
+<div class="caja-tip">💡 Truco para identificar reactivos a partir de un éster: separa el enlace C(=O)–O del éster; el fragmento con el C=O se convierte en el ácido (agregando −OH); el fragmento del otro lado del O se convierte en el alcohol (agregando −H).</div>
+<div class="caja-advertencia">⚠️ Se usa EXCESO de alcohol para desplazar el equilibrio hacia la formación del éster — no olvides mencionarlo si el profesor pregunta por las condiciones de la reacción.</div>
+
+<h3 class="encabezado-sub">⑥ Amidación (ácido carboxílico + amina/amoniaco → amida)</h3>
+<div class="caja-concepto">Un ácido carboxílico reacciona con amoniaco (NH₃) o una amina, con calor, formando una amida + agua — el mismo patrón que la esterificación, pero con nitrógeno en vez de oxígeno del lado del alcohol.</div>
+<p>\( \text{Ácido carboxílico} + NH_3 \text{(o amina)} \xrightarrow{\text{calor}} \text{Amida} + H_2O \)</p>
+<div class="caja-tip">💡 El nombre de la amida se construye igual que el ácido, cambiando el sufijo "-oico/-ico" por "-amida": ácido propanoico → propanamida.</div>
+
+<h3 class="encabezado-sub" id="og-practica-reacciones" data-nav-label="🎯Práctica Reacciones">🎯 PROBLEMAS — Predicción de Productos</h3>
+
+<div class="problema">
+<div class="problema-header dif-1"><span>⭐ Básico</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Reacción R1 · Combustión</div>
+<div class="enunciado">Escribe la ecuación balanceada de combustión completa del propano (C₃H₈).</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-r1-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-r1-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-r1-exp">Todo alcano en combustión completa da CO₂+H₂O+energía. Balancea C primero, luego H, luego O al final.</div>
+<div class="toggle-contenido" id="og-r1-sol">
+<ol>
+<li>Escribe el esqueleto sin balancear: C₃H₈ + O₂ → CO₂ + H₂O</li>
+<li>Balancea C (hay 3 en el reactivo): C₃H₈ + O₂ → 3CO₂ + H₂O</li>
+<li>Balancea H (hay 8 en el reactivo, cada H₂O aporta 2H, necesitas 8/2=4 H₂O): C₃H₈ + O₂ → 3CO₂ + 4H₂O</li>
+<li>Cuenta el O necesario en productos: 3CO₂ aporta 3×2=6 O, 4H₂O aporta 4×1=4 O, total=10 O</li>
+<li>Como O₂ aporta de a 2 átomos, necesitas 10/2=5 O₂: <strong>C₃H₈ + 5O₂ → 3CO₂ + 4H₂O</strong></li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('og-r1-resp', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="og-r1-resp">
+<div class="mol-caja" data-smiles="CCC" data-mol-id="og-r1"></div>
+<div class="respuesta-final">✅ C₃H₈(g) + 5O₂(g) → 3CO₂(g) + 4H₂O(g) + energía</div>
+<div class="leccion">💡 El propano es el gas de las estufas/calentadores portátiles — ejemplo clásico de examen.</div>
+</div>
+</div>
+</div>
+
+<div class="problema">
+<div class="problema-header dif-1"><span>⭐ Básico</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Reacción R2 · Hidrogenación</div>
+<div class="enunciado">Da el producto (nombre y estructura) de la hidrogenación catalítica (Pt) del 2-buteno.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-r2-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-r2-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-r2-exp">Hidrogenación = agregar H a cada carbono del doble enlace, usando catalizador Pt/Ni/Pd. El sufijo cambia de "-eno/-ene" a "-ano/-ane".</div>
+<div class="toggle-contenido" id="og-r2-sol">
+<ol>
+<li>Identifica el doble enlace: CH₃-CH=CH-CH₃ (2-buteno, doble enlace entre C2 y C3)</li>
+<li>Agrega 1H a cada carbono del doble enlace: CH₃-CH₂-CH₂-CH₃</li>
+<li>El resultado es un alcano de 4 carbonos sin ramas → butano</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('og-r2-resp', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="og-r2-resp">
+<div class="mol-caja" data-smiles="CC=CC" data-mol-id="og-r2a"></div>
+<div class="respuesta-final">✅ Butano (CH₃CH₂CH₂CH₃)</div>
+<div class="mol-caja" data-smiles="CCCC" data-mol-id="og-r2b"></div>
+<div class="leccion">💡 La hidrogenación siempre convierte un alqueno en el alcano de igual número de carbonos, sin importar dónde estaba el doble enlace.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Reacción R3 · Polimerización</div>
+<div class="enunciado">¿Qué polímero se forma a partir del monómero cloruro de vinilo (CH₂=CHCl), y para qué se usa comúnmente?</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-r3-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-r3-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-r3-exp">La polimerización conecta miles de monómeros del mismo alqueno, abriendo cada doble enlace para formar enlaces simples entre monómeros consecutivos.</div>
+<div class="toggle-contenido" id="og-r3-sol">
+<ol>
+<li>Identifica el monómero: cloruro de vinilo, CH₂=CHCl</li>
+<li>Abre el doble enlace: cada monómero se conecta al siguiente por enlaces simples</li>
+<li>Repite esta unidad "n" veces (n = miles)</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('og-r3-resp', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="og-r3-resp">
+<div class="mol-caja" data-smiles="C=CCl" data-mol-id="og-r3"></div>
+<div class="respuesta-final">✅ PVC (policloruro de vinilo) — usado en tuberías, mangueras y envolturas plásticas</div>
+<div class="leccion">💡 Memoriza los 5 monómero→polímero más comunes del capítulo: etileno→polietileno, cloruro de vinilo→PVC, propileno→polipropileno, tetrafluoroetileno→teflón, estireno→poliestireno.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Reacción R4 · Esterificación</div>
+<div class="enunciado">Escribe la ecuación balanceada de esterificación entre el ácido butanoico y el metanol (catalizador H⁺, calor), y da el nombre IUPAC del éster formado.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-r4-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-r4-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-r4-exp">El −OH del ácido y el −H del alcohol se combinan para formar H₂O; lo que queda del ácido y del alcohol se unen por el oxígeno para formar el éster.</div>
+<div class="toggle-contenido" id="og-r4-sol">
+<ol>
+<li>Identifica el ácido: CH₃CH₂CH₂C(=O)OH (ácido butanoico) y el alcohol: CH₃OH (metanol)</li>
+<li>Quita el −OH del ácido y el −H del alcohol: quedan CH₃CH₂CH₂C(=O)− y −O-CH₃</li>
+<li>Une ambos fragmentos por el oxígeno: CH₃CH₂CH₂C(=O)-O-CH₃</li>
+<li>Libera el H y OH removidos como H₂O</li>
+<li>Nombra el éster: la parte del alcohol (metanol) se vuelve "methyl", la parte del ácido (butanoico) se vuelve "butanoate"</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('og-r4-resp', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="og-r4-resp">
+<div class="mol-caja" data-smiles="CCCC(=O)OC" data-mol-id="og-r4"></div>
+<div class="respuesta-final">✅ CH₃CH₂CH₂C(=O)OH + CH₃OH →(H⁺,calor)→ CH₃CH₂CH₂C(=O)OCH₃ + H₂O · Nombre: methyl butanoate (huele a piña)</div>
+<div class="leccion">💡 Muchos aromas frutales naturales (piña, manzana, plátano) son ésteres — el examen puede preguntar por el olor asociado.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Reacción R5 · Amidación</div>
+<div class="enunciado">Escribe la ecuación balanceada de amidación entre el ácido etanoico y la metilamina (calor), y da el nombre IUPAC de la amida formada.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-r5-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-r5-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-r5-exp">Mismo patrón que la esterificación, pero el alcohol se reemplaza por una amina: el −OH del ácido y un −H del nitrógeno se combinan para formar H₂O.</div>
+<div class="toggle-contenido" id="og-r5-sol">
+<ol>
+<li>Identifica el ácido: CH₃C(=O)OH (ácido etanoico) y la amina: CH₃NH₂ (metilamina)</li>
+<li>Quita el −OH del ácido y un −H del N de la amina</li>
+<li>Une el carbonilo del ácido directamente al N: CH₃C(=O)-NH-CH₃</li>
+<li>Libera el H y OH removidos como H₂O</li>
+<li>Nombra la amida: cambia "-oico" por "-amida" y antepone "N-metil" porque el sustituyente está en el nitrógeno, no en la cadena principal</li>
+</ol>
+</div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('og-r5-resp', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="og-r5-resp">
+<div class="mol-caja" data-smiles="CC(=O)NC" data-mol-id="og-r5"></div>
+<div class="respuesta-final">✅ CH₃C(=O)OH + CH₃NH₂ →(calor)→ CH₃C(=O)NHCH₃ + H₂O · Nombre: N-methylethanamide (N-methylacetamide)</div>
+<div class="leccion">💡 El prefijo "N-" indica que el sustituyente está unido al nitrógeno de la amida, no a la cadena de carbono — un detalle que el profesor revisa con cuidado.</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<h2 class="encabezado-seccion oculta-crisis oculta-urgente" id="og-practica-multi" data-nav-label="🎯Nombre→Estructura">7. Traducción Nombre↔Estructura en Múltiples Grupos Funcionales</h2>
+<div class="caja-concepto oculta-crisis oculta-urgente">El profesor da el nombre en inglés y pide dibujar la molécula — o al revés. Estos problemas cubren esa dirección para grupos MÁS ALLÁ de hidrocarburos: aminas, amidas, y compuestos aromáticos con sustituyentes.</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto N1</div>
+<div class="enunciado">El profesor dice: <strong>"trimethylamine"</strong> — dibuja la estructura y explica el patrón de nomenclatura común usado.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-n1-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-n1-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-n1-exp">Las aminas simples usan nombres comunes (no IUPAC formal): se listan los grupos alquilo unidos al N en orden alfabético, con prefijos di-/tri- para grupos repetidos.</div>
+<div class="toggle-contenido" id="og-n1-sol"><ol><li>"Tri"=3 grupos idénticos · "methyl"=CH₃ · "amine"=grupo funcional con N</li><li>Los 3 H de amoniaco (NH₃) se reemplazan por 3 grupos metilo</li></ol></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('og-n1-resp', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="og-n1-resp">
+<div class="mol-caja" data-smiles="CN(C)C" data-mol-id="og-n1"></div>
+<div class="respuesta-final">✅ (CH₃)₃N — trimethylamine</div>
+<div class="leccion">💡 Amoniaco(NH₃)→metilamina(1 sustituyente)→dimetilamina(2)→trimetilamina(3) es la secuencia que más aparece en examen.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span><span class="badge-meta">🎯 Probable</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto N2 · C6H6BrN</div>
+<div class="enunciado">Dibuja la estructura de <strong>"4-bromoaniline"</strong>.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-n2-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-n2-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-n2-exp">"Aniline" es un nombre aprobado por IUPAC para el anillo aromático con -NH₂ (no sigue el patrón "amino-benceno"). El carbono con el -NH₂ es automáticamente C1.</div>
+<div class="toggle-contenido" id="og-n2-sol"><ol><li>Base: aniline = anillo aromático con -NH₂ en C1</li><li>"4-bromo" = un átomo de Br en C4 (posición para respecto al NH₂)</li></ol></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('og-n2-resp', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="og-n2-resp">
+<div class="mol-caja" data-smiles="Nc1ccc(Br)cc1" data-mol-id="og-n2"></div>
+<div class="respuesta-final">✅ 4-bromoaniline</div>
+<div class="leccion">💡 "Aniline" es como "toluene" o "phenol" — un nombre común aceptado por IUPAC que no sigue el patrón regular de sustituyente+benzene.</div>
+</div>
+</div>
+</div>
+
+<div class="problema oculta-crisis oculta-urgente">
+<div class="problema-header dif-2"><span>⭐⭐ Intermedio</span></div>
+<div class="problema-body">
+<div class="nombre-ingles">Compuesto N3 · C7H7NO</div>
+<div class="enunciado">Dibuja la estructura de <strong>"benzamide"</strong>.</div>
+<button class="toggle-btn" data-label="🧠 Ver explicación ▸" onclick="toggleCaja('og-n3-exp', this)">🧠 Ver explicación ▸</button>
+<button class="toggle-btn" data-label="⚙️ Ver solución paso a paso ▸" onclick="toggleCaja('og-n3-sol', this)">⚙️ Ver solución paso a paso ▸</button>
+<div class="toggle-contenido" id="og-n3-exp">"Benzamide" = anillo aromático con el grupo amida C(=O)NH₂ directamente unido, sin cadena intermedia (a diferencia de "phenylacetamide" que sí tendría un CH₂ de por medio).</div>
+<div class="toggle-contenido" id="og-n3-sol"><ol><li>Base: benzene con C(=O)NH₂ unido directamente al anillo</li></ol></div>
+<button class="toggle-btn" data-label="✅ Ver respuesta ▸" onclick="toggleCaja('og-n3-resp', this)">✅ Ver respuesta ▸</button>
+<div class="toggle-contenido" id="og-n3-resp">
+<div class="mol-caja" data-smiles="NC(=O)c1ccccc1" data-mol-id="og-n3"></div>
+<div class="respuesta-final">✅ Benzamide</div>
+<div class="leccion">💡 Igual que "aniline", "benzamide" es un nombre común-IUPAC directo, sin numeración porque solo hay un sustituyente en el anillo.</div>
+</div>
+</div>
+</div>
 
 <h2 class="encabezado-seccion" id="og-practica-hc" data-nav-label="Práctica HC">🎯 PROBLEMAS — Nomenclatura de Hidrocarburos</h2>
 
@@ -1608,11 +1943,11 @@ body.modo-corto .oculta-corto{ display:none !important; }
 </div>
 </div>
 
-<h2 class="encabezado-seccion" id="og-basicos" data-nav-label="Básicos⭐">6. Reconocimiento Básico — 1 Grupo Funcional (20 compuestos)</h2>
+<h2 class="encabezado-seccion" id="og-basicos" data-nav-label="Básicos⭐">8. Reconocimiento Básico — 1 Grupo Funcional (20 compuestos)</h2>
 <div class="caja-concepto">Objetivo: identifica el único grupo funcional presente en cada molécula pequeña. Memoriza el <strong>patrón</strong>, no el ejemplo.</div>
 <div id="grid-basicos-21" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:14px 0;"></div>
 
-<h2 class="encabezado-seccion oculta-crisis" id="og-intermedios" data-nav-label="Intermedios⭐⭐">7. Reconocimiento Intermedio — 3-4 Grupos Funcionales</h2>
+<h2 class="encabezado-seccion oculta-crisis" id="og-intermedios" data-nav-label="Intermedios⭐⭐">9. Reconocimiento Intermedio — 3-4 Grupos Funcionales</h2>
 <div class="caja-concepto oculta-crisis">Objetivo: identifica TODOS los grupos combinados en una misma molécula. Escanea la cadena de un extremo al otro.</div>
 
 <div class="problema oculta-crisis">
@@ -1693,7 +2028,7 @@ body.modo-corto .oculta-corto{ display:none !important; }
 </div></div>
 </div>
 
-<h2 class="encabezado-seccion oculta-crisis oculta-urgente" id="og-avanzados" data-nav-label="Avanzados⭐⭐⭐">8. Reconocimiento Avanzado — 5-7 Grupos Funcionales</h2>
+<h2 class="encabezado-seccion oculta-crisis oculta-urgente" id="og-avanzados" data-nav-label="Avanzados⭐⭐⭐">10. Reconocimiento Avanzado — 5-7 Grupos Funcionales</h2>
 <div class="caja-concepto oculta-crisis oculta-urgente">Moléculas densas, similares en escala a lo que el profesor puede pedir en el taller.</div>
 
 <div class="problema oculta-crisis oculta-urgente">
@@ -1755,7 +2090,7 @@ body.modo-corto .oculta-corto{ display:none !important; }
 </div>
 </div>
 
-<h2 class="encabezado-seccion oculta-crisis oculta-urgente oculta-corto" id="og-supermoleculas" data-nav-label="🎯Súper-moléculas">9. EL EJERCICIO REAL DEL TALLER 🎯 — Súper-moléculas (10-12 grupos)</h2>
+<h2 class="encabezado-seccion oculta-crisis oculta-urgente oculta-corto" id="og-supermoleculas" data-nav-label="🎯Súper-moléculas">11. EL EJERCICIO REAL DEL TALLER 🎯 — Súper-moléculas (10-12 grupos)</h2>
 <div class="caja-advertencia oculta-crisis oculta-urgente oculta-corto"><strong>⚠️ Esto es lo que el profesor va a poner en el taller.</strong> Practica las tres antes del examen — cada una tiene distribución distinta de grupos, así entrenas el método en vez de memorizar una sola estructura.</div>
 
 <div class="problema oculta-crisis oculta-urgente oculta-corto">
@@ -1840,6 +2175,8 @@ body.modo-corto .oculta-corto{ display:none !important; }
 <div class="bloque-cheat"><h4>🔍 Escaneo sistemático</h4>1° N y S (raros, saltan a la vista) → 2° C=O (define familia carbonilo) → 3° enlaces C-C simples/dobles/triples. Recorre de extremo a extremo, sin saltarte segmentos.</div>
 <div class="bloque-cheat"><h4>🚫 Errores fatales</h4>Ester≠Ácido(-O-R vs -OH) · Imina(C=N)≠Nitrilo(C≡N) · S-CH₃(tioéter)≠S-H(tiol) · "Bromuro" NO es sustituyente orgánico (es "bromo") · Alfabetizar ignorando di-/tri-/tetra-</div>
 <div class="bloque-cheat"><h4>💍 Numeración de anillos</h4>1 sustituyente = sin número. 2+ sustituyentes = numera desde el carbono MÁS sustituido, dirección de números más bajos.</div>
+<div class="bloque-cheat"><h4>⚗️ Las 6 reacciones del capítulo</h4>Combustión: alcano+O₂→CO₂+H₂O · Hidrogenación: alqueno+H₂(Pt)→alcano · Halogenación: alqueno+X₂→dihaloalcano · Polimerización: n(monómero)→polímero · Esterificación: ácido+alcohol(H⁺,calor)→éster+H₂O · Amidación: ácido+amina(calor)→amida+H₂O</div>
+<div class="bloque-cheat"><h4>🧪 5 monómero→polímero</h4>Etileno→polietileno · Cloruro de vinilo→PVC · Propileno→polipropileno · Tetrafluoroetileno→teflón · Estireno→poliestireno</div>
 </div>
 
 </div>
